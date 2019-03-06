@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>ejat</groupId>
+	<artifactId>ejat-repository</artifactId>
+	<version>0.2.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>eJAT Full Maven Repository</name>
+
+	<description>Builds a Maven Repository with all the Release Bundles</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>ejat</groupId>
+			<artifactId>ejat-obr</artifactId>
+			<version>0.2.0-SNAPSHOT</version>
+			<type>obr</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>ejat-core</groupId>
+			<artifactId>ejat-core-obr</artifactId>
+			<version>0.2.0-SNAPSHOT</version>
+			<type>obr</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>ejat-common</groupId>
+			<artifactId>ejat-common-obr</artifactId>
+			<version>0.2.0-SNAPSHOT</version>
+			<type>obr</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>ejat</groupId>
+			<artifactId>ejat-devtools-karaffeature</artifactId>
+			<version>0.2.0-SNAPSHOT</version>
+			<type>xml</type>
+		</dependency>
+		<dependency>
+			<groupId>ejat-common</groupId>
+			<artifactId>ejat-uber-karaffeature</artifactId>
+			<version>0.2.0-SNAPSHOT</version>
+			<type>xml</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+		</plugins>
+	</build>
+</project>
