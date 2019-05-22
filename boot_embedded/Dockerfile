@@ -26,4 +26,3 @@ VOLUME /cirillo/.ejat
 EXPOSE 9010/tcp
 EXPOSE 9011/tcp
 
-ENTRYPOINT ["/cirillo/resourcemonitor.sh"]
