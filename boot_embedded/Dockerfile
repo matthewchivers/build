@@ -19,8 +19,6 @@ RUN mkdir /cirillo/.ejat && \
     touch /cirillo/.ejat/credentials.properties && \
     mkdir /cirillo/.ejat/ras
     
-COPY resourcemonitor.sh /cirillo/
-
 VOLUME /cirillo/.ejat
 
 EXPOSE 9010/tcp
