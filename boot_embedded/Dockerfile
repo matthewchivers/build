@@ -11,15 +11,15 @@ WORKDIR /cirillo
 
 USER cirillo
 
-RUN mkdir /cirillo/.ejat && \
-    touch /cirillo/.ejat/bootstrap.properties && \
-    touch /cirillo/.ejat/override.properties && \
-    touch /cirillo/.ejat/cps.properties && \
-    touch /cirillo/.ejat/dss.properties && \
-    touch /cirillo/.ejat/credentials.properties && \
-    mkdir /cirillo/.ejat/ras
+RUN mkdir /cirillo/.cirillo && \
+    touch /cirillo/.cirillo/bootstrap.properties && \
+    touch /cirillo/.cirillo/override.properties && \
+    touch /cirillo/.cirillo/cps.properties && \
+    touch /cirillo/.cirillo/dss.properties && \
+    touch /cirillo/.cirillo/credentials.properties && \
+    mkdir /cirillo/.cirillo/ras
     
-VOLUME /cirillo/.ejat
+VOLUME /cirillo/.cirillo
 
 EXPOSE 9010/tcp
 EXPOSE 9011/tcp
