@@ -44,6 +44,13 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
+			<groupId>ejat-ivt</groupId>
+			<artifactId>ejat-ivt-obr</artifactId>
+			<version>0.2.0-SNAPSHOT</version>
+			<type>obr</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
 			<groupId>ejat</groupId>
 			<artifactId>ejat-devtools-karaffeature</artifactId>
 			<version>0.2.0-SNAPSHOT</version>
