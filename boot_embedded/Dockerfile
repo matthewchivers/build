@@ -20,7 +20,7 @@ RUN mkdir /cirillo/.cirillo && \
     mkdir /cirillo/.cirillo/ras
     
 
-COPY log4j.properties /cirillo/
+COPY trace-log4j.properties /cirillo/
     
 VOLUME /cirillo/.cirillo
 
