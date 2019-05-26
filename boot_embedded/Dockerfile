@@ -19,6 +19,9 @@ RUN mkdir /cirillo/.cirillo && \
     touch /cirillo/.cirillo/credentials.properties && \
     mkdir /cirillo/.cirillo/ras
     
+
+COPY log4j.properties /cirillo/
+    
 VOLUME /cirillo/.cirillo
 
 EXPOSE 9010/tcp
