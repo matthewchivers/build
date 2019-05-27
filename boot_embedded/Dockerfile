@@ -1,6 +1,6 @@
 FROM cicsts-docker-local.artifactory.swg-devops.com/ejatv3-obr-generic:latest
 
-FROM ibmjava:8
+FROM openjdk:8-jdk
 
 COPY --from=0 /cirillo/* /cirillo/
 
