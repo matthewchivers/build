@@ -58,7 +58,7 @@
 		</dependency>
 		<dependency>
 			<groupId>ejat-common</groupId>
-			<artifactId>ejat-uber-karaffeature</artifactId>
+			<artifactId>cirillo-uber-karaffeature</artifactId>
 			<version>0.3.0-SNAPSHOT</version>
 			<type>xml</type>
 		</dependency>
