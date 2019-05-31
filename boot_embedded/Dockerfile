@@ -21,6 +21,7 @@ RUN mkdir /cirillo/.cirillo && \
     
 
 COPY trace-log4j.properties /cirillo/
+COPY k8s.properties /cirillo/
     
 VOLUME /cirillo/.cirillo
 
