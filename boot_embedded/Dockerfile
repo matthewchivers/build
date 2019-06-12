@@ -1,8 +1,7 @@
 FROM cicsts-docker-local.artifactory.swg-devops.com/voras-obr-generic:latest
 
 ARG OPENJDK=openjdk:8-jdk
-
-FROM ${OPENJDK}
+FROM $OPENJDK
 
 COPY --from=0 /voras/* /voras/
 
