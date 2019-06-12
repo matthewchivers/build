@@ -1,28 +1,30 @@
-FROM cicsts-docker-local.artifactory.swg-devops.com/ejatv3-obr-generic:latest
+FROM cicsts-docker-local.artifactory.swg-devops.com/voras-obr-generic:latest
 
-FROM openjdk:8-jdk
+ARG OPENJDK=openjdk:8-jdk
 
-COPY --from=0 /cirillo/* /cirillo/
+FROM ${OPENJDK}
 
-RUN useradd -d /cirillo cirillo && \
-    chown -R cirillo:cirillo /cirillo
+COPY --from=0 /voras/* /voras/
 
-WORKDIR /cirillo
+RUN useradd -d /voras voras && \
+    chown -R voras:voras /voras
 
-USER cirillo
+WORKDIR /voras
 
-RUN mkdir /cirillo/.cirillo && \
-    touch /cirillo/.cirillo/bootstrap.properties && \
-    touch /cirillo/.cirillo/override.properties && \
-    touch /cirillo/.cirillo/cps.properties && \
-    touch /cirillo/.cirillo/dss.properties && \
-    touch /cirillo/.cirillo/credentials.properties && \
-    mkdir /cirillo/.cirillo/ras
+USER voras
+
+RUN mkdir /voras/.voras && \
+    touch /voras/.voras/bootstrap.properties && \
+    touch /voras/.voras/override.properties && \
+    touch /voras/.voras/cps.properties && \
+    touch /voras/.voras/dss.properties && \
+    touch /voras/.voras/credentials.properties && \
+    mkdir /voras/.voras/ras
     
 
-COPY trace-log4j.properties /cirillo/
+COPY trace-log4j.properties /voras/
     
-VOLUME /cirillo/.cirillo
+VOLUME /voras/.voras
 
 EXPOSE 9010/tcp
 EXPOSE 9011/tcp

@@ -5,34 +5,25 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>ejat</groupId>
-	<artifactId>ejat-docker-obr</artifactId>
-	<version>0.2.0-SNAPSHOT</version>
+	<parent>
+		<groupId>dev.voras</groupId>
+		<artifactId>voras-common-parent</artifactId>
+		<version>0.3.0-SNAPSHOT</version>
+	</parent>
+	
+	<artifactId>voras-docker-obr</artifactId>
+	<version>0.3.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>eJAT Docker OBR Repository</name>
+	<name>Voras Docker OBR Repository</name>
 
 	<description>Builds a OBR Repository for use with docker</description>
 
 	<dependencies>
 		<dependency>
-			<groupId>ejat</groupId>
-			<artifactId>ejat-obr</artifactId>
-			<version>0.2.0-SNAPSHOT</version>
-			<type>obr</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>ejat-core</groupId>
-			<artifactId>ejat-core-obr</artifactId>
-			<version>0.2.0-SNAPSHOT</version>
-			<type>obr</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>ejat-common</groupId>
-			<artifactId>ejat-common-obr</artifactId>
-			<version>0.3.0-SNAPSHOT</version>
+			<groupId>dev.voras</groupId>
+			<artifactId>dev.voras.uber.obr</artifactId>
+			<version>${dev.voras.uber.obr}</version>
 			<type>obr</type>
 			<scope>compile</scope>
 		</dependency>
@@ -43,7 +34,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<version>3.1.1</version>
 				<executions>
 					<execution>
 						<id>copy</id>
@@ -56,9 +46,9 @@
 				<configuration>
 					<artifactItems>
 						<artifactItem>
-							<groupId>ejat</groupId>
-							<artifactId>ejat-boot</artifactId>
-							<version>0.2.0-SNAPSHOT</version>
+							<groupId>dev.voras</groupId>
+							<artifactId>voras-boot</artifactId>
+							<version>${voras-boot}</version>
 							<overWrite>true</overWrite>
 							<outputDirectory>${project.build.directory}</outputDirectory>
 							<destFileName>boot.jar</destFileName>

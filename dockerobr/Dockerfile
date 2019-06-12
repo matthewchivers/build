@@ -1,3 +1,3 @@
 FROM scratch
 
-COPY target/* /cirillo/
+COPY target/* /voras/
