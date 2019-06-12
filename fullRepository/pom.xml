@@ -22,7 +22,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>dev.voras</groupId>
-			<artifactId>voras-uber-obr</artifactId>
+			<artifactId>dev.voras.uber.obr</artifactId>
 			<version>0.3.0-SNAPSHOT</version>
 			<type>obr</type>
 			<scope>compile</scope>
