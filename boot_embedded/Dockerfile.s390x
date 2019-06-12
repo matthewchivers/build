@@ -1,6 +1,6 @@
 FROM cicsts-docker-local.artifactory.swg-devops.com/voras-obr-generic:latest
 
-FROM openjdk:8-jdk
+FROM s390x/openjdk:8-jdk
 
 COPY --from=0 /voras/* /voras/
 
