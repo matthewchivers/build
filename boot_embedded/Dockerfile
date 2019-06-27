@@ -24,6 +24,7 @@ COPY trace-log4j.properties /voras/
     
 VOLUME /voras/.voras
 
-EXPOSE 9010/tcp
+EXPOSE 9010/tcpwhiterocks-tawnyowl
+
 EXPOSE 9011/tcp
 
