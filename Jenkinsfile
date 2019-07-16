@@ -11,6 +11,7 @@ pipeline {
       
       def dockerVersion = 'preprod'
       def dockerLatest  = 'true'
+      def dockerRepository = 'cicsts-docker-local.artifactory.swg-devops.com'
    }
    options {
     skipDefaultCheckout true
@@ -23,6 +24,7 @@ pipeline {
             echo "Maven profile      : ${mvnProfile}"
             echo "Docker Version     : ${dockerVersion}"
             echo "Docker Latest      : ${dockerLatest}"
+            echo "Docker Repository  : ${dockerRepository}"
          }
       }
    
@@ -146,7 +148,6 @@ pipeline {
             def workspace = pwd()
          }
          steps {
-            sh "ls -l"
             
             dir('repository/dev/voras') {
                deleteDir()
@@ -158,6 +159,15 @@ pipeline {
    
             configFileProvider([configFile(fileId: '86dde059-684b-4300-b595-64e83c2dd217', targetLocation: 'settings.xml')]) {
             }
+            
+			dir('docker') {
+			   dir('mavenRepository') {
+			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean dev.voras:voras:mavenrepository"
+			      
+			      sh "docker build -t ${dockerRepo}/voras-maven-repo-generic:$dockerVersion ." 
+			      sh "docker push ${dockerRepo}/voras-maven-repo-generic:$dockerVersion" 
+			   }
+			}            
          }
       }
    }
