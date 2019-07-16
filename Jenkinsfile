@@ -20,26 +20,6 @@ pipeline {
          configFileProvider([configFile(fileId: '647688a9-d178-475b-ae65-80fca764a8c2', targetLocation: 'cit-settings.xml')]) {
          }
          
-         def exists = fileExists 'repository/dev/voras'
-         if (exists) {
-            dir('repository/dev/voras') {
-               deleteDir()
-            }
-         }
-         
-         exists = fileExists 'git'
-         if (exists) {
-            dir('git') {
-               deleteDir()
-            }
-         }
-         
-         exists = fileExists 'deploy'
-         if (exists) {
-            dir('deploy') {
-               deleteDir()
-            }
-         }
          }
       }
    }
