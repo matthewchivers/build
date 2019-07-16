@@ -61,7 +61,7 @@ pipeline {
       stage('wrapping-deploy') {
          when {
             expression {
-            	return ${mvnProfile} != null;
+            	return mvnProfile != null;
             }
          }
          steps {
