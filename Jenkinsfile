@@ -6,7 +6,7 @@ pipeline {
       
       def workspace = pwd()
       
- //     def mvnProfile = 'voras-dev'
+      def mvnProfile = 'none'
       
       def dockerVersion = 'dev'
       def dockerLatest  = 'true'
@@ -61,7 +61,7 @@ pipeline {
       stage('wrapping-deploy') {
          when {
             expression {
-            	return mvnProfile != null;
+            	return mvnProfile != 'none';
             }
          }
          steps {
