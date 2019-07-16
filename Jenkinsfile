@@ -244,5 +244,41 @@ pipeline {
             }
          }
       }
+
+      stage('generic-docker-manifests') {
+         agent { 
+            label 'docker-amd64'
+         }
+	     options {
+            skipDefaultCheckout true
+         }
+         steps {
+            withCredentials([usernamePassword(credentialsId: '633cd4b1-ea8c-4ce1-a6bc-f103009af770', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]){
+               sh "docker login -u=${DOCKER_USER} -p=${DOCKER_PASSWORD} ${dockerRepository}"
+            }
+            
+			sh "rm -rf ~/.docker/manifests/${dockerReposistory}_voras-boot-embedded-$dockerVersion"
+			sh "docker manifest create ${dockerRepository}/voras-boot-embedded:$dockerVersion ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion"
+			sh "docker push ${dockerRepository}/voras-boot-embedded:$dockerVersion"
+         }
+      }
+      
+      stage('generic-docker-manifests-latest') {
+         agent { 
+            label 'docker-amd64'
+         }
+	     options {
+            skipDefaultCheckout true
+         }
+         steps {
+            withCredentials([usernamePassword(credentialsId: '633cd4b1-ea8c-4ce1-a6bc-f103009af770', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]){
+               sh "docker login -u=${DOCKER_USER} -p=${DOCKER_PASSWORD} ${dockerRepository}"
+            }
+            
+			sh "docker pull ${dockerRepository}/voras-boot-embedded:$dockerVersion"
+			sh "docker tag ${dockerRepository}/voras-boot-embedded:$dockerVersion  ${dockerRepository}/voras-boot-embedded:latest"
+			sh "docker push ${dockerRepository}/voras-boot-embedded:latest"
+         }
+      }
    }
 }
