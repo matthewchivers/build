@@ -6,6 +6,9 @@ pipeline {
       
       def workspace = pwd()
    }
+   options {
+    skipDefaultCheckout true
+   }
    stages {
       stage('prep-workspace') { 
          steps {
