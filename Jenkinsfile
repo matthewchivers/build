@@ -262,7 +262,7 @@ pipeline {
             
 			sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-boot-embedded-$dockerVersion"
 			sh "docker manifest create ${dockerRepository}/voras-boot-embedded:$dockerVersion ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion"
-			sh "docker push ${dockerRepository}/voras-boot-embedded:$dockerVersion"
+			sh "docker manifest push ${dockerRepository}/voras-boot-embedded:$dockerVersion"
          }
       }
       
@@ -281,9 +281,9 @@ pipeline {
                sh "docker login -u=${DOCKER_USER} -p=${DOCKER_PASSWORD} ${dockerRepository}"
             }
             
-			sh "docker pull ${dockerRepository}/voras-boot-embedded:$dockerVersion"
-			sh "docker tag ${dockerRepository}/voras-boot-embedded:$dockerVersion  ${dockerRepository}/voras-boot-embedded:latest"
-			sh "docker push ${dockerRepository}/voras-boot-embedded:latest"
+			sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-boot-embedded-latest"
+			sh "docker manifest create ${dockerRepository}/voras-boot-embedded:latest ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion"
+			sh "docker manifest push ${dockerRepository}/voras-boot-embedded:latest"
          }
       }
    }
