@@ -6,7 +6,7 @@ pipeline {
       
       def workspace = pwd()
       
-      def mvnProfile = 'voras-devint'
+      def mvnProfile = 'voras-dev'
       
       def dockerVersion = 'dev'
       def dockerLatest  = 'true'
@@ -54,6 +54,19 @@ pipeline {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/wrapping.git'
          
                sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -Dvoras.distribution.repo=file:${workspace}/deploy -B -e -fae deploy"
+            }
+         }
+      }
+      
+      stage('wrapping-deploy') {
+         when {
+            expression {
+            	return ${mvnProfile} != null;
+            }
+         }
+         steps {
+            dir('git/wrapping') {
+               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -Dmaven.test.skip=true -P ${mvnProfile} -B -e -fae deploy"
             }
          }
       }
