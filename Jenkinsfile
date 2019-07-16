@@ -260,7 +260,7 @@ pipeline {
                sh "docker login -u=${DOCKER_USER} -p=${DOCKER_PASSWORD} ${dockerRepository}"
             }
             
-			sh "rm -rf ~/.docker/manifests/${dockerReposistory}_voras-boot-embedded-$dockerVersion"
+			sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-boot-embedded-$dockerVersion"
 			sh "docker manifest create ${dockerRepository}/voras-boot-embedded:$dockerVersion ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion"
 			sh "docker push ${dockerRepository}/voras-boot-embedded:$dockerVersion"
          }
