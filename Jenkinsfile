@@ -1,13 +1,15 @@
 pipeline {
    agent any
-   stages {
+   environment {
       def mvnHome = tool 'Default'
       env.PATH = "${mvnHome}/bin:${env.PATH}"
       
       def workspace = pwd()
-      echo "Workspace directory: ${workspace}"
-      
+   }
+   stages {
       stage('prep-workspace') { 
+         echo "Workspace directory: ${workspace}"
+      
          withCredentials([usernamePassword(credentialsId: '633cd4b1-ea8c-4ce1-a6bc-f103009af770', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]){
             sh "docker login -u=${DOCKER_USER} -p=${DOCKER_PASSWORD} cicsts-docker-local.artifactory.swg-devops.com"
          }
