@@ -6,10 +6,10 @@ pipeline {
       
       def workspace = pwd()
       
-      def mvnGoal    = 'install'
-      def mvnProfile = 'voras-local'
+      def mvnGoal    = 'deploy'
+      def mvnProfile = 'voras-preprod'
       
-      def dockerVersion = 'dev'
+      def dockerVersion = 'preprod'
       def dockerLatest  = 'true'
    }
    options {
@@ -38,7 +38,7 @@ pipeline {
             configFileProvider([configFile(fileId: '647688a9-d178-475b-ae65-80fca764a8c2', targetLocation: 'cit-settings.xml')]) {
             }
          
-            dir('.m2/repository/dev/voras') {
+            dir('repository/dev/voras') {
                deleteDir()
             }
             dir('git') {
@@ -55,7 +55,7 @@ pipeline {
             dir('git/wrapping') {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/wrapping.git'
          
-               sh "mvn --settings ${workspace}/settings.xml -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
             }
          }
       }
@@ -66,7 +66,7 @@ pipeline {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/maven.git'
          
                dir('voras-maven-plugin') {
-                  sh "mvn --settings ${workspace}/settings.xml -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
             }
          }
@@ -78,7 +78,7 @@ pipeline {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/framework.git'
          
                dir('voras-parent') {
-                  sh "mvn --settings ${workspace}/settings.xml -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
             }
          }
@@ -90,7 +90,7 @@ pipeline {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/core.git'
          
                dir('voras-core-parent') {
-                  sh "mvn --settings ${workspace}/settings.xml -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
             }
          }
@@ -102,7 +102,7 @@ pipeline {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/common.git'
          
                dir('voras-common-parent') {
-                  sh "mvn --settings ${workspace}/settings.xml -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
             }
          }
@@ -113,7 +113,7 @@ pipeline {
             dir('git/runtime') {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/runtime.git'
          
-               sh "mvn --settings ${workspace}/settings.xml -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
             }
          }
       }
@@ -123,7 +123,7 @@ pipeline {
             dir('git/devtools') {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/devtools.git'
          
-               sh "mvn --settings ${workspace}/settings.xml -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
             }
          }
       }
@@ -134,9 +134,30 @@ pipeline {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/ivt.git'
          
                dir('voras-ivt-parent') {
-                  sh "mvn --settings ${workspace}/settings.xml -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
             }
+         }
+      }
+      
+      stage('ivt') {
+         steps {
+            dir('git/ivt') {
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/ivt.git'
+         
+               dir('voras-ivt-parent') {
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+               }
+            }
+         }
+      }
+      
+      stage('generic-docker-images') {
+         agent { 
+                label 'docker-amd64'
+         }
+         steps {
+            echo "boo"
          }
       }
    }
