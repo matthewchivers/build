@@ -1,5 +1,5 @@
 pipeline {
-agent {
+   agent any
    node {
       def mvnHome = tool 'Default'
       env.PATH = "${mvnHome}/bin:${env.PATH}"
