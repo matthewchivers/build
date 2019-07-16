@@ -162,7 +162,7 @@ pipeline {
             
 			dir('docker') {
 			   dir('mavenRepository') {
-			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean dev.voras:voras:mavenrepository"
+			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean voras:mavenrepository"
 			      
 			      sh "docker build -t ${dockerRepo}/voras-maven-repo-generic:$dockerVersion ." 
 			      sh "docker push ${dockerRepo}/voras-maven-repo-generic:$dockerVersion" 
