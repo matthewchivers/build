@@ -59,5 +59,85 @@ pipeline {
             }
          }
       }
+      
+      stage('maven') {
+         steps {
+            dir('git/maven') {
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/maven.git'
+         
+               dir('voras-maven-plugin') {
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -Dvoras.distribution.repo=${mvnDist} -B -e -fae clean deploy"
+               }
+            }
+         }
+      }
+      
+      stage('framework') {
+         steps {
+            dir('git/framework') {
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/framework.git'
+         
+               dir('voras-parent') {
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -Dvoras.distribution.repo=${mvnDist} -B -e -fae clean deploy"
+               }
+            }
+         }
+      }
+      
+      stage('core') {
+         steps {
+            dir('git/core') {
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/core.git'
+         
+               dir('voras-core-parent') {
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -Dvoras.distribution.repo=${mvnDist} -B -e -fae clean deploy"
+               }
+            }
+         }
+      }
+      
+      stage('common') {
+         steps {
+            dir('git/common') {
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/common.git'
+         
+               dir('voras-common-parent') {
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -Dvoras.distribution.repo=${mvnDist} -B -e -fae clean deploy"
+               }
+            }
+         }
+      }
+      
+      stage('runtime') {
+         steps {
+            dir('git/runtime') {
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/runtime.git'
+         
+               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -Dvoras.distribution.repo=${mvnDist} -B -e -fae clean deploy"
+            }
+         }
+      }
+      
+      stage('devtools') {
+         steps {
+            dir('git/devtools') {
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/devtools.git'
+         
+               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -Dvoras.distribution.repo=${mvnDist} -B -e -fae clean deploy"
+            }
+         }
+      }
+      
+      stage('ivt') {
+         steps {
+            dir('git/ivt') {
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/ivt.git'
+         
+               dir('voras-ivt-parent') {
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -Dvoras.distribution.repo=${mvnDist} -B -e -fae clean deploy"
+               }
+            }
+         }
+      }
    }
 }
