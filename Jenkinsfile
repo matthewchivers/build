@@ -1,3 +1,4 @@
+pipeline {
 agent {
    node {
       def mvnHome = tool 'Default'
@@ -38,4 +39,5 @@ agent {
          }
       }
    }
+}
 }
