@@ -167,7 +167,81 @@ pipeline {
 			      sh "docker build -t ${dockerRepository}/voras-maven-repo-generic:$dockerVersion ." 
 			      sh "docker push ${dockerRepository}/voras-maven-repo-generic:$dockerVersion" 
 			   }
+			   
+			   dir('dockerObr') {
+			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean voras:obrembedded"
+			      
+			      sh "docker build -t ${dockerRepository}/voras-obr-generic:$dockerVersion ." 
+			      sh "docker push ${dockerRepository}/voras-obr-generic:$dockerVersion" 
+			   }
 			}            
+         }
+      }
+      
+      stage('platform-docker-images') {
+         parallel {
+            stage('amd64-docker-images') {
+               agent { 
+                  label 'docker-amd64'
+               }
+	           options {
+                  skipDefaultCheckout false
+               }
+               environment {
+                  def workspace = pwd()
+               }
+               steps {
+            
+                  dir('repository/dev/voras') {
+                     deleteDir()
+                  }
+
+                  withCredentials([usernamePassword(credentialsId: '633cd4b1-ea8c-4ce1-a6bc-f103009af770', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]){
+                     sh "docker login -u=${DOCKER_USER} -p=${DOCKER_PASSWORD} ${dockerRepository}"
+                  }
+   
+                  configFileProvider([configFile(fileId: '86dde059-684b-4300-b595-64e83c2dd217', targetLocation: 'settings.xml')]) {
+                  }
+            
+			      dir('docker') {
+			         dir('bootEmbedded') {
+			            sh "docker build -t ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ." 
+			            sh "docker push ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion" 
+   			         }
+			      }            
+               }
+            }
+            stage('s390x-docker-images') {
+               agent { 
+                  label 'docker-s390x'
+               }
+	           options {
+                  skipDefaultCheckout false
+               }
+               environment {
+                  def workspace = pwd()
+               }
+               steps {
+            
+                  dir('repository/dev/voras') {
+                     deleteDir()
+                  }
+
+                  withCredentials([usernamePassword(credentialsId: '633cd4b1-ea8c-4ce1-a6bc-f103009af770', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]){
+                     sh "docker login -u=${DOCKER_USER} -p=${DOCKER_PASSWORD} ${dockerRepository}"
+                  }
+   
+                  configFileProvider([configFile(fileId: '86dde059-684b-4300-b595-64e83c2dd217', targetLocation: 'settings.xml')]) {
+                  }
+            
+			      dir('docker') {
+			         dir('bootEmbedded') {
+			            sh "docker build -t ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion -f Dockerfile.s390x ." 
+			            sh "docker push ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion" 
+   			         }
+			      }            
+               }
+            }
          }
       }
    }
