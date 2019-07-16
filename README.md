@@ -1,2 +1,2 @@
-# docker
-Docker build files for eJATv3
+# Build
+Building files for Voras
