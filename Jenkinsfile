@@ -154,7 +154,7 @@ pipeline {
             }
 
             withCredentials([usernamePassword(credentialsId: '633cd4b1-ea8c-4ce1-a6bc-f103009af770', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]){
-               sh "docker login -u=${DOCKER_USER} -p=${DOCKER_PASSWORD} cicsts-docker-local.artifactory.swg-devops.com"
+               sh "docker login -u=${DOCKER_USER} -p=${DOCKER_PASSWORD} ${dockerRepository}"
             }
    
             configFileProvider([configFile(fileId: '86dde059-684b-4300-b595-64e83c2dd217', targetLocation: 'settings.xml')]) {
@@ -164,8 +164,8 @@ pipeline {
 			   dir('mavenRepository') {
 			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean voras:mavenrepository"
 			      
-			      sh "docker build -t ${dockerRepo}/voras-maven-repo-generic:$dockerVersion ." 
-			      sh "docker push ${dockerRepo}/voras-maven-repo-generic:$dockerVersion" 
+			      sh "docker build -t ${dockerRepository}/voras-maven-repo-generic:$dockerVersion ." 
+			      sh "docker push ${dockerRepository}/voras-maven-repo-generic:$dockerVersion" 
 			   }
 			}            
          }
