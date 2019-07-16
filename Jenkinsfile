@@ -205,7 +205,7 @@ pipeline {
             
 			      dir('docker') {
 			         dir('bootEmbedded') {
-			            sh "docker build -t ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ." 
+			            sh "docker build --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ." 
 			            sh "docker push ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion" 
    			         }
 			      }            
@@ -236,7 +236,7 @@ pipeline {
             
 			      dir('docker') {
 			         dir('bootEmbedded') {
-			            sh "docker build -t ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion -f Dockerfile.s390x ." 
+			            sh "docker build --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion -f Dockerfile.s390x ." 
 			            sh "docker push ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion" 
    			         }
 			      }            

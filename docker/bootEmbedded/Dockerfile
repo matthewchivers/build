@@ -1,4 +1,7 @@
-FROM cicsts-docker-local.artifactory.swg-devops.com/voras-obr-generic:latest
+ARG dockerVersion
+ARG dockerRepository
+
+FROM ${dockerRepository}/voras-obr-generic:${dockerVersion}
 
 FROM openjdk:8-jdk
 
