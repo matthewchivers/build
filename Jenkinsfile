@@ -2,12 +2,13 @@ pipeline {
    agent any
    environment {
       def mvnHome = tool 'Default'
-      env.PATH = "${mvnHome}/bin:${env.PATH}"
+      PATH = "${mvnHome}/bin:${env.PATH}"
       
       def workspace = pwd()
    }
    stages {
       stage('prep-workspace') { 
+         steps {
          echo "Workspace directory: ${workspace}"
       
          withCredentials([usernamePassword(credentialsId: '633cd4b1-ea8c-4ce1-a6bc-f103009af770', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]){
@@ -38,6 +39,7 @@ pipeline {
             dir('deploy') {
                deleteDir()
             }
+         }
          }
       }
    }
