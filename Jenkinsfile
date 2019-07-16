@@ -1,6 +1,6 @@
 pipeline {
    agent any
-   node {
+   stages {
       def mvnHome = tool 'Default'
       env.PATH = "${mvnHome}/bin:${env.PATH}"
       
