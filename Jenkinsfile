@@ -7,11 +7,13 @@ pipeline {
       def workspace = pwd()
       
       def mvnGoal    = 'deploy'
-      def mvnProfile = 'voras-preprod'
       
       def dockerVersion = 'preprod'
       def dockerLatest  = 'true'
       def dockerRepository = 'cicsts-docker-local.artifactory.swg-devops.com'
+   }
+   parameters {
+      string(name: 'MAVENPROFILE', defaultValue:'voras-preprod', description:'The Maven profile to use')
    }
    options {
     skipDefaultCheckout true
@@ -21,7 +23,7 @@ pipeline {
          steps {
             echo "Workspace directory: ${workspace}"
             echo "Maven Goal         : ${mvnGoal}"
-            echo "Maven profile      : ${mvnProfile}"
+            echo "Maven profile      : ${params.MAVENPROFILE}"
             echo "Docker Version     : ${dockerVersion}"
             echo "Docker Latest      : ${dockerLatest}"
             echo "Docker Repository  : ${dockerRepository}"
@@ -52,7 +54,7 @@ pipeline {
             dir('git/wrapping') {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/wrapping.git'
          
-               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${params.MAVENPROFILE} -B -e -fae ${mvnGoal}"
             }
          }
       }
@@ -63,7 +65,7 @@ pipeline {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/maven.git'
          
                dir('voras-maven-plugin') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${params.MAVENPROFILE} -B -e -fae ${mvnGoal}"
                }
             }
          }
@@ -75,7 +77,7 @@ pipeline {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/framework.git'
          
                dir('voras-parent') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${params.MAVENPROFILE} -B -e -fae ${mvnGoal}"
                }
             }
          }
@@ -87,7 +89,7 @@ pipeline {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/core.git'
          
                dir('voras-core-parent') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${params.MAVENPROFILE} -B -e -fae ${mvnGoal}"
                }
             }
          }
@@ -99,7 +101,7 @@ pipeline {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/common.git'
          
                dir('voras-common-parent') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${params.MAVENPROFILE} -B -e -fae ${mvnGoal}"
                }
             }
          }
@@ -110,7 +112,7 @@ pipeline {
             dir('git/runtime') {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/runtime.git'
          
-               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${params.MAVENPROFILE} -B -e -fae ${mvnGoal}"
             }
          }
       }
@@ -120,7 +122,7 @@ pipeline {
             dir('git/devtools') {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/devtools.git'
          
-               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${params.MAVENPROFILE} -B -e -fae ${mvnGoal}"
             }
          }
       }
@@ -131,7 +133,7 @@ pipeline {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/ivt.git'
          
                dir('voras-ivt-parent') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${params.MAVENPROFILE} -B -e -fae ${mvnGoal}"
                }
             }
          }
@@ -162,14 +164,14 @@ pipeline {
             
 			dir('docker') {
 			   dir('mavenRepository') {
-			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean voras:mavenrepository"
+			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${params.MAVENPROFILE} -B -e clean voras:mavenrepository"
 			      
 			      sh "docker build -t ${dockerRepository}/voras-maven-repo-generic:$dockerVersion ." 
 			      sh "docker push ${dockerRepository}/voras-maven-repo-generic:$dockerVersion" 
 			   }
 			   
 			   dir('dockerObr') {
-			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean voras:obrembedded"
+			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${params.MAVENPROFILE} -B -e clean voras:obrembedded"
 			      
 			      sh "docker build -t ${dockerRepository}/voras-obr-generic:$dockerVersion ." 
 			      sh "docker push ${dockerRepository}/voras-obr-generic:$dockerVersion" 
@@ -216,7 +218,7 @@ pipeline {
    			         
 			         dir('resources') {
 			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-resources-amd64:$dockerVersion ." 
-			            sh "docker push ${dockerRepository}/voras-ras-resources-amd64:$dockerVersion" 
+			            sh "docker push ${dockerRepository}/voras-resources-amd64:$dockerVersion" 
    			         }
    			         
 			         dir('ibm/bootEmbedded') {
@@ -262,7 +264,7 @@ pipeline {
    			         
 			         dir('resources') {
 			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-resources-s390x:$dockerVersion ." 
-			            sh "docker push ${dockerRepository}/voras-ras-resources-s390x:$dockerVersion" 
+			            sh "docker push ${dockerRepository}/voras-resources-s390x:$dockerVersion" 
    			         }
    			         
 			         dir('ibm/bootEmbedded') {
