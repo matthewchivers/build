@@ -19,11 +19,13 @@ pipeline {
    stages {
       stage('set-master') {
          when {
-           banch 'master'
+           branch 'master'
          }
          steps {
-            mvnProfile = 'voras-preprod'
-            dockerVersion = 'preprod'
+            script {
+               mvnProfile = 'voras-preprod'
+               dockerVersion = 'preprod'
+            }
          }
       }
       stage('set-preprod') {
@@ -31,8 +33,10 @@ pipeline {
            tag 'test-preprod'
          }
          steps {
-            mvnProfile = 'voras-preprod2'
-            dockerVersion = 'preprod2'
+            script {
+               mvnProfile = 'voras-preprod2'
+               dockerVersion = 'preprod2'
+            }
          }
       }
    
