@@ -205,7 +205,7 @@ pipeline {
             
 			      dir('docker') {
 			         dir('bootEmbedded') {
-			            sh "docker build --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ." 
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ." 
 			            sh "docker push ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion" 
    			         }
 			      }            
@@ -236,7 +236,7 @@ pipeline {
             
 			      dir('docker') {
 			         dir('bootEmbedded') {
-			            sh "docker build --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion -f Dockerfile.s390x ." 
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion -f Dockerfile.s390x ." 
 			            sh "docker push ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion" 
    			         }
 			      }            
@@ -261,6 +261,8 @@ pipeline {
             }
             
 			sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-boot-embedded-$dockerVersion"
+			sh "docker pull ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion"
+			sh "docker pull ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion"
 			sh "docker manifest create ${dockerRepository}/voras-boot-embedded:$dockerVersion ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion"
 			sh "docker manifest push ${dockerRepository}/voras-boot-embedded:$dockerVersion"
          }
@@ -282,6 +284,8 @@ pipeline {
             }
             
 			sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-boot-embedded-latest"
+			sh "docker pull ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion"
+			sh "docker pull ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion"
 			sh "docker manifest create ${dockerRepository}/voras-boot-embedded:latest ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion"
 			sh "docker manifest push ${dockerRepository}/voras-boot-embedded:latest"
          }
