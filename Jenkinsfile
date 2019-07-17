@@ -1,3 +1,7 @@
+def mvnProfile    = 'unknown'
+def dockerVersion = 'unknown'
+def gitBranch     = 'unknown'
+
 pipeline {
    agent any
    environment {
@@ -10,22 +14,42 @@ pipeline {
       
       def dockerRepository = 'cicsts-docker-local.artifactory.swg-devops.com'
    }
-   parameters {
-      string(name: 'MAVENPROFILE', defaultValue:'voras-preprod', description:'The Maven profile to use')
-      string(name: 'DOCKERVERSION', defaultValue:'preprod', description:'The version of the produced docker images')
-      booleanParam(name: 'DOCKERLATEST', defaultValue:true, description:'Produce LATEST docker images')
-   }
    options {
     skipDefaultCheckout true
    }
    stages {
+      stage('set-dev') {
+         when {
+           environment name: 'GIT_BRANCH', value: 'origin/master'
+         }
+         steps {
+            script {
+               mvnProfile    = 'voras-preprod'
+               dockerVersion = 'preprod'
+               gitBranch     = 'master'
+            }
+         }
+      }
+      stage('set-test-preprod') {
+         when {
+           environment name: 'GIT_BRANCH', value: 'origin/testpreprod'
+         }
+         steps {
+            script {
+               mvnProfile    = 'voras-preprod'
+               dockerVersion = 'preprod'
+               gitBranch     = 'master'
+            }
+         }
+      }
+
       stage('report') {
          steps {
+            echo "Branch/Tag         : ${env.GIT_BRANCH}"
             echo "Workspace directory: ${workspace}"
             echo "Maven Goal         : ${mvnGoal}"
-            echo "Maven profile      : ${params.MAVENPROFILE}"
-            echo "Docker Version     : ${params.DOCKERVERSION}"
-            echo "Docker Latest      : ${params.DOCKERLATEST}"
+            echo "Maven profile      : ${mvnProfile}"
+            echo "Docker Version     : ${dockerVersion}"
             echo "Docker Repository  : ${dockerRepository}"
          }
       }
@@ -54,7 +78,7 @@ pipeline {
             dir('git/wrapping') {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/wrapping.git'
          
-               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${params.MAVENPROFILE} -B -e -fae ${mvnGoal}"
+               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
             }
          }
       }
@@ -65,7 +89,7 @@ pipeline {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/maven.git'
          
                dir('voras-maven-plugin') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${params.MAVENPROFILE} -B -e -fae ${mvnGoal}"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
             }
          }
@@ -77,7 +101,7 @@ pipeline {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/framework.git'
          
                dir('voras-parent') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${params.MAVENPROFILE} -B -e -fae ${mvnGoal}"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
             }
          }
@@ -89,7 +113,7 @@ pipeline {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/core.git'
          
                dir('voras-core-parent') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${params.MAVENPROFILE} -B -e -fae ${mvnGoal}"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
             }
          }
@@ -101,7 +125,7 @@ pipeline {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/common.git'
          
                dir('voras-common-parent') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${params.MAVENPROFILE} -B -e -fae ${mvnGoal}"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
             }
          }
@@ -112,7 +136,7 @@ pipeline {
             dir('git/runtime') {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/runtime.git'
          
-               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${params.MAVENPROFILE} -B -e -fae ${mvnGoal}"
+               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
             }
          }
       }
@@ -122,7 +146,7 @@ pipeline {
             dir('git/devtools') {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/devtools.git'
          
-               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${params.MAVENPROFILE} -B -e -fae ${mvnGoal}"
+               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
             }
          }
       }
@@ -133,7 +157,7 @@ pipeline {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/ivt.git'
          
                dir('voras-ivt-parent') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${params.MAVENPROFILE} -B -e -fae ${mvnGoal}"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
             }
          }
@@ -164,14 +188,14 @@ pipeline {
             
 			dir('docker') {
 			   dir('mavenRepository') {
-			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${params.MAVENPROFILE} -B -e clean voras:mavenrepository"
+			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean voras:mavenrepository"
 			      
 			      sh "docker build -t ${dockerRepository}/voras-maven-repo-generic:$dockerVersion ." 
 			      sh "docker push ${dockerRepository}/voras-maven-repo-generic:$dockerVersion" 
 			   }
 			   
 			   dir('dockerObr') {
-			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${params.MAVENPROFILE} -B -e clean voras:obrembedded"
+			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean voras:obrembedded"
 			      
 			      sh "docker build -t ${dockerRepository}/voras-obr-generic:$dockerVersion ." 
 			      sh "docker push ${dockerRepository}/voras-obr-generic:$dockerVersion" 
@@ -207,22 +231,22 @@ pipeline {
             
 			      dir('docker') {
 			         dir('bootEmbedded') {
-			            sh "docker build --pull --build-arg dockerVersion=${params.DOCKERVERSION} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ." 
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ." 
 			            sh "docker push ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion" 
    			         }
 
 			         dir('rasCouchdbInit') {
-			            sh "docker build --pull --build-arg dockerVersion=${params.DOCKERVERSION} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ras-couchdb-init-amd64:$dockerVersion ." 
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ras-couchdb-init-amd64:$dockerVersion ." 
 			            sh "docker push ${dockerRepository}/voras-ras-couchdb-init-amd64:$dockerVersion" 
    			         }
    			         
 			         dir('resources') {
-			            sh "docker build --pull --build-arg dockerVersion=${params.DOCKERVERSION} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-resources-amd64:$dockerVersion ." 
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-resources-amd64:$dockerVersion ." 
 			            sh "docker push ${dockerRepository}/voras-resources-amd64:$dockerVersion" 
    			         }
    			         
 			         dir('ibm/bootEmbedded') {
-			            sh "docker build --pull --build-arg dockerVersion=${params.DOCKERVERSION} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion ." 
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion ." 
 			            sh "docker push ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion" 
    			         }
 			      }            
@@ -253,22 +277,22 @@ pipeline {
             
 			      dir('docker') {
 			         dir('bootEmbedded') {
-			            sh "docker build --pull --build-arg dockerVersion=${params.DOCKERVERSION} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion -f Dockerfile.s390x ." 
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion -f Dockerfile.s390x ." 
 			            sh "docker push ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion" 
    			         }
    			         
 			         dir('rasCouchdbInit') {
-			            sh "docker build --pull --build-arg dockerVersion=${params.DOCKERVERSION} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ras-couchdb-init-s390x:$dockerVersion ." 
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ras-couchdb-init-s390x:$dockerVersion ." 
 			            sh "docker push ${dockerRepository}/voras-ras-couchdb-init-s390x:$dockerVersion" 
    			         }
    			         
 			         dir('resources') {
-			            sh "docker build --pull --build-arg dockerVersion=${params.DOCKERVERSION} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-resources-s390x:$dockerVersion ." 
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-resources-s390x:$dockerVersion ." 
 			            sh "docker push ${dockerRepository}/voras-resources-s390x:$dockerVersion" 
    			         }
    			         
 			         dir('ibm/bootEmbedded') {
-			            sh "docker build --pull --build-arg dockerVersion=${params.DOCKERVERSION} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion ." 
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion ." 
 			            sh "docker push ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion" 
    			         }
 			      }            
