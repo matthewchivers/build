@@ -15,7 +15,7 @@ pipeline {
       def dockerRepository = 'cicsts-docker-local.artifactory.swg-devops.com'
    }
    options {
-    skipDefaultCheckout false
+    skipDefaultCheckout true
    }
    stages {
       stage('set-dev') {
