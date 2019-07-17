@@ -1,0 +1,68 @@
+def mvnProfile = 'unknown'
+def dockerVersion = 'unknown'
+
+pipeline {
+   agent any
+   environment {
+      def mvnHome = tool 'Default'
+      PATH = "${mvnHome}/bin:${env.PATH}"
+      
+      def workspace = pwd()
+      
+      def mvnGoal    = 'deploy'
+      
+      def dockerRepository = 'cicsts-docker-local.artifactory.swg-devops.com'
+   }
+   options {
+    skipDefaultCheckout true
+   }
+   stages {
+      stage('set-master') {
+         when {
+           banch 'master'
+         }
+         steps {
+            mvnProfile = 'voras-preprod'
+            dockerVersion = 'preprod'
+         }
+      }
+      stage('set-preprod') {
+         when {
+           tag 'test-preprod'
+         }
+         steps {
+            mvnProfile = 'voras-preprod2'
+            dockerVersion = 'preprod2'
+         }
+      }
+   
+      stage('report') {
+         steps {
+            echo "Workspace directory: ${workspace}"
+            echo "Maven Goal         : ${mvnGoal}"
+            echo "Maven profile      : ${mvnProfile}"
+            echo "Docker Version     : ${dockerVersion}"
+            echo "Docker Repository  : ${dockerRepository}"
+         }
+      }
+   
+      stage('prep-workspace') { 
+         steps {
+            configFileProvider([configFile(fileId: '86dde059-684b-4300-b595-64e83c2dd217', targetLocation: 'settings.xml')]) {
+            }
+            configFileProvider([configFile(fileId: '647688a9-d178-475b-ae65-80fca764a8c2', targetLocation: 'cit-settings.xml')]) {
+            }
+         
+            dir('repository/dev/voras') {
+               deleteDir()
+            }
+            dir('git') {
+               deleteDir()
+            }
+            dir('deploy') {
+               deleteDir()
+            }
+         }
+      }
+   }      
+}

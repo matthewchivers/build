@@ -8,12 +8,12 @@ pipeline {
       
       def mvnGoal    = 'deploy'
       
-      def dockerVersion = 'preprod'
-      def dockerLatest  = 'true'
       def dockerRepository = 'cicsts-docker-local.artifactory.swg-devops.com'
    }
    parameters {
       string(name: 'MAVENPROFILE', defaultValue:'voras-preprod', description:'The Maven profile to use')
+      string(name: 'DOCKERVERSION', defaultValue:'preprod', description:'The version of the produced docker images')
+      booleanParam(name: 'DOCKERLATEST', defaultValue:true, description:'Produce LATEST docker images')
    }
    options {
     skipDefaultCheckout true
@@ -24,8 +24,8 @@ pipeline {
             echo "Workspace directory: ${workspace}"
             echo "Maven Goal         : ${mvnGoal}"
             echo "Maven profile      : ${params.MAVENPROFILE}"
-            echo "Docker Version     : ${dockerVersion}"
-            echo "Docker Latest      : ${dockerLatest}"
+            echo "Docker Version     : ${params.DOCKERVERSION}"
+            echo "Docker Latest      : ${params.DOCKERLATEST}"
             echo "Docker Repository  : ${dockerRepository}"
          }
       }
@@ -207,22 +207,22 @@ pipeline {
             
 			      dir('docker') {
 			         dir('bootEmbedded') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ." 
+			            sh "docker build --pull --build-arg dockerVersion=${params.DOCKERVERSION} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ." 
 			            sh "docker push ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion" 
    			         }
 
 			         dir('rasCouchdbInit') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ras-couchdb-init-amd64:$dockerVersion ." 
+			            sh "docker build --pull --build-arg dockerVersion=${params.DOCKERVERSION} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ras-couchdb-init-amd64:$dockerVersion ." 
 			            sh "docker push ${dockerRepository}/voras-ras-couchdb-init-amd64:$dockerVersion" 
    			         }
    			         
 			         dir('resources') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-resources-amd64:$dockerVersion ." 
+			            sh "docker build --pull --build-arg dockerVersion=${params.DOCKERVERSION} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-resources-amd64:$dockerVersion ." 
 			            sh "docker push ${dockerRepository}/voras-resources-amd64:$dockerVersion" 
    			         }
    			         
 			         dir('ibm/bootEmbedded') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion ." 
+			            sh "docker build --pull --build-arg dockerVersion=${params.DOCKERVERSION} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion ." 
 			            sh "docker push ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion" 
    			         }
 			      }            
@@ -253,22 +253,22 @@ pipeline {
             
 			      dir('docker') {
 			         dir('bootEmbedded') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion -f Dockerfile.s390x ." 
+			            sh "docker build --pull --build-arg dockerVersion=${params.DOCKERVERSION} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion -f Dockerfile.s390x ." 
 			            sh "docker push ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion" 
    			         }
    			         
 			         dir('rasCouchdbInit') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ras-couchdb-init-s390x:$dockerVersion ." 
+			            sh "docker build --pull --build-arg dockerVersion=${params.DOCKERVERSION} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ras-couchdb-init-s390x:$dockerVersion ." 
 			            sh "docker push ${dockerRepository}/voras-ras-couchdb-init-s390x:$dockerVersion" 
    			         }
    			         
 			         dir('resources') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-resources-s390x:$dockerVersion ." 
+			            sh "docker build --pull --build-arg dockerVersion=${params.DOCKERVERSION} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-resources-s390x:$dockerVersion ." 
 			            sh "docker push ${dockerRepository}/voras-resources-s390x:$dockerVersion" 
    			         }
    			         
 			         dir('ibm/bootEmbedded') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion ." 
+			            sh "docker build --pull --build-arg dockerVersion=${params.DOCKERVERSION} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion ." 
 			            sh "docker push ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion" 
    			         }
 			      }            
