@@ -46,6 +46,7 @@ pipeline {
       stage('report') {
          steps {
             echo "Branch/Tag         : ${env.GIT_BRANCH}"
+            echo "Repo Branches      : ${gitBranch}"
             echo "Workspace directory: ${workspace}"
             echo "Maven Goal         : ${mvnGoal}"
             echo "Maven profile      : ${mvnProfile}"
@@ -64,10 +65,31 @@ pipeline {
             dir('repository/dev/voras') {
                deleteDir()
             }
-            dir('git') {
+            dir('git/wrapping') {
                deleteDir()
             }
-            dir('deploy') {
+            dir('git/maven') {
+               deleteDir()
+            }
+            dir('git/framework') {
+               deleteDir()
+            }
+            dir('git/core') {
+               deleteDir()
+            }
+            dir('git/common') {
+               deleteDir()
+            }
+            dir('git/runtime') {
+               deleteDir()
+            }
+            dir('git/devtools') {
+               deleteDir()
+            }
+            dir('git/ivt') {
+               deleteDir()
+            }
+            dir('git/inttests') {
                deleteDir()
             }
          }
@@ -186,7 +208,7 @@ pipeline {
             configFileProvider([configFile(fileId: '86dde059-684b-4300-b595-64e83c2dd217', targetLocation: 'settings.xml')]) {
             }
             
-			dir('docker') {
+			dir('git/build/docker') {
 			   dir('mavenRepository') {
 			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean voras:mavenrepository"
 			      
@@ -229,7 +251,7 @@ pipeline {
                   configFileProvider([configFile(fileId: '86dde059-684b-4300-b595-64e83c2dd217', targetLocation: 'settings.xml')]) {
                   }
             
-			      dir('docker') {
+			      dir('git/build/docker') {
 			         dir('bootEmbedded') {
 			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ." 
 			            sh "docker push ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion" 
@@ -275,7 +297,7 @@ pipeline {
                   configFileProvider([configFile(fileId: '86dde059-684b-4300-b595-64e83c2dd217', targetLocation: 'settings.xml')]) {
                   }
             
-			      dir('docker') {
+			      dir('git/build/docker') {
 			         dir('bootEmbedded') {
 			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion -f Dockerfile.s390x ." 
 			            sh "docker push ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion" 
