@@ -257,12 +257,12 @@ pipeline {
    			         
 			         dir('rasCouchdbInit') {
 			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ras-couchdb-init-s390x:$dockerVersion ." 
-			            sh "docker push ${dockerRepository}/voras-ras-couchdb-init-amd64:$dockerVersion" 
+			            sh "docker push ${dockerRepository}/voras-ras-couchdb-init-s390x:$dockerVersion" 
    			         }
    			         
 			         dir('resources') {
 			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-resources-s390x:$dockerVersion ." 
-			            sh "docker push ${dockerRepository}/voras-ras-resources-amd64:$dockerVersion" 
+			            sh "docker push ${dockerRepository}/voras-ras-resources-s390x:$dockerVersion" 
    			         }
    			         
 			         dir('ibm/bootEmbedded') {
