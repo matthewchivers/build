@@ -208,6 +208,11 @@ pipeline {
 			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ." 
 			            sh "docker push ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion" 
    			         }
+
+			         dir('ibm/bootEmbedded') {
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion ." 
+			            sh "docker push ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion" 
+   			         }
 			      }            
                }
             }
@@ -239,6 +244,11 @@ pipeline {
 			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion -f Dockerfile.s390x ." 
 			            sh "docker push ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion" 
    			         }
+   			         
+			         dir('ibm/bootEmbedded') {
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion ." 
+			            sh "docker push ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion" 
+   			         }
 			      }            
                }
             }
@@ -265,6 +275,12 @@ pipeline {
 			sh "docker pull ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion"
 			sh "docker manifest create ${dockerRepository}/voras-boot-embedded:$dockerVersion ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion"
 			sh "docker manifest push ${dockerRepository}/voras-boot-embedded:$dockerVersion"
+            
+			sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-ibm-boot-embedded-$dockerVersion"
+			sh "docker pull ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion"
+			sh "docker pull ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion"
+			sh "docker manifest create ${dockerRepository}/voras-ibm-boot-embedded:$dockerVersion ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion"
+			sh "docker manifest push ${dockerRepository}/voras-ibm-boot-embedded:$dockerVersion"
          }
       }
       
@@ -288,6 +304,12 @@ pipeline {
 			sh "docker pull ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion"
 			sh "docker manifest create ${dockerRepository}/voras-boot-embedded:latest ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion"
 			sh "docker manifest push ${dockerRepository}/voras-boot-embedded:latest"
+			
+			sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-ibm-boot-embedded-latest"
+			sh "docker pull ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion"
+			sh "docker pull ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion"
+			sh "docker manifest create ${dockerRepository}/voras-ibm-boot-embedded:latest ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion"
+			sh "docker manifest push ${dockerRepository}/voras-ibm-boot-embedded:latest"
          }
       }
    }
