@@ -283,7 +283,7 @@ pipeline {
    			         }
    			         
 			         dir('ibm/bootEmbedded') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion ." 
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} --build-arg platform=amd64 -t ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion ." 
 			            sh "docker push ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion" 
    			         }
 			      }            
@@ -329,7 +329,7 @@ pipeline {
    			         }
    			         
 			         dir('ibm/bootEmbedded') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion ." 
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} --build-arg platform=s390x -t ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion ." 
 			            sh "docker push ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion" 
    			         }
 			      }            

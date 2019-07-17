@@ -1,7 +1,8 @@
 ARG dockerVersion
 ARG dockerRepository
+ARG platform
 
-FROM ${dockerRepository}/voras-boot-embedded:${dockerVersion}
+FROM ${dockerRepository}/voras-boot-embedded-${platform}:${dockerVersion}
 
 USER root
 
