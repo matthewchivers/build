@@ -16,7 +16,7 @@ pipeline {
    stages {
       stage('set-master') {
          when {
-           branch 'master'
+           environment name: 'GIT_BRANCH', value: 'docker/master'
          }
          steps {
             script {
@@ -27,7 +27,7 @@ pipeline {
       }
       stage('set-preprod') {
          when {
-           tag 'test-preprod'
+           environment name: 'GIT_BRANCH', value: 'docker/test_preprod'
          }
          steps {
             script {
