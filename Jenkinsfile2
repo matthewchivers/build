@@ -39,7 +39,7 @@ pipeline {
    
       stage('report') {
          steps {
-            echo "Branch/Tag         : ${env.BRANCH_NAME}"
+            echo "Branch/Tag         : ${env.GIT_BRANCH}"
             echo "Workspace directory: ${workspace}"
             echo "Maven Goal         : ${mvnGoal}"
             echo "Maven profile      : ${mvnProfile}"
