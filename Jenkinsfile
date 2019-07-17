@@ -3,33 +3,33 @@ def dockerVersion = 'unknown'
 def gitBranch     = 'unknown'
 
 pipeline {
+// Initially run on any agent
    agent any
    environment {
+//Configure Maven from the maven tooling in Jenkins
       def mvnHome = tool 'Default'
       PATH = "${mvnHome}/bin:${env.PATH}"
       
+//Set some defaults
       def workspace = pwd()
-      
       def mvnGoal    = 'deploy'
-      
       def dockerRepository = 'cicsts-docker-local.artifactory.swg-devops.com'
    }
-   options {
-    skipDefaultCheckout false
-   }
    stages {
+// If it is the master branch, version 0.3.0 and master on all the other branches
       stage('set-dev') {
          when {
            environment name: 'GIT_BRANCH', value: 'origin/master'
          }
          steps {
             script {
-               mvnProfile    = 'voras-preprod'
-               dockerVersion = 'preprod'
+               mvnProfile    = 'voras-dev'
+               dockerVersion = '0.3.0'
                gitBranch     = 'master'
             }
          }
       }
+// If the test-preprod tag,  then set as appropriate
       stage('set-test-preprod') {
          when {
            environment name: 'GIT_BRANCH', value: 'origin/testpreprod'
@@ -38,11 +38,12 @@ pipeline {
             script {
                mvnProfile    = 'voras-preprod'
                dockerVersion = 'preprod'
-               gitBranch     = 'master'
+               gitBranch     = 'testpreprod'
             }
          }
       }
 
+// for debugging purposes
       stage('report') {
          steps {
             echo "Branch/Tag         : ${env.GIT_BRANCH}"
@@ -55,6 +56,7 @@ pipeline {
          }
       }
    
+// Set up the workspace, clear the git directories and setup the manve settings.xml files
       stage('prep-workspace') { 
          steps {
             configFileProvider([configFile(fileId: '86dde059-684b-4300-b595-64e83c2dd217', targetLocation: 'settings.xml')]) {
@@ -95,6 +97,7 @@ pipeline {
          }
       }
       
+// Build the wrapping repository
       stage('wrapping') {
          steps {
             dir('git/wrapping') {
@@ -105,6 +108,7 @@ pipeline {
          }
       }
       
+// Build the maven repository
       stage('maven') {
          steps {
             dir('git/maven') {
@@ -117,6 +121,7 @@ pipeline {
          }
       }
       
+// Build the framework repository
       stage('framework') {
          steps {
             dir('git/framework') {
@@ -129,6 +134,7 @@ pipeline {
          }
       }
       
+// Build the core repository
       stage('core') {
          steps {
             dir('git/core') {
@@ -141,6 +147,7 @@ pipeline {
          }
       }
       
+// Build the common repository
       stage('common') {
          steps {
             dir('git/common') {
@@ -153,6 +160,7 @@ pipeline {
          }
       }
       
+// Build the runtime repository
       stage('runtime') {
          steps {
             dir('git/runtime') {
@@ -163,6 +171,7 @@ pipeline {
          }
       }
       
+// Build the devtools repository
       stage('devtools') {
          steps {
             dir('git/devtools') {
@@ -173,6 +182,7 @@ pipeline {
          }
       }
       
+// Build the Installation Verification Tests repository
       stage('ivt') {
          steps {
             dir('git/ivt') {
@@ -184,7 +194,8 @@ pipeline {
             }
          }
       }
-      
+
+// Spawn to a docker amd64 agent to build the generic (non-executable) images      
       stage('generic-docker-images') {
          agent { 
             label 'docker-amd64'
@@ -196,7 +207,8 @@ pipeline {
             def workspace = pwd()
          }
          steps {
-            
+
+// Ensure we force the download of the voras artifacts            
             dir('repository/dev/voras') {
                deleteDir()
             }
@@ -209,6 +221,7 @@ pipeline {
             }
             
 			dir('git/build/docker') {
+// Build the maven repository image
 			   dir('mavenRepository') {
 			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean voras:mavenrepository"
 			      
@@ -216,6 +229,7 @@ pipeline {
 			      sh "docker push ${dockerRepository}/voras-maven-repo-generic:$dockerVersion" 
 			   }
 			   
+// Build the emedded obr directory
 			   dir('dockerObr') {
 			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean voras:obrembedded"
 			      
@@ -226,6 +240,7 @@ pipeline {
          }
       }
       
+// Build all the platform specific docker images
       stage('platform-docker-images') {
          parallel {
             stage('amd64-docker-images') {
@@ -323,6 +338,7 @@ pipeline {
          }
       }
 
+// Build the generic manifests with amd64 and s390x images
       stage('generic-docker-manifests') {
          agent { 
             label 'docker-amd64'
@@ -338,24 +354,28 @@ pipeline {
                sh "docker login -u=${DOCKER_USER} -p=${DOCKER_PASSWORD} ${dockerRepository}"
             }
             
+// boot embedded
 			sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-boot-embedded-$dockerVersion"
 			sh "docker pull ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion"
 			sh "docker pull ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion"
 			sh "docker manifest create ${dockerRepository}/voras-boot-embedded:$dockerVersion ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion"
 			sh "docker manifest push ${dockerRepository}/voras-boot-embedded:$dockerVersion"
             
+// the Couchdb RAS initialisation       
 			sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-ras-couchdb-init-$dockerVersion"
 			sh "docker pull ${dockerRepository}/voras-ras-couchdb-init-amd64:$dockerVersion"
 			sh "docker pull ${dockerRepository}/voras-ras-couchdb-init-s390x:$dockerVersion"
 			sh "docker manifest create ${dockerRepository}/voras-ras-couchdb-init:$dockerVersion ${dockerRepository}/voras-ras-couchdb-init-amd64:$dockerVersion ${dockerRepository}/voras-ras-couchdb-init-s390x:$dockerVersion"
 			sh "docker manifest push ${dockerRepository}/voras-ras-couchdb-init:$dockerVersion"
             
+// The resources image containing maven and the eclipse update site
 			sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-resources-$dockerVersion"
 			sh "docker pull ${dockerRepository}/voras-resources-amd64:$dockerVersion"
 			sh "docker pull ${dockerRepository}/voras-resources-s390x:$dockerVersion"
 			sh "docker manifest create ${dockerRepository}/voras-resources:$dockerVersion ${dockerRepository}/voras-resources-amd64:$dockerVersion ${dockerRepository}/voras-resources-s390x:$dockerVersion"
 			sh "docker manifest push ${dockerRepository}/voras-resources:$dockerVersion"
             
+// Boot embedded with the IBM CA certificate
 			sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-ibm-boot-embedded-$dockerVersion"
 			sh "docker pull ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion"
 			sh "docker pull ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion"
@@ -364,7 +384,11 @@ pipeline {
          }
       }
       
+// Build the "latest" manifests
       stage('generic-docker-manifests-latest') {
+         when {
+           environment name: 'GIT_BRANCH', value: 'origin/master'
+         }
          agent { 
             label 'docker-amd64'
          }
