@@ -297,7 +297,7 @@ pipeline {
 			      }
 			                  
 			      dir('git/build/karaf-distributions/bootstrap') {
-			         sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean voras:obrembedded"
+			         sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean install"
 			      
 			         sh "docker build -t ${dockerRepository}/voras-api-bootstrap-amd64:$dockerVersion ." 
 			         sh "docker push ${dockerRepository}/voras-api-bootstrap-amd64:$dockerVersion" 
