@@ -230,7 +230,7 @@ pipeline {
 			   }
 			   
 // Build the javadocs image
-			   dir('javadocs') {
+			   dir('javadoc') {
 			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean generate-sources"
 			      
 			      sh "docker build -t ${dockerRepository}/voras-javadoc-generic:$dockerVersion ." 
