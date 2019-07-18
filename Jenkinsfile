@@ -230,7 +230,7 @@ pipeline {
 			   }
 			   
 // Build the javadocs image
-			   dir('javadocs') {
+			   dir('javadoc') {
 			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean generate-sources"
 			      
 			      sh "docker build -t ${dockerRepository}/voras-javadoc-generic:$dockerVersion ." 
@@ -294,7 +294,14 @@ pipeline {
 			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} --build-arg platform=amd64 -t ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion ." 
 			            sh "docker push ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion" 
    			         }
-			      }            
+			      }
+			                  
+			      dir('git/build/karaf-distributions/bootstrap') {
+			         sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean install"
+			      
+			         sh "docker build -t ${dockerRepository}/voras-api-bootstrap-amd64:$dockerVersion ." 
+			         sh "docker push ${dockerRepository}/voras-api-bootstrap-amd64:$dockerVersion" 
+			      }
                }
             }
             stage('s390x-docker-images') {
@@ -434,6 +441,10 @@ pipeline {
 			sh "docker pull ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion"
 			sh "docker manifest create ${dockerRepository}/voras-ibm-boot-embedded:latest ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion"
 			sh "docker manifest push ${dockerRepository}/voras-ibm-boot-embedded:latest"
+			
+			sh "docker pull ${dockerRepository}/voras-api-bootstrap-amd64:$dockerVersion"
+			sh "docker tag ${dockerRepository}/voras-api-bootstrap-amd64:$dockerVersion  ${dockerRepository}/voras-api-bootstrap-amd64:latest"
+			sh "docker push ${dockerRepository}/voras-api-bootstrap-amd64:latest"
          }
       }
    }
