@@ -353,98 +353,139 @@ pipeline {
          }
       }
 
-// Build the generic manifests with amd64 and s390x images
-      stage('generic-docker-manifests') {
-         agent { 
-            label 'docker-amd64'
-         }
-	     options {
-            skipDefaultCheckout true
-         }
-         environment {
-            def workspace = pwd()
-         }
-         steps {
-            withCredentials([usernamePassword(credentialsId: '633cd4b1-ea8c-4ce1-a6bc-f103009af770', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]){
-               sh "docker login -u=${DOCKER_USER} -p=${DOCKER_PASSWORD} ${dockerRepository}"
+// Build all the platform indenpendent manifests, including latest versions if required
+// Built in parallel because the awful manifest push is so very very slow
+      stage('docker-manifests') {
+         parallel {
+            stage('manifest-boot-embedded') {
+               agent { 
+                  label 'docker-amd64'
+               }
+               steps {
+                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-boot-embedded-$dockerVersion"
+                  sh "docker pull ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion"
+                  sh "docker pull ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion"
+                  sh "docker manifest create ${dockerRepository}/voras-boot-embedded:$dockerVersion ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion"
+                  sh "docker manifest push ${dockerRepository}/voras-boot-embedded:$dockerVersion"
+               }
             }
-            
-// boot embedded
-			sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-boot-embedded-$dockerVersion"
-			sh "docker pull ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion"
-			sh "docker pull ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion"
-			sh "docker manifest create ${dockerRepository}/voras-boot-embedded:$dockerVersion ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion"
-			sh "docker manifest push ${dockerRepository}/voras-boot-embedded:$dockerVersion"
-            
-// the Couchdb RAS initialisation       
-			sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-ras-couchdb-init-$dockerVersion"
-			sh "docker pull ${dockerRepository}/voras-ras-couchdb-init-amd64:$dockerVersion"
-			sh "docker pull ${dockerRepository}/voras-ras-couchdb-init-s390x:$dockerVersion"
-			sh "docker manifest create ${dockerRepository}/voras-ras-couchdb-init:$dockerVersion ${dockerRepository}/voras-ras-couchdb-init-amd64:$dockerVersion ${dockerRepository}/voras-ras-couchdb-init-s390x:$dockerVersion"
-			sh "docker manifest push ${dockerRepository}/voras-ras-couchdb-init:$dockerVersion"
-            
-// The resources image containing maven and the eclipse update site
-			sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-resources-$dockerVersion"
-			sh "docker pull ${dockerRepository}/voras-resources-amd64:$dockerVersion"
-			sh "docker pull ${dockerRepository}/voras-resources-s390x:$dockerVersion"
-			sh "docker manifest create ${dockerRepository}/voras-resources:$dockerVersion ${dockerRepository}/voras-resources-amd64:$dockerVersion ${dockerRepository}/voras-resources-s390x:$dockerVersion"
-			sh "docker manifest push ${dockerRepository}/voras-resources:$dockerVersion"
-            
-// Boot embedded with the IBM CA certificate
-			sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-ibm-boot-embedded-$dockerVersion"
-			sh "docker pull ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion"
-			sh "docker pull ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion"
-			sh "docker manifest create ${dockerRepository}/voras-ibm-boot-embedded:$dockerVersion ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion"
-			sh "docker manifest push ${dockerRepository}/voras-ibm-boot-embedded:$dockerVersion"
-         }
-      }
-      
-// Build the "latest" manifests
-      stage('generic-docker-manifests-latest') {
-         when {
-           environment name: 'GIT_BRANCH', value: 'origin/master'
-         }
-         agent { 
-            label 'docker-amd64'
-         }
-	     options {
-            skipDefaultCheckout true
-         }
-         environment {
-            def workspace = pwd()
-         }
-         steps {
-            withCredentials([usernamePassword(credentialsId: '633cd4b1-ea8c-4ce1-a6bc-f103009af770', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]){
-               sh "docker login -u=${DOCKER_USER} -p=${DOCKER_PASSWORD} ${dockerRepository}"
+
+            stage('manifest-boot-embedded-latest') {
+               when {
+                  environment name: 'GIT_BRANCH', value: 'origin/master'
+               }
+               agent { 
+                  label 'docker-amd64'
+               }
+               steps {
+                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-boot-embedded-latest"
+                  sh "docker pull ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion"
+                  sh "docker pull ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion"
+                  sh "docker manifest create ${dockerRepository}/voras-boot-embedded:latest ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion"
+                  sh "docker manifest push ${dockerRepository}/voras-boot-embedded:latest"
+               }
             }
-            
-			sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-boot-embedded-latest"
-			sh "docker pull ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion"
-			sh "docker pull ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion"
-			sh "docker manifest create ${dockerRepository}/voras-boot-embedded:latest ${dockerRepository}/voras-boot-embedded-amd64:$dockerVersion ${dockerRepository}/voras-boot-embedded-s390x:$dockerVersion"
-			sh "docker manifest push ${dockerRepository}/voras-boot-embedded:latest"
-			
-			sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-ras-couchdb-init-latest"
-			sh "docker pull ${dockerRepository}/voras-ras-couchdb-init-amd64:$dockerVersion"
-			sh "docker pull ${dockerRepository}/voras-ras-couchdb-init-s390x:$dockerVersion"
-			sh "docker manifest create ${dockerRepository}/voras-ras-couchdb-init:latest ${dockerRepository}/voras-ras-couchdb-init-amd64:$dockerVersion ${dockerRepository}/voras-ras-couchdb-init-s390x:$dockerVersion"
-			sh "docker manifest push ${dockerRepository}/voras-ras-couchdb-init:latest"
-            
-			sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-resources-latest"
-			sh "docker pull ${dockerRepository}/voras-resources-amd64:$dockerVersion"
-			sh "docker pull ${dockerRepository}/voras-resources-s390x:$dockerVersion"
-			sh "docker manifest create ${dockerRepository}/voras-resources:latest ${dockerRepository}/voras-resources-amd64:$dockerVersion ${dockerRepository}/voras-resources-s390x:$dockerVersion"
-			sh "docker manifest push ${dockerRepository}/voras-resources:latest"
-            
-			sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-ibm-boot-embedded-latest"
-			sh "docker pull ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion"
-			sh "docker pull ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion"
-			sh "docker manifest create ${dockerRepository}/voras-ibm-boot-embedded:latest ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion"
-			sh "docker manifest push ${dockerRepository}/voras-ibm-boot-embedded:latest"
-			
-			sh "docker pull ${dockerRepository}/voras-api-bootstrap-amd64:$dockerVersion"
-			sh "docker tag ${dockerRepository}/voras-api-bootstrap-amd64:$dockerVersion  ${dockerRepository}/voras-api-bootstrap-amd64:latest"
-			sh "docker push ${dockerRepository}/voras-api-bootstrap-amd64:latest"
+
+            stage('manifest-ras-couchdb-init') {
+               agent { 
+                  label 'docker-amd64'
+               }
+               steps {
+                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-ras-couchdb-init-$dockerVersion"
+                  sh "docker pull ${dockerRepository}/voras-ras-couchdb-init-amd64:$dockerVersion"
+                  sh "docker pull ${dockerRepository}/voras-ras-couchdb-init-s390x:$dockerVersion"
+                  sh "docker manifest create ${dockerRepository}/voras-ras-couchdb-init:$dockerVersion ${dockerRepository}/voras-ras-couchdb-init-amd64:$dockerVersion ${dockerRepository}/voras-ras-couchdb-init-s390x:$dockerVersion"
+                  sh "docker manifest push ${dockerRepository}/voras-ras-couchdb-init:$dockerVersion"
+               }
+            }
+
+            stage('manifest-ras-couchdb-init-latest') {
+               when {
+                  environment name: 'GIT_BRANCH', value: 'origin/master'
+               }
+               agent { 
+                  label 'docker-amd64'
+               }
+               steps {
+                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-ras-couchdb-init-latest"
+                  sh "docker pull ${dockerRepository}/voras-ras-couchdb-init-amd64:$dockerVersion"
+                  sh "docker pull ${dockerRepository}/voras-ras-couchdb-init-s390x:$dockerVersion"
+                  sh "docker manifest create ${dockerRepository}/voras-ras-couchdb-init:latest ${dockerRepository}/voras-ras-couchdb-init-amd64:$dockerVersion ${dockerRepository}/voras-ras-couchdb-init-s390x:$dockerVersion"
+                  sh "docker manifest push ${dockerRepository}/voras-ras-couchdb-init:latest"
+               }
+            }
+
+            stage('manifest-resources') {
+               agent { 
+                  label 'docker-amd64'
+               }
+               steps {
+                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-resources-$dockerVersion"
+                  sh "docker pull ${dockerRepository}/voras-resources-amd64:$dockerVersion"
+                  sh "docker pull ${dockerRepository}/voras-resources-s390x:$dockerVersion"
+                  sh "docker manifest create ${dockerRepository}/voras-resources:$dockerVersion ${dockerRepository}/voras-resources-amd64:$dockerVersion ${dockerRepository}/voras-resources-s390x:$dockerVersion"
+                  sh "docker manifest push ${dockerRepository}/voras-resources:$dockerVersion"
+               }
+            }
+
+            stage('manifest-resources-latest') {
+               when {
+                  environment name: 'GIT_BRANCH', value: 'origin/master'
+               }
+               agent { 
+                  label 'docker-amd64'
+               }
+               steps {
+                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-resources-latest"
+                  sh "docker pull ${dockerRepository}/voras-resources-amd64:$dockerVersion"
+                  sh "docker pull ${dockerRepository}/voras-resources-s390x:$dockerVersion"
+                  sh "docker manifest create ${dockerRepository}/voras-resources:latest ${dockerRepository}/voras-resources-amd64:$dockerVersion ${dockerRepository}/voras-resources-s390x:$dockerVersion"
+                  sh "docker manifest push ${dockerRepository}/voras-resources:latest"
+               }
+            }
+
+            stage('manifest-ibm-boot') {
+               agent { 
+                  label 'docker-amd64'
+               }
+               steps {
+                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-ibm-boot-embedded-$dockerVersion"
+                  sh "docker pull ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion"
+                  sh "docker pull ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion"
+                  sh "docker manifest create ${dockerRepository}/voras-ibm-boot-embedded:$dockerVersion ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion"
+                  sh "docker manifest push ${dockerRepository}/voras-ibm-boot-embedded:$dockerVersion"
+               }
+            }
+
+            stage('manifest-ibm-boot-latest') {
+               when {
+                  environment name: 'GIT_BRANCH', value: 'origin/master'
+               }
+               agent { 
+                  label 'docker-amd64'
+               }
+               steps {
+                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-ibm-boot-embedded-;latest"
+                  sh "docker pull ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion"
+                  sh "docker pull ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion"
+                  sh "docker manifest create ${dockerRepository}/voras-ibm-boot-embedded:latest ${dockerRepository}/voras-ibm-boot-embedded-amd64:$dockerVersion ${dockerRepository}/voras-ibm-boot-embedded-s390x:$dockerVersion"
+                  sh "docker manifest push ${dockerRepository}/voras-ibm-boot-embedded:latest"
+               }
+            }
+
+            stage('manifest-api-bootstrap-latest') {
+               when {
+                  environment name: 'GIT_BRANCH', value: 'origin/master'
+               }
+               agent { 
+                  label 'docker-amd64'
+               }
+               steps {
+                  sh "docker pull ${dockerRepository}/voras-api-bootstrap-amd64:$dockerVersion"
+                  sh "docker tag ${dockerRepository}/voras-api-bootstrap-amd64:$dockerVersion  ${dockerRepository}/voras-api-bootstrap-amd64:latest"
+                  sh "docker push ${dockerRepository}/voras-api-bootstrap-amd64:latest"
+               }
+            }
          }
       }
    }
