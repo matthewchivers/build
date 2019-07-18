@@ -229,6 +229,14 @@ pipeline {
 			      sh "docker push ${dockerRepository}/voras-maven-repo-generic:$dockerVersion" 
 			   }
 			   
+// Build the javadocs image
+			   dir('javadocs') {
+			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean generate-sources"
+			      
+			      sh "docker build -t ${dockerRepository}/voras-javadoc-generic:$dockerVersion ." 
+			      sh "docker push ${dockerRepository}/voras-javadoc-generic:$dockerVersion" 
+			   }
+			   
 // Build the emedded obr directory
 			   dir('dockerObr') {
 			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean voras:obrembedded"
