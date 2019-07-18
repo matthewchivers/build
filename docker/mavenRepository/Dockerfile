@@ -1,3 +1,3 @@
 FROM scratch
 
-COPY target/repository/* /maven/
+COPY target/repository/ /maven/

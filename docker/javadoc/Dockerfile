@@ -1,3 +1,3 @@
 FROM scratch
 
-COPY target/javadocs/* /javadoc/
+COPY target/javadocs/ /javadoc/
