@@ -161,7 +161,7 @@ pipeline {
       }
       
 // Build the simframe
-      stage('common') {
+      stage('simframe') {
          steps {
             dir('git/simframe') {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/simframe.git', branch: "${gitBranch}"
