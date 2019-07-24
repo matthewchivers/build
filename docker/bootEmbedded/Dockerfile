@@ -28,6 +28,7 @@ COPY trace-log4j.properties /voras/
 VOLUME /voras/.voras
 
 EXPOSE 9010/tcp
-
 EXPOSE 9011/tcp
+EXPOSE 2080/tcp
+EXPOSE 2023/tcp
 
