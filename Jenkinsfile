@@ -82,6 +82,9 @@ pipeline {
             dir('git/common') {
                deleteDir()
             }
+            dir('git/simframe') {
+               deleteDir()
+            }
             dir('git/runtime') {
                deleteDir()
             }
