@@ -15,6 +15,10 @@
 <packaging>pom</packaging>
 
 <modules>
+  <module>dev.voras.karaf.distribution.bootstrap.obr</module>
+  <module>dev.voras.karaf.distribution.bootstrap.feature</module>
+  <module>dev.voras.karaf.distribution.api.obr</module>
+  <module>dev.voras.karaf.distribution.api.feature</module>
   <module>dev.voras.karaf.distribution.dev</module>
 </modules>
 
