@@ -82,6 +82,9 @@ pipeline {
             dir('git/common') {
                deleteDir()
             }
+            dir('git/eclipse') {
+               deleteDir()
+            }
             dir('git/simframe') {
                deleteDir()
             }
@@ -157,6 +160,19 @@ pipeline {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/common.git', branch: "${gitBranch}"
          
                dir('voras-common-parent') {
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+               }
+            }
+         }
+      }
+      
+// Build the common repository
+      stage('eclipse') {
+         steps {
+            dir('git/eclipse') {
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/eclipse.git', branch: "${gitBranch}"
+         
+               dir('voras-eclipse-parent') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
             }
