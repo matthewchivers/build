@@ -10,17 +10,15 @@
   <version>0.3.0-SNAPSHOT</version>
 </parent>
 
-<artifactId>karaf-distribution-dev</artifactId>
+<artifactId>karaf-distribution-authentication</artifactId>
 <version>0.3.0-SNAPSHOT</version>
 <packaging>pom</packaging>
 
 <modules>
-<module>default.security</module>
-  <module>dev.voras.karaf.distribution.bootstrap.obr</module>
-  <module>dev.voras.karaf.distribution.bootstrap.feature</module>
   <module>dev.voras.karaf.distribution.api.obr</module>
   <module>dev.voras.karaf.distribution.api.feature</module>
-  <module>dev.voras.karaf.distribution.dev</module>
+  <module>dev.voras.karaf.distribution.authentication</module>
+  <module>default.security</module>
 </modules>
 
 </project>

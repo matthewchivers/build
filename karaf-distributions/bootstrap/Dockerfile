@@ -14,5 +14,4 @@ RUN tar -xvf /voras/dev.voras.karaf.distribution.bootstrap-1.0-SNAPSHOT.tar.gz -
 RUN rm /voras/dev.voras.karaf.distribution.bootstrap-1.0-SNAPSHOT.tar.gz
 COPY dev.voras.bootstrap.cfg /voras/etc
 
-
 CMD [ "/voras/bin/karaf", "server"]
