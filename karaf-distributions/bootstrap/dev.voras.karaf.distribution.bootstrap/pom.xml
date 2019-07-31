@@ -22,7 +22,7 @@
 
     <groupId>dev.voras</groupId>
     <artifactId>dev.voras.karaf.distribution.bootstrap</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.3.0-SNAPSHOT</version>
     <packaging>karaf-assembly</packaging>
 
     <name>dev.voras.karaf.distribution.bootstrap</name>
