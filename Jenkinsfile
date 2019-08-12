@@ -166,7 +166,18 @@ pipeline {
          }
       }
       
-// Build the common repository
+// Build the simframe
+      stage('simframe') {
+         steps {
+            dir('git/simframe') {
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/simframe.git', branch: "${gitBranch}"
+         
+               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+            }
+         }
+      }
+      
+// Build the eclipse
       stage('eclipse') {
          steps {
             dir('git/eclipse') {
@@ -175,17 +186,6 @@ pipeline {
                dir('voras-eclipse-parent') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
-            }
-         }
-      }
-      
-// Build the simframe
-      stage('simframe') {
-         steps {
-            dir('git/simframe') {
-               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/simframe.git', branch: "${gitBranch}"
-         
-               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
             }
          }
       }
