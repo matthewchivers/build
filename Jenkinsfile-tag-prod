@@ -1,0 +1,81 @@
+pipeline {
+// Initially run on any agent
+   agent any
+   environment {
+//Set some defaults
+      def workspace = pwd()
+   }
+   stages {
+// If it is the master branch, version 0.3.0 and master on all the other branches
+      stage('set-dev') {
+         when {
+           environment name: 'GIT_BRANCH', value: 'origin/master'
+         }
+         steps {
+            script {
+               gitBranch     = 'master'
+            }
+         }
+      }
+// for debugging purposes
+      stage('report') {
+         steps {
+            echo "Branch/Tag         : ${env.GIT_BRANCH}"
+            echo "Repo Branches      : ${gitBranch}"
+         }
+      }
+   
+// Set up the workspace, clear the git directories
+      stage('prep-workspace') { 
+         steps {
+            dir('git/wrapping') {
+               deleteDir()
+            }
+            dir('git/maven') {
+               deleteDir()
+            }
+            dir('git/framework') {
+               deleteDir()
+            }
+            dir('git/core') {
+               deleteDir()
+            }
+            dir('git/common') {
+               deleteDir()
+            }
+            dir('git/eclipse') {
+               deleteDir()
+            }
+            dir('git/simframe') {
+               deleteDir()
+            }
+            dir('git/runtime') {
+               deleteDir()
+            }
+            dir('git/devtools') {
+               deleteDir()
+            }
+            dir('git/ivt') {
+               deleteDir()
+            }
+            dir('git/inttests') {
+               deleteDir()
+            }
+         }
+      }
+      
+// Build the wrapping repository
+      stage('wrapping') {
+         steps {
+            dir('git/wrapping') {
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/wrapping.git', branch: "${gitBranch}"
+         
+               sh "git tag -a prod -m 'Production build'"
+         
+               sh "git push --follow-tags"
+            }
+         }
+      }
+      
+   }
+}
