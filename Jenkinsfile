@@ -23,7 +23,7 @@ pipeline {
          }
          steps {
             script {
-               mvnProfile    = 'voras-dev'
+               mvnProfile    = 'galasa-dev'
                dockerVersion = '0.3.0'
                gitBranch     = 'master'
             }
@@ -36,7 +36,7 @@ pipeline {
          }
          steps {
             script {
-               mvnProfile    = 'voras-preprod'
+               mvnProfile    = 'galasa-preprod'
                dockerVersion = 'preprod'
                gitBranch     = 'testpreprod'
             }
@@ -123,7 +123,7 @@ pipeline {
             dir('git/maven') {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/maven.git', branch: "${gitBranch}"
          
-               dir('voras-maven-plugin') {
+               dir('galasa-maven-plugin') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
             }
@@ -136,7 +136,7 @@ pipeline {
             dir('git/framework') {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/framework.git', branch: "${gitBranch}"
          
-               dir('voras-parent') {
+               dir('galasa-parent') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
             }
@@ -149,7 +149,7 @@ pipeline {
             dir('git/core') {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/core.git', branch: "${gitBranch}"
          
-               dir('voras-core-parent') {
+               dir('galasa-core-parent') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
             }
@@ -162,7 +162,7 @@ pipeline {
             dir('git/common') {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/common.git', branch: "${gitBranch}"
          
-               dir('voras-common-parent') {
+               dir('galasa-common-parent') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
             }
@@ -186,7 +186,7 @@ pipeline {
             dir('git/eclipse') {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/eclipse.git', branch: "${gitBranch}"
          
-               dir('voras-eclipse-parent') {
+               dir('galasa-eclipse-parent') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
             }
@@ -221,7 +221,7 @@ pipeline {
             dir('git/ivt') {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/ivt.git', branch: "${gitBranch}"
          
-               dir('voras-ivt-parent') {
+               dir('galasa-ivt-parent') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
             }
@@ -241,8 +241,8 @@ pipeline {
          }
          steps {
 
-// Ensure we force the download of the voras artifacts            
-            dir('repository/dev/voras') {
+// Ensure we force the download of the galasa artifacts            
+            dir('repository/dev/galasa') {
                deleteDir()
             }
 
@@ -252,34 +252,34 @@ pipeline {
 			dir('git/build/docker') {
 // Build the maven repository image
 			   dir('mavenRepository') {
-			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -DdockerVersion=${dockerVersion} -P ${mvnProfile} -B -e clean voras:mavenrepository"
+			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -DdockerVersion=${dockerVersion} -P ${mvnProfile} -B -e clean galasa:mavenrepository"
 			      
-			      sh "docker build -t ${dockerRepository}/voras-maven-repo-generic:${dockerVersion} ." 
-			      sh "docker push ${dockerRepository}/voras-maven-repo-generic:${dockerVersion}" 
+			      sh "docker build -t ${dockerRepository}/galasa-maven-repo-generic:${dockerVersion} ." 
+			      sh "docker push ${dockerRepository}/galasa-maven-repo-generic:${dockerVersion}" 
 			   }
 			   
 // Build the javadocs image
 			   dir('javadoc') {
 			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean generate-sources"
 			      
-			      sh "docker build -t ${dockerRepository}/voras-javadoc-generic:${dockerVersion} ." 
-			      sh "docker push ${dockerRepository}/voras-javadoc-generic:${dockerVersion}" 
+			      sh "docker build -t ${dockerRepository}/galasa-javadoc-generic:${dockerVersion} ." 
+			      sh "docker push ${dockerRepository}/galasa-javadoc-generic:${dockerVersion}" 
 			   }
 			   
 // Build the javadocs image
 			   dir('eclipse') {
 			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean generate-sources"
 			      
-			      sh "docker build -t ${dockerRepository}/voras-eclipse-generic:${dockerVersion} ." 
-			      sh "docker push ${dockerRepository}/voras-eclipse-generic:${dockerVersion}" 
+			      sh "docker build -t ${dockerRepository}/galasa-eclipse-generic:${dockerVersion} ." 
+			      sh "docker push ${dockerRepository}/galasa-eclipse-generic:${dockerVersion}" 
 			   }
 			   
 // Build the emedded obr directory
 			   dir('dockerObr') {
-			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean process-sources voras:obrembedded"
+			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean process-sources galasa:obrembedded"
 			      
-			      sh "docker build -t ${dockerRepository}/voras-obr-generic:${dockerVersion} ." 
-			      sh "docker push ${dockerRepository}/voras-obr-generic:${dockerVersion}" 
+			      sh "docker build -t ${dockerRepository}/galasa-obr-generic:${dockerVersion} ." 
+			      sh "docker push ${dockerRepository}/galasa-obr-generic:${dockerVersion}" 
 			   }
 			}            
          }
@@ -300,7 +300,7 @@ pipeline {
                }
                steps {
             
-                  dir('repository/dev/voras') {
+                  dir('repository/dev/galasa') {
                      deleteDir()
                   }
 
@@ -309,31 +309,31 @@ pipeline {
             
 			      dir('git/build/docker') {
 			         dir('bootEmbedded') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-boot-embedded-amd64:${dockerVersion} ." 
-			            sh "docker push ${dockerRepository}/voras-boot-embedded-amd64:${dockerVersion}" 
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/galasa-boot-embedded-amd64:${dockerVersion} ." 
+			            sh "docker push ${dockerRepository}/galasa-boot-embedded-amd64:${dockerVersion}" 
    			         }
 
 			         dir('rasCouchdbInit') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ras-couchdb-init-amd64:${dockerVersion} ." 
-			            sh "docker push ${dockerRepository}/voras-ras-couchdb-init-amd64:${dockerVersion}" 
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/galasa-ras-couchdb-init-amd64:${dockerVersion} ." 
+			            sh "docker push ${dockerRepository}/galasa-ras-couchdb-init-amd64:${dockerVersion}" 
    			         }
    			         
 			         dir('resources') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-resources-amd64:${dockerVersion} ." 
-			            sh "docker push ${dockerRepository}/voras-resources-amd64:${dockerVersion}" 
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/galasa-resources-amd64:${dockerVersion} ." 
+			            sh "docker push ${dockerRepository}/galasa-resources-amd64:${dockerVersion}" 
    			         }
    			         
 			         dir('ibm/bootEmbedded') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} --build-arg platform=amd64 -t ${dockerRepository}/voras-ibm-boot-embedded-amd64:${dockerVersion} ." 
-			            sh "docker push ${dockerRepository}/voras-ibm-boot-embedded-amd64:${dockerVersion}" 
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} --build-arg platform=amd64 -t ${dockerRepository}/galasa-ibm-boot-embedded-amd64:${dockerVersion} ." 
+			            sh "docker push ${dockerRepository}/galasa-ibm-boot-embedded-amd64:${dockerVersion}" 
    			         }
 			      }
 			                  
 			      dir('git/build/karaf-distributions/bootstrap') {
 			         sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean install"
 			      
-			         sh "docker build -t ${dockerRepository}/voras-api-bootstrap-amd64:${dockerVersion} ." 
-			         sh "docker push ${dockerRepository}/voras-api-bootstrap-amd64:${dockerVersion}" 
+			         sh "docker build -t ${dockerRepository}/galasa-api-bootstrap-amd64:${dockerVersion} ." 
+			         sh "docker push ${dockerRepository}/galasa-api-bootstrap-amd64:${dockerVersion}" 
 			      }
                }
             }
@@ -349,7 +349,7 @@ pipeline {
                }
                steps {
             
-                  dir('repository/dev/voras') {
+                  dir('repository/dev/galasa') {
                      deleteDir()
                   }
 
@@ -358,23 +358,23 @@ pipeline {
             
 			      dir('git/build/docker') {
 			         dir('bootEmbedded') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-boot-embedded-s390x:${dockerVersion} -f Dockerfile.s390x ." 
-			            sh "docker push ${dockerRepository}/voras-boot-embedded-s390x:${dockerVersion}" 
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/galasa-boot-embedded-s390x:${dockerVersion} -f Dockerfile.s390x ." 
+			            sh "docker push ${dockerRepository}/galasa-boot-embedded-s390x:${dockerVersion}" 
    			         }
    			         
 			         dir('rasCouchdbInit') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-ras-couchdb-init-s390x:${dockerVersion} ." 
-			            sh "docker push ${dockerRepository}/voras-ras-couchdb-init-s390x:${dockerVersion}" 
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/galasa-ras-couchdb-init-s390x:${dockerVersion} ." 
+			            sh "docker push ${dockerRepository}/galasa-ras-couchdb-init-s390x:${dockerVersion}" 
    			         }
    			         
 			         dir('resources') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/voras-resources-s390x:${dockerVersion} ." 
-			            sh "docker push ${dockerRepository}/voras-resources-s390x:${dockerVersion}" 
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/galasa-resources-s390x:${dockerVersion} ." 
+			            sh "docker push ${dockerRepository}/galasa-resources-s390x:${dockerVersion}" 
    			         }
    			         
 			         dir('ibm/bootEmbedded') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} --build-arg platform=s390x -t ${dockerRepository}/voras-ibm-boot-embedded-s390x:${dockerVersion} ." 
-			            sh "docker push ${dockerRepository}/voras-ibm-boot-embedded-s390x:${dockerVersion}" 
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} --build-arg platform=s390x -t ${dockerRepository}/galasa-ibm-boot-embedded-s390x:${dockerVersion} ." 
+			            sh "docker push ${dockerRepository}/galasa-ibm-boot-embedded-s390x:${dockerVersion}" 
    			         }
 			      }            
                }
