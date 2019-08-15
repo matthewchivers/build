@@ -175,7 +175,7 @@ pipeline {
             dir('git/simframe') {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:galasa/simframe.git', branch: "${gitBranch}"
          
-               dir('simframe-parent') {
+               dir('simframe-application') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
             }
