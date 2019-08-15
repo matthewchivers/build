@@ -2,7 +2,7 @@ ARG dockerVersion
 ARG dockerRepository
 ARG platform
 
-FROM ${dockerRepository}/voras-boot-embedded-${platform}:${dockerVersion}
+FROM ${dockerRepository}/galasa-boot-embedded-${platform}:${dockerVersion}
 
 USER root
 
@@ -14,7 +14,7 @@ RUN \
     && keytool -keystore cacerts -storepass changeit -noprompt -trustcacerts -importcert -alias ibmca -file carootcert.der \
     && keytool -keystore cacerts -storepass changeit -noprompt -trustcacerts -importcert -alias ibminter -file caintermediatecert.der
 
-WORKDIR /voras
+WORKDIR /galasa
 
-USER voras
+USER galasa
 

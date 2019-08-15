@@ -1,3 +1,3 @@
 FROM scratch
 
-COPY target/* /voras/
+COPY target/* /galasa/

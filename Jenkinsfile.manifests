@@ -25,11 +25,11 @@ pipeline {
                   label 'docker-amd64'
                }
                steps {
-                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-boot-embedded-${dockerVersion}"
-                  sh "docker pull ${dockerRepository}/voras-boot-embedded-amd64:${dockerVersion}"
-                  sh "docker pull ${dockerRepository}/voras-boot-embedded-s390x:${dockerVersion}"
-                  sh "docker manifest create ${dockerRepository}/voras-boot-embedded:${dockerVersion} ${dockerRepository}/voras-boot-embedded-amd64:${dockerVersion} ${dockerRepository}/voras-boot-embedded-s390x:${dockerVersion}"
-                  sh "docker manifest push ${dockerRepository}/voras-boot-embedded:${dockerVersion}"
+                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_galasa-boot-embedded-${dockerVersion}"
+                  sh "docker pull ${dockerRepository}/galasa-boot-embedded-amd64:${dockerVersion}"
+                  sh "docker pull ${dockerRepository}/galasa-boot-embedded-s390x:${dockerVersion}"
+                  sh "docker manifest create ${dockerRepository}/galasa-boot-embedded:${dockerVersion} ${dockerRepository}/galasa-boot-embedded-amd64:${dockerVersion} ${dockerRepository}/galasa-boot-embedded-s390x:${dockerVersion}"
+                  sh "docker manifest push ${dockerRepository}/galasa-boot-embedded:${dockerVersion}"
                }
             }
 
@@ -41,11 +41,11 @@ pipeline {
                   label 'docker-amd64'
                }
                steps {
-                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-boot-embedded-latest"
-                  sh "docker pull ${dockerRepository}/voras-boot-embedded-amd64:${dockerVersion}"
-                  sh "docker pull ${dockerRepository}/voras-boot-embedded-s390x:${dockerVersion}"
-                  sh "docker manifest create ${dockerRepository}/voras-boot-embedded:latest ${dockerRepository}/voras-boot-embedded-amd64:${dockerVersion} ${dockerRepository}/voras-boot-embedded-s390x:${dockerVersion}"
-                  sh "docker manifest push ${dockerRepository}/voras-boot-embedded:latest"
+                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_galasa-boot-embedded-latest"
+                  sh "docker pull ${dockerRepository}/galasa-boot-embedded-amd64:${dockerVersion}"
+                  sh "docker pull ${dockerRepository}/galasa-boot-embedded-s390x:${dockerVersion}"
+                  sh "docker manifest create ${dockerRepository}/galasa-boot-embedded:latest ${dockerRepository}/galasa-boot-embedded-amd64:${dockerVersion} ${dockerRepository}/galasa-boot-embedded-s390x:${dockerVersion}"
+                  sh "docker manifest push ${dockerRepository}/galasa-boot-embedded:latest"
                }
             }
 
@@ -54,11 +54,11 @@ pipeline {
                   label 'docker-amd64'
                }
                steps {
-                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-ras-couchdb-init-${dockerVersion}"
-                  sh "docker pull ${dockerRepository}/voras-ras-couchdb-init-amd64:${dockerVersion}"
-                  sh "docker pull ${dockerRepository}/voras-ras-couchdb-init-s390x:${dockerVersion}"
-                  sh "docker manifest create ${dockerRepository}/voras-ras-couchdb-init:${dockerVersion} ${dockerRepository}/voras-ras-couchdb-init-amd64:${dockerVersion} ${dockerRepository}/voras-ras-couchdb-init-s390x:${dockerVersion}"
-                  sh "docker manifest push ${dockerRepository}/voras-ras-couchdb-init:${dockerVersion}"
+                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_galasa-ras-couchdb-init-${dockerVersion}"
+                  sh "docker pull ${dockerRepository}/galasa-ras-couchdb-init-amd64:${dockerVersion}"
+                  sh "docker pull ${dockerRepository}/galasa-ras-couchdb-init-s390x:${dockerVersion}"
+                  sh "docker manifest create ${dockerRepository}/galasa-ras-couchdb-init:${dockerVersion} ${dockerRepository}/galasa-ras-couchdb-init-amd64:${dockerVersion} ${dockerRepository}/galasa-ras-couchdb-init-s390x:${dockerVersion}"
+                  sh "docker manifest push ${dockerRepository}/galasa-ras-couchdb-init:${dockerVersion}"
                }
             }
 
@@ -70,11 +70,11 @@ pipeline {
                   label 'docker-amd64'
                }
                steps {
-                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-ras-couchdb-init-latest"
-                  sh "docker pull ${dockerRepository}/voras-ras-couchdb-init-amd64:${dockerVersion}"
-                  sh "docker pull ${dockerRepository}/voras-ras-couchdb-init-s390x:${dockerVersion}"
-                  sh "docker manifest create ${dockerRepository}/voras-ras-couchdb-init:latest ${dockerRepository}/voras-ras-couchdb-init-amd64:${dockerVersion} ${dockerRepository}/voras-ras-couchdb-init-s390x:${dockerVersion}"
-                  sh "docker manifest push ${dockerRepository}/voras-ras-couchdb-init:latest"
+                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_galasa-ras-couchdb-init-latest"
+                  sh "docker pull ${dockerRepository}/galasa-ras-couchdb-init-amd64:${dockerVersion}"
+                  sh "docker pull ${dockerRepository}/galasa-ras-couchdb-init-s390x:${dockerVersion}"
+                  sh "docker manifest create ${dockerRepository}/galasa-ras-couchdb-init:latest ${dockerRepository}/galasa-ras-couchdb-init-amd64:${dockerVersion} ${dockerRepository}/galasa-ras-couchdb-init-s390x:${dockerVersion}"
+                  sh "docker manifest push ${dockerRepository}/galasa-ras-couchdb-init:latest"
                }
             }
 
@@ -83,11 +83,11 @@ pipeline {
                   label 'docker-amd64'
                }
                steps {
-                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-resources-${dockerVersion}"
-                  sh "docker pull ${dockerRepository}/voras-resources-amd64:${dockerVersion}"
-                  sh "docker pull ${dockerRepository}/voras-resources-s390x:${dockerVersion}"
-                  sh "docker manifest create ${dockerRepository}/voras-resources:${dockerVersion} ${dockerRepository}/voras-resources-amd64:${dockerVersion} ${dockerRepository}/voras-resources-s390x:${dockerVersion}"
-                  sh "docker manifest push ${dockerRepository}/voras-resources:${dockerVersion}"
+                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_galasa-resources-${dockerVersion}"
+                  sh "docker pull ${dockerRepository}/galasa-resources-amd64:${dockerVersion}"
+                  sh "docker pull ${dockerRepository}/galasa-resources-s390x:${dockerVersion}"
+                  sh "docker manifest create ${dockerRepository}/galasa-resources:${dockerVersion} ${dockerRepository}/galasa-resources-amd64:${dockerVersion} ${dockerRepository}/galasa-resources-s390x:${dockerVersion}"
+                  sh "docker manifest push ${dockerRepository}/galasa-resources:${dockerVersion}"
                }
             }
 
@@ -99,11 +99,11 @@ pipeline {
                   label 'docker-amd64'
                }
                steps {
-                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-resources-latest"
-                  sh "docker pull ${dockerRepository}/voras-resources-amd64:${dockerVersion}"
-                  sh "docker pull ${dockerRepository}/voras-resources-s390x:${dockerVersion}"
-                  sh "docker manifest create ${dockerRepository}/voras-resources:latest ${dockerRepository}/voras-resources-amd64:${dockerVersion} ${dockerRepository}/voras-resources-s390x:${dockerVersion}"
-                  sh "docker manifest push ${dockerRepository}/voras-resources:latest"
+                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_galasa-resources-latest"
+                  sh "docker pull ${dockerRepository}/galasa-resources-amd64:${dockerVersion}"
+                  sh "docker pull ${dockerRepository}/galasa-resources-s390x:${dockerVersion}"
+                  sh "docker manifest create ${dockerRepository}/galasa-resources:latest ${dockerRepository}/galasa-resources-amd64:${dockerVersion} ${dockerRepository}/galasa-resources-s390x:${dockerVersion}"
+                  sh "docker manifest push ${dockerRepository}/galasa-resources:latest"
                }
             }
 
@@ -112,11 +112,11 @@ pipeline {
                   label 'docker-amd64'
                }
                steps {
-                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-ibm-boot-embedded-${dockerVersion}"
-                  sh "docker pull ${dockerRepository}/voras-ibm-boot-embedded-amd64:${dockerVersion}"
-                  sh "docker pull ${dockerRepository}/voras-ibm-boot-embedded-s390x:${dockerVersion}"
-                  sh "docker manifest create ${dockerRepository}/voras-ibm-boot-embedded:${dockerVersion} ${dockerRepository}/voras-ibm-boot-embedded-amd64:${dockerVersion} ${dockerRepository}/voras-ibm-boot-embedded-s390x:${dockerVersion}"
-                  sh "docker manifest push ${dockerRepository}/voras-ibm-boot-embedded:${dockerVersion}"
+                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_galasa-ibm-boot-embedded-${dockerVersion}"
+                  sh "docker pull ${dockerRepository}/galasa-ibm-boot-embedded-amd64:${dockerVersion}"
+                  sh "docker pull ${dockerRepository}/galasa-ibm-boot-embedded-s390x:${dockerVersion}"
+                  sh "docker manifest create ${dockerRepository}/galasa-ibm-boot-embedded:${dockerVersion} ${dockerRepository}/galasa-ibm-boot-embedded-amd64:${dockerVersion} ${dockerRepository}/galasa-ibm-boot-embedded-s390x:${dockerVersion}"
+                  sh "docker manifest push ${dockerRepository}/galasa-ibm-boot-embedded:${dockerVersion}"
                }
             }
 
@@ -128,11 +128,11 @@ pipeline {
                   label 'docker-amd64'
                }
                steps {
-                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_voras-ibm-boot-embedded-latest"
-                  sh "docker pull ${dockerRepository}/voras-ibm-boot-embedded-amd64:${dockerVersion}"
-                  sh "docker pull ${dockerRepository}/voras-ibm-boot-embedded-s390x:${dockerVersion}"
-                  sh "docker manifest create ${dockerRepository}/voras-ibm-boot-embedded:latest ${dockerRepository}/voras-ibm-boot-embedded-amd64:${dockerVersion} ${dockerRepository}/voras-ibm-boot-embedded-s390x:${dockerVersion}"
-                  sh "docker manifest push ${dockerRepository}/voras-ibm-boot-embedded:latest"
+                  sh "rm -rf ~/.docker/manifests/${dockerRepository}_galasa-ibm-boot-embedded-latest"
+                  sh "docker pull ${dockerRepository}/galasa-ibm-boot-embedded-amd64:${dockerVersion}"
+                  sh "docker pull ${dockerRepository}/galasa-ibm-boot-embedded-s390x:${dockerVersion}"
+                  sh "docker manifest create ${dockerRepository}/galasa-ibm-boot-embedded:latest ${dockerRepository}/galasa-ibm-boot-embedded-amd64:${dockerVersion} ${dockerRepository}/galasa-ibm-boot-embedded-s390x:${dockerVersion}"
+                  sh "docker manifest push ${dockerRepository}/galasa-ibm-boot-embedded:latest"
                }
             }
 
@@ -144,9 +144,9 @@ pipeline {
                   label 'docker-amd64'
                }
                steps {
-                  sh "docker pull ${dockerRepository}/voras-api-bootstrap-amd64:${dockerVersion}"
-                  sh "docker tag ${dockerRepository}/voras-api-bootstrap-amd64:${dockerVersion}  ${dockerRepository}/voras-api-bootstrap-amd64:latest"
-                  sh "docker push ${dockerRepository}/voras-api-bootstrap-amd64:latest"
+                  sh "docker pull ${dockerRepository}/galasa-api-bootstrap-amd64:${dockerVersion}"
+                  sh "docker tag ${dockerRepository}/galasa-api-bootstrap-amd64:${dockerVersion}  ${dockerRepository}/galasa-api-bootstrap-amd64:latest"
+                  sh "docker push ${dockerRepository}/galasa-api-bootstrap-amd64:latest"
                }
             }
          }

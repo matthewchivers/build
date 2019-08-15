@@ -6,11 +6,11 @@
 	<ext:property-placeholder
 		placeholder-prefix="$[" placeholder-suffix="]" />
 
-	<jaas:config name="voras" rank="0">
+	<jaas:config name="galasa" rank="0">
 	 	<jaas:module
 			className="org.apache.karaf.jaas.modules.properties.PropertiesLoginModule"
 			flags="sufficient">
-			users = $[karaf.etc]/voras-users.properties
+			users = $[karaf.etc]/galasa-users.properties
 		</jaas:module> 
 	</jaas:config>
 </blueprint>

@@ -5,8 +5,8 @@
   <modelVersion>4.0.0</modelVersion>
 
 <parent>
-  <groupId>dev.voras</groupId>
-  <artifactId>voras-parent</artifactId>
+  <groupId>dev.galasa</groupId>
+  <artifactId>galasa-parent</artifactId>
   <version>0.3.0-SNAPSHOT</version>
 </parent>
 
@@ -15,9 +15,9 @@
 <packaging>pom</packaging>
 
 <modules>
-  <module>dev.voras.karaf.distribution.bootstrap.obr</module>
-  <module>dev.voras.karaf.distribution.bootstrap.feature</module>
-  <module>dev.voras.karaf.distribution.bootstrap</module>
+  <module>dev.galasa.karaf.distribution.bootstrap.obr</module>
+  <module>dev.galasa.karaf.distribution.bootstrap.feature</module>
+  <module>dev.galasa.karaf.distribution.bootstrap</module>
 </modules>
 
 </project>

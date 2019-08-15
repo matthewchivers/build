@@ -3,13 +3,13 @@ FROM openjdk:8
 EXPOSE 8181
 EXPOSE 5005
 
-RUN mkdir /voras
+RUN mkdir /galasa
 
-WORKDIR /voras
+WORKDIR /galasa
 
-COPY dev.voras.karaf.distribution.bootstrap/target/dev.voras.karaf.distribution.bootstrap-0.3.0-SNAPSHOT.tar.gz /voras
-RUN tar -xf dev.voras.karaf.distribution.bootstrap-0.3.0-SNAPSHOT.tar.gz --strip 1
-RUN rm dev.voras.karaf.distribution.bootstrap-0.3.0-SNAPSHOT.tar.gz
+COPY dev.galasa.karaf.distribution.bootstrap/target/dev.galasa.karaf.distribution.bootstrap-0.3.0-SNAPSHOT.tar.gz /galasa
+RUN tar -xf dev.galasa.karaf.distribution.bootstrap-0.3.0-SNAPSHOT.tar.gz --strip 1
+RUN rm dev.galasa.karaf.distribution.bootstrap-0.3.0-SNAPSHOT.tar.gz
 
 COPY resources/* etc/
 

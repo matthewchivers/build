@@ -1,2 +1,2 @@
 # Build
-Building files for Voras
+Building files for Galasa

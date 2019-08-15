@@ -1,11 +1,11 @@
 ARG dockerVersion
 ARG dockerRepository
 
-FROM ${dockerRepository}/voras-maven-repo-generic:${dockerVersion}
+FROM ${dockerRepository}/galasa-maven-repo-generic:${dockerVersion}
 
-FROM ${dockerRepository}/voras-javadoc-generic:${dockerVersion}
+FROM ${dockerRepository}/galasa-javadoc-generic:${dockerVersion}
 
-FROM ${dockerRepository}/voras-eclipse-generic:${dockerVersion}
+FROM ${dockerRepository}/galasa-eclipse-generic:${dockerVersion}
 
 FROM httpd:2.4
 

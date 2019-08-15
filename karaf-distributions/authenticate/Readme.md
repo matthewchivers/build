@@ -1,9 +1,9 @@
 # Required Properties:
 
-## dev.voras.cfg
+## dev.galasa.cfg
 
 - framework.jwt.secret=XXXXXXXX
 
-## voras-users.properties
+## galasa-users.properties
 
 Any users using the default login module.

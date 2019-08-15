@@ -64,7 +64,7 @@ pipeline {
             configFileProvider([configFile(fileId: '647688a9-d178-475b-ae65-80fca764a8c2', targetLocation: 'cit-settings.xml')]) {
             }
          
-            dir('repository/dev/voras') {
+            dir('repository/dev.galasa') {
                deleteDir()
             }
             dir('repository/dev/galasa') {
@@ -110,7 +110,7 @@ pipeline {
       stage('wrapping') {
          steps {
             dir('git/wrapping') {
-               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/wrapping.git', branch: "${gitBranch}"
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:Galasav3/wrapping.git', branch: "${gitBranch}"
          
                sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
             }
@@ -121,7 +121,7 @@ pipeline {
       stage('maven') {
          steps {
             dir('git/maven') {
-               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/maven.git', branch: "${gitBranch}"
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:Galasav3/maven.git', branch: "${gitBranch}"
          
                dir('galasa-maven-plugin') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
@@ -134,7 +134,7 @@ pipeline {
       stage('framework') {
          steps {
             dir('git/framework') {
-               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/framework.git', branch: "${gitBranch}"
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:Galasav3/framework.git', branch: "${gitBranch}"
          
                dir('galasa-parent') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
@@ -147,7 +147,7 @@ pipeline {
       stage('core') {
          steps {
             dir('git/core') {
-               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/core.git', branch: "${gitBranch}"
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:Galasav3/core.git', branch: "${gitBranch}"
          
                dir('galasa-core-parent') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
@@ -160,7 +160,7 @@ pipeline {
       stage('common') {
          steps {
             dir('git/common') {
-               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/common.git', branch: "${gitBranch}"
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:Galasav3/common.git', branch: "${gitBranch}"
          
                dir('galasa-common-parent') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
@@ -173,7 +173,7 @@ pipeline {
       stage('simframe') {
          steps {
             dir('git/simframe') {
-               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/simframe.git', branch: "${gitBranch}"
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:Galasav3/simframe.git', branch: "${gitBranch}"
          
                sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
             }
@@ -184,7 +184,7 @@ pipeline {
       stage('eclipse') {
          steps {
             dir('git/eclipse') {
-               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/eclipse.git', branch: "${gitBranch}"
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:Galasav3/eclipse.git', branch: "${gitBranch}"
          
                dir('galasa-eclipse-parent') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
@@ -197,7 +197,7 @@ pipeline {
       stage('runtime') {
          steps {
             dir('git/runtime') {
-               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/runtime.git', branch: "${gitBranch}"
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:Galasav3/runtime.git', branch: "${gitBranch}"
          
                sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -DdockerVersion=${dockerVersion} -P ${mvnProfile} -B -e -fae ${mvnGoal}"
             }
@@ -208,7 +208,7 @@ pipeline {
       stage('devtools') {
          steps {
             dir('git/devtools') {
-               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/devtools.git', branch: "${gitBranch}"
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:Galasav3/devtools.git', branch: "${gitBranch}"
          
                sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
             }
@@ -219,7 +219,7 @@ pipeline {
       stage('ivt') {
          steps {
             dir('git/ivt') {
-               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:eJATv3/ivt.git', branch: "${gitBranch}"
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:Galasav3/ivt.git', branch: "${gitBranch}"
          
                dir('galasa-ivt-parent') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"

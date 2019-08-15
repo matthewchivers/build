@@ -1,31 +1,31 @@
 ARG dockerVersion
 ARG dockerRepository
 
-FROM ${dockerRepository}/voras-obr-generic:${dockerVersion}
+FROM ${dockerRepository}/galasa-obr-generic:${dockerVersion}
 
 FROM s390x/openjdk:8-jdk
 
-COPY --from=0 /voras/* /voras/
+COPY --from=0 /galasa/* /galasa/
 
-RUN useradd -d /voras voras && \
-    chown -R voras:voras /voras
+RUN useradd -d /galasa galasa && \
+    chown -R galasa:galasa /galasa
 
-WORKDIR /voras
+WORKDIR /galasa
 
-USER voras
+USER galasa
 
-RUN mkdir /voras/.voras && \
-    touch /voras/.voras/bootstrap.properties && \
-    touch /voras/.voras/override.properties && \
-    touch /voras/.voras/cps.properties && \
-    touch /voras/.voras/dss.properties && \
-    touch /voras/.voras/credentials.properties && \
-    mkdir /voras/.voras/ras
+RUN mkdir /galasa/.galasa && \
+    touch /galasa/.galasa/bootstrap.properties && \
+    touch /galasa/.galasa/override.properties && \
+    touch /galasa/.galasa/cps.properties && \
+    touch /galasa/.galasa/dss.properties && \
+    touch /galasa/.galasa/credentials.properties && \
+    mkdir /galasa/.galasa/ras
     
 
-COPY trace-log4j.properties /voras/
+COPY trace-log4j.properties /galasa/
     
-VOLUME /voras/.voras
+VOLUME /galasa/.galasa
 
 EXPOSE 9010/tcp
 EXPOSE 9011/tcp

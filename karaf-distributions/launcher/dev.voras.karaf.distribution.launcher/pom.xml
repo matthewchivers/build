@@ -20,12 +20,12 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>dev.voras</groupId>
-    <artifactId>dev.voras.karaf.distribution.launcher</artifactId>
+    <groupId>dev.galasa</groupId>
+    <artifactId>dev.galasa.karaf.distribution.launcher</artifactId>
     <version>0.3.0-SNAPSHOT</version>
     <packaging>karaf-assembly</packaging>
 
-    <name>dev.voras.karaf.distribution.launcher</name>
+    <name>dev.galasa.karaf.distribution.launcher</name>
 
     <repositories>
         <!-- Apache ServiceMix repository (for region) -->
@@ -82,15 +82,15 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>dev.voras</groupId>
-            <artifactId>dev.voras.uber.karaffeature</artifactId>
+            <groupId>dev.galasa</groupId>
+            <artifactId>dev.galasa.uber.karaffeature</artifactId>
             <version>0.3.0-SNAPSHOT</version>
             <type>xml</type>
             <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>dev.voras</groupId>
-            <artifactId>dev.voras.karaf.distribution.api.feature</artifactId>
+            <groupId>dev.galasa</groupId>
+            <artifactId>dev.galasa.karaf.distribution.api.feature</artifactId>
             <version>0.3.0-SNAPSHOT</version>
             <type>xml</type>
             <scope>runtime</scope>
@@ -115,7 +115,7 @@
                 <artifactId>karaf-maven-plugin</artifactId>
                 <configuration>
                     <installedFeatures>
-                        <feature>voras</feature>
+                        <feature>galasa</feature>
                         <feature>launcher</feature>
                     </installedFeatures>
                     <startupFeatures>
@@ -124,7 +124,7 @@
                     <bootFeatures>
                         <feature>bundle</feature>
                         <feature>config</feature>
-                        <feature>voras</feature>
+                        <feature>galasa</feature>
                         <feature>launcher</feature>
                         <feature>diagnostic</feature>
                         <feature>feature</feature>
