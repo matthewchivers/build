@@ -67,6 +67,9 @@ pipeline {
             dir('repository/dev/voras') {
                deleteDir()
             }
+            dir('repository/dev/galasa') {
+               deleteDir()
+            }
             dir('git/wrapping') {
                deleteDir()
             }
