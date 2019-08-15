@@ -382,4 +382,10 @@ pipeline {
          }
       }
    }
+   post {
+       // triggered when red sign
+       failure {
+           slackSend (channel: '#cics-galasa', color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+       }
+    }
 }
