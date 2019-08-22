@@ -22,6 +22,24 @@
 	<dependencies>
 		<dependency>
 			<groupId>dev.galasa</groupId>
+			<artifactId>galasa-paren</artifactId>
+			<version>0.3.0-SNAPSHOT</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>galasa-core-paren</artifactId>
+			<version>0.3.0-SNAPSHOT</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>galasa-common-paren</artifactId>
+			<version>0.3.0-SNAPSHOT</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.uber.obr</artifactId>
 			<version>0.3.0-SNAPSHOT</version>
 			<type>obr</type>
