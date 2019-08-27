@@ -341,13 +341,6 @@ pipeline {
 			            sh "docker push ${dockerRepository}/galasa-ibm-boot-embedded-amd64:${dockerVersion}" 
    			         }
 			      }
-			                  
-			      dir('git/build/karaf-distributions/bootstrap') {
-			         sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean install"
-			      
-			         sh "docker build -t ${dockerRepository}/galasa-api-bootstrap-amd64:${dockerVersion} ." 
-			         sh "docker push ${dockerRepository}/galasa-api-bootstrap-amd64:${dockerVersion}" 
-			      }
                }
             }
             stage('s390x-docker-images') {
