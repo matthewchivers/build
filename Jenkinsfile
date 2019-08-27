@@ -329,6 +329,13 @@ pipeline {
 			            sh "docker push ${dockerRepository}/galasa-resources-amd64:${dockerVersion}" 
    			         }
    			         
+			         dir('master-api') {
+    			        sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean generate-sources"
+
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/galasa-master-api-amd64:${dockerVersion} ." 
+			            sh "docker push ${dockerRepository}/galasa-master-api-amd64:${dockerVersion}" 
+   			         }
+   			         
 			         dir('ibm/bootEmbedded') {
 			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} --build-arg platform=amd64 -t ${dockerRepository}/galasa-ibm-boot-embedded-amd64:${dockerVersion} ." 
 			            sh "docker push ${dockerRepository}/galasa-ibm-boot-embedded-amd64:${dockerVersion}" 
