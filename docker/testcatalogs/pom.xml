@@ -40,6 +40,7 @@
 							</artifactItems>
 							<overWriteReleases>true</overWriteReleases>
 							<overWriteSnapshots>true</overWriteSnapshots>
+							<stripClassifier>true</stripClassifier>
 							<stripVersion>true</stripVersion>
 						</configuration>
 					</execution>
