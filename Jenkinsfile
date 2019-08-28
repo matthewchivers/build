@@ -287,6 +287,14 @@ pipeline {
 			      sh "docker build -t ${dockerRepository}/galasa-obr-generic:${dockerVersion} ." 
 			      sh "docker push ${dockerRepository}/galasa-obr-generic:${dockerVersion}" 
 			   }
+
+// Build the sample test catalogs
+			   dir('testcatalogs') {
+			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean generate-sources"
+			      
+			      sh "docker build -t ${dockerRepository}/galasa-testcatalogs-generic:${dockerVersion} ." 
+			      sh "docker push ${dockerRepository}/galasa-testcatalogs-generic:${dockerVersion}" 
+			   }
 			}            
          }
       }
