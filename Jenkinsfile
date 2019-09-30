@@ -79,7 +79,7 @@ pipeline {
             dir('git/framework') {
                deleteDir()
             }
-            dir('git/core') {
+            dir('git/extensions') {
                deleteDir()
             }
             dir('git/common') {
@@ -143,13 +143,13 @@ pipeline {
          }
       }
       
-// Build the core repository
-      stage('core') {
+// Build the extensions repository
+      stage('extensions') {
          steps {
-            dir('git/core') {
-               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:galasa/core.git', branch: "${gitBranch}"
+            dir('git/extensions') {
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:galasa/extensions.git', branch: "${gitBranch}"
          
-               dir('galasa-core-parent') {
+               dir('galasa-extensions-parent') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
             }
