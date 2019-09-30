@@ -7,7 +7,7 @@
 
 	<parent>
 		<groupId>dev.galasa</groupId>
-		<artifactId>galasa-common-parent</artifactId>
+		<artifactId>galasa-parent</artifactId>
 		<version>0.3.0-SNAPSHOT</version>
 	</parent>
 	
