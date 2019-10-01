@@ -245,7 +245,7 @@ pipeline {
             
 // Build the Eclipse p2 site
             
-            dir('git/build/eclipse/galasa-eclipse-parent') {
+            dir('git/build/eclipse/dev.galasa.eclipse.site') {
                sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae install"
             }
 
