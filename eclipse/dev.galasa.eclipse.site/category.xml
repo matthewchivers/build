@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/dev.galasa.eclipse.feature_0.3.0.qualifier.jar" id="dev.galasa.eclipse.feature" version="0.3.0.qualifier">
+      <category name="dev.galasa.category"/>
+   </feature>
+   <category-def name="dev.galasa.category" label="Galasa"/>
+</site>

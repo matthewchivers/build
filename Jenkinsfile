@@ -85,9 +85,6 @@ pipeline {
             dir('git/managers') {
                deleteDir()
             }
-            dir('git/eclipse') {
-               deleteDir()
-            }
             dir('git/simframe') {
                deleteDir()
             }
@@ -152,6 +149,10 @@ pipeline {
                dir('galasa-extensions-parent') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
+
+               dir('galasa-eclipse-parent') {
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+               }
             }
          }
       }
@@ -180,19 +181,6 @@ pipeline {
                }
          
                dir('simframe-galasa-tests') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
-               }
-            }
-         }
-      }
-      
-// Build the eclipse
-      stage('eclipse') {
-         steps {
-            dir('git/eclipse') {
-               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:galasa/eclipse.git', branch: "${gitBranch}"
-         
-               dir('galasa-eclipse-parent') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
             }
@@ -251,10 +239,16 @@ pipeline {
             dir('repository/dev/galasa') {
                deleteDir()
             }
-
+        
             configFileProvider([configFile(fileId: '86dde059-684b-4300-b595-64e83c2dd217', targetLocation: 'settings.xml')]) {
             }
             
+// Build the Eclipse p2 site
+            
+            dir('git/build/eclipse/galasa-eclipse-parent') {
+               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae install"
+            }
+
 			dir('git/build/docker') {
 // Build the maven repository image
 			   dir('mavenRepository') {
