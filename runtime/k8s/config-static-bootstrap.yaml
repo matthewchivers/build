@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bootstrap-file
+data:
+  index.html: |
+    framework.config.store=etcd:http://cicsk8sm.hursley.ibm.com:32374
+    framework.extra.bundles=dev.galasa.core.cps.etcd,dev.galasa.core.ras.couchdb
+

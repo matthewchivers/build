@@ -85,10 +85,7 @@ pipeline {
             dir('git/managers') {
                deleteDir()
             }
-            dir('git/simframe') {
-               deleteDir()
-            }
-            dir('git/runtime') {
+            dir('git/simplatform') {
                deleteDir()
             }
             dir('git/inttests') {
@@ -147,11 +144,11 @@ pipeline {
          }
       }
       
-// Build the simframe
-      stage('simframe') {
+// Build the simplatform
+      stage('simplatform') {
          steps {
-            dir('git/simframe') {
-               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:galasa/simframe.git', branch: "${gitBranch}"
+            dir('git/simplatform') {
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:galasa/simplatform.git', branch: "${gitBranch}"
          
                dir('simframe-application') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
@@ -184,7 +181,7 @@ pipeline {
 // Build the runtime repository
       stage('runtime') {
          steps {
-            dir('git/runtime') {
+            dir('git/build/runtime') {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:galasa/runtime.git', branch: "${gitBranch}"
          
                sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -DdockerVersion=${dockerVersion} -P ${mvnProfile} -B -e -fae ${mvnGoal}"

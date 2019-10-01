@@ -1,0 +1,66 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-prometheus
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: {{ .Release.Name }}-prometheus
+      labels:
+        app: {{ .Release.Name }}-prometheus
+    spec:
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+        platform: hdc
+      initContainers:
+        - name: init-chown-data
+          image: busybox:latest
+          imagePullPolicy: IfNotPresent
+          command: ["chown", "-R", "65534:65534", "/data"]
+          volumeMounts:
+          - name: datadir
+            mountPath: /data
+            subPath: ""
+      containers:
+        - name: prometheus
+          image: prom/prometheus:v2.10.0
+          args:
+            - "--config.file=/etc/prometheus/prometheus.yml"
+            - "--storage.tsdb.path=/prometheus"
+          ports:
+            - containerPort: 9090
+          volumeMounts:
+            - name: prometheus-config-volume
+              mountPath: /etc/prometheus/
+            - name: datadir
+              mountPath: /prometheus
+      volumes:
+        - name: prometheus-config-volume
+          configMap:
+            defaultMode: 420
+            name: {{ .Release.Name }}-prometheus
+  volumeClaimTemplates:
+    - metadata:
+        name: datadir
+      spec:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            # upstream recommended max is 700M
+            storage: 500M
+        storageClassName: hdc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-prometheus
+  labels:
+    app: {{ .Release.Name }}-prometheus
+spec:
+  ports:
+  - port: 9090
+    name: metrics
+  selector:
+    app: {{ .Release.Name }}-prometheus

@@ -1,0 +1,58 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: grafana-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: grafana-server
+    spec:
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+      containers:
+        - name: grafana
+          image: grafana/grafana
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: grafana-config-volume
+              mountPath: /etc/grafana/
+            - name: grafana-provisioing-config-voloume
+              mountPath: /etc/grafana/provisioning/datasources
+            - name: grafana-dashboard-yaml-voloume
+              mountPath: /etc/grafana/provisioning/dashboards
+            - name: grafana-auto-dashboard-voloume
+              mountPath: /etc/grafana/json
+      volumes:
+        - name: grafana-config-volume
+          configMap:
+            defaultMode: 420
+            name: grafana-config
+        - name: grafana-provisioing-config-voloume
+          configMap:
+            defaultMode: 420
+            name: grafana-provisioning-config
+        - name: grafana-dashboard-yaml-voloume
+          configMap:
+            defaultMode: 420
+            name: grafana-dashboard-yaml
+        - name: grafana-auto-dashboard-voloume
+          configMap:
+            defaultMode: 420
+            name: grafana-auto-dashboard
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana-server
+  labels:
+    app: grafana-server
+spec:
+  ports:
+  - port: 9090
+    name: metrics
+  selector:
+    app: grafana-server

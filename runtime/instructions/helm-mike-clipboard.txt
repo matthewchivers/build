@@ -1,0 +1,50 @@
+wget http://archiva.cics-ts.hur.hdclab.intranet.ibm.com:8080/repository/demo/dev.galasa/runtime/0.3.0-SNAPSHOT/runtime-0.3.0-SNAPSHOT.zip
+
+unzip runtime-0.3.0-SNAPSHOT.zip
+
+helm --tiller-namespace tiller install --name mike --namespace play1 helm
+
+helm --tiller-namespace tiller status mike
+
+kubectl -n play1 edit configmap mike-bootstrap
+
+etcdctl --endpoints=http://cicsk8sm.hursley.ibm.com:{cps} put framework.dynamicstatus.store etcd:http://cicsk8sm.hursley.ibm.com:{dss}
+
+etcdctl --endpoints=http://cicsk8sm.hursley.ibm.com:{cps} put framework.resultarchive.store couchdb:http://cicsk8sm.hursley.ibm.com:{ras}
+
+etcdctl --endpoints=http://cicsk8sm.hursley.ibm.com:{cps} put zos.cluster.default.images MV2D
+
+kubectl -n play1 scale deployment.v1.apps/mike-bootstrap --replicas=1
+
+kubectl -n play1 scale deployment.v1.apps/mike-controller --replicas=1
+kubectl -n play1 scale deployment.v1.apps/mike-metrics --replicas=1
+kubectl -n play1 scale deployment.v1.apps/mike-resmon --replicas=1
+
+helm --tiller-namespace tiller status mike
+
+
+mvn archetype:generate -DarchetypeGroupId=dev.galasa -DarchetypeArtifactId=galasa-demo-archetype -DarchetypeVersion=0.3.0-SNAPSHOT -DgroupId=mike2
+
+mvn install
+
+mvn deploy
+
+java -jar ./galasa-boot.jar --bootstrap https://cicscit.hursley.ibm.com/mike/bootstrap/ --obr mvn:mike2/demo-obr/1.0-SNAPSHOT/obr --test  demo.tests/demo.FastCore
+
+tar -xvzf ~/Downloads/apache-karaf-4.2.5.tar.gz
+
+feature:install maven
+maven:repository-add -id galasa http://cicscit.hursley.ibm.com/galasa/maven@snapshots
+feature:repo-add mvn:dev.galasa/dev.galasa.uber.karaffeature/0.3.0-SNAPSHOT/xml
+feature:repo-add mvn:dev.galasa/dev.galasa.devtools.karaffeature/0.3.0-SNAPSHOT/xml
+
+feature:install galasa-devtools
+
+galasa:init --bootstrap https://cicscit.hursley.ibm.com/mike/bootstrap/
+
+run:submit --repo http://archiva.cics-ts.hur.hdclab.intranet.ibm.com:8080/repository/demo --obr mvn:mike2/demo-obr/1.0-SNAPSHOT/obr demo.tests demo.SlowCore
+
+kubectl -n play1 get pods
+kubectl -n play1 logs mike-engine-u1
+
+run:submit --repo http://archiva.cics-ts.hur.hdclab.intranet.ibm.com:8080/repository/demo --obr mvn:mike2/demo-obr/1.0-SNAPSHOT/obr --count 10 demo.tests demo.SlowCore

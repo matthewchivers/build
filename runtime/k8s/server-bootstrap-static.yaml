@@ -1,0 +1,47 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: bootstrap
+  labels:
+    app: bootstrap
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: bootstrap
+      labels:
+        app: bootstrap
+    spec:
+      serviceAccountName: galasa
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+      containers:
+      - name: bootstrap
+        image: cicsts-docker-local.artifactory.swg-devops.com/galasa-static-bootstrap-amd64:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          name: http
+        volumeMounts:
+        - name: bootstrap
+          mountPath: /usr/local/apache2/htdocs
+      volumes:
+      - name: bootstrap
+        configMap:
+          name: bootstrap-file
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bootstrap
+  labels:
+    app: bootstrap
+spec:
+  ports:
+  - port: 80
+    name: http
+  selector:
+    app: bootstrap
+
+
+

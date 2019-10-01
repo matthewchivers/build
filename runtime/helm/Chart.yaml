@@ -1,0 +1,5 @@
+apiVersion: v1
+appVersion: "1.0"
+description: Galasa helm chart
+name: galasa
+version: 0.3.0

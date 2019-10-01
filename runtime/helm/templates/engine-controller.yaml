@@ -1,0 +1,71 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-controller
+  labels:
+    app: {{ .Release.Name }}-controller
+spec:
+  replicas: 0
+  template:
+    metadata:
+      name: {{ .Release.Name }}-controller
+      labels:
+        app: {{ .Release.Name }}-controller
+    spec:
+      serviceAccountName: {{ .Release.Name }}-controller
+      containers:
+      - name: resource-monitor
+        image: cicsts-docker-local.artifactory.swg-devops.com/galasa-boot-embedded:latest
+        imagePullPolicy: Always
+        command: ["java"]
+        args: 
+        - -jar
+        - boot.jar
+        - --obr
+        - file:galasa.obr
+        - --trace
+        - --k8scontroller
+        - --bootstrap
+        - $(BOOTSTRAP_URI)
+        env:
+        - name: BOOTSTRAP_URI
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-config
+              key: bootstrap
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: CONFIG
+          value: {{ .Release.Name }}-config
+        ports:
+        - containerPort: 9010
+          name: metrics
+        - containerPort: 9011
+          name: health
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 9011
+          initialDelaySeconds: 60
+          periodSeconds: 60
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-controller
+  labels:
+    app: {{ .Release.Name }}-controller
+spec:
+  ports:
+  - port: 9010
+    name: metrics
+  - port: 9011
+    name: health
+  selector:
+    app: {{ .Release.Name }}-controller
+
+
+
