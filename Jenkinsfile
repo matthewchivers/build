@@ -114,6 +114,23 @@ pipeline {
          }
       }
       
+// Build the simframe
+      stage('simframe') {
+         steps {
+            dir('git/simframe') {
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:galasa/simframe.git', branch: "${gitBranch}"
+         
+               dir('simframe-application') {
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+               }
+         
+               dir('simframe-galasa-tests') {
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+               }
+            }
+         }
+      }
+      
 // Build the maven repository
       stage('maven') {
          steps {
@@ -164,23 +181,6 @@ pipeline {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:galasa/managers.git', branch: "${gitBranch}"
          
                dir('galasa-managers-parent') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
-               }
-            }
-         }
-      }
-      
-// Build the simframe
-      stage('simframe') {
-         steps {
-            dir('git/simframe') {
-               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:galasa/simframe.git', branch: "${gitBranch}"
-         
-               dir('simframe-application') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
-               }
-         
-               dir('simframe-galasa-tests') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
                }
             }
