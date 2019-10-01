@@ -91,9 +91,6 @@ pipeline {
             dir('git/runtime') {
                deleteDir()
             }
-            dir('git/devtools') {
-               deleteDir()
-            }
             dir('git/inttests') {
                deleteDir()
             }
@@ -191,17 +188,6 @@ pipeline {
                git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:galasa/runtime.git', branch: "${gitBranch}"
          
                sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -DdockerVersion=${dockerVersion} -P ${mvnProfile} -B -e -fae ${mvnGoal}"
-            }
-         }
-      }
-      
-// Build the devtools repository
-      stage('devtools') {
-         steps {
-            dir('git/devtools') {
-               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:galasa/devtools.git', branch: "${gitBranch}"
-         
-               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
             }
          }
       }
