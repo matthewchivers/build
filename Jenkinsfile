@@ -191,6 +191,15 @@ pipeline {
          }
       }
       
+// Build the various global sites and features
+      stage('global') {
+         steps {
+            dir('git/build/devtools') {
+               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -DdockerVersion=${dockerVersion} -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+            }
+         }
+      }
+      
 // Spawn to a docker amd64 agent to build the generic (non-executable) images      
       stage('generic-docker-images') {
          agent { 
@@ -235,7 +244,7 @@ pipeline {
 			      sh "docker push ${dockerRepository}/galasa-javadoc-generic:${dockerVersion}" 
 			   }
 			   
-// Build the javadocs image
+// Build the eclipse image
 			   dir('eclipse') {
 			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean generate-sources"
 			      
