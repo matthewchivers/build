@@ -1,4 +1,5 @@
 def tagToSet = 'unknown'
+def gitBranch = 'unknown'
 
 pipeline {
 // Initially run on any agent
@@ -12,6 +13,7 @@ pipeline {
          steps {
             script {
                tagToSet = 'testPreProd'
+               gitBranch = 'master'
             }
          }
       }
