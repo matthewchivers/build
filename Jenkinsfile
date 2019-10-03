@@ -85,6 +85,11 @@ pipeline {
             dir('devtools') {
                sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -DdockerVersion=${dockerVersion} -P ${mvnProfile} -B -e -fae ${mvnGoal}"
             }
+            
+// Build the Eclipse p2 site
+            dir('eclipse/dev.galasa.eclipse.site') {
+               sh "MAVEN_OPTS=-Xmx800m mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+            }
          }
       }
       
@@ -109,12 +114,6 @@ pipeline {
             configFileProvider([configFile(fileId: '86dde059-684b-4300-b595-64e83c2dd217', targetLocation: 'settings.xml')]) {
             }
             
-// Build the Eclipse p2 site
-            
-            dir('eclipse/dev.galasa.eclipse.site') {
-               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae deploy"
-            }
-
 			dir('docker') {
 // Build the maven repository image
 			   dir('mavenRepository') {
