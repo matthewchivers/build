@@ -1,0 +1,38 @@
+def tagToSet = 'unknown'
+
+pipeline {
+// Initially run on any agent
+   agent any
+   stages {
+// If it is the master branch, version 0.3.0 and master on all the other branches
+      stage('set-dev') {
+         when {
+           environment name: 'GIT_BRANCH', value: 'origin/master'
+         }
+         steps {
+            script {
+               tagToSet = 'testPreProd'
+            }
+         }
+      }
+   
+      stage('wrapping') {
+         steps {
+            dir('git/wrapping') {
+               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:Michael-Baylis/wrapping.git', branch: "${gitBranch}"
+         
+               sh 'git tag ${tagToSet}'
+               sh 'git push origin --tags'
+            }
+         }
+      }
+
+
+   }
+//   post {
+//       // triggered when red sign
+//       failure {
+//           slackSend (channel: '#project-galasa-devs', color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+//       }
+//    }
+}
