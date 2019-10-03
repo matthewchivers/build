@@ -1,6 +1,5 @@
-def mvnProfile    = 'unknown'
-def dockerVersion = 'unknown'
-def gitBranch     = 'unknown'
+def mvnProfile    = 'galasa-dev'
+def dockerVersion = '0.3.0'
 
 pipeline {
 // Initially run on any agent
@@ -12,7 +11,7 @@ pipeline {
       
 //Set some defaults
       def workspace = pwd()
-      def mvnGoal    = 'deploy'
+      def mvnGoal    = 'install'
       def dockerRepository = 'cicsts-docker-local.artifactory.swg-devops.com'
    }
    stages {
@@ -23,31 +22,29 @@ pipeline {
          }
          steps {
             script {
+               mvnGoal       = 'deploy'
                mvnProfile    = 'galasa-dev'
-               dockerVersion = '0.3.0'
-               gitBranch     = 'master'
             }
          }
       }
 // If the test-preprod tag,  then set as appropriate
-      stage('set-test-preprod') {
-         when {
-           environment name: 'GIT_BRANCH', value: 'origin/testpreprod'
-         }
-         steps {
-            script {
-               mvnProfile    = 'galasa-preprod'
-               dockerVersion = 'preprod'
-               gitBranch     = 'testpreprod'
-            }
-         }
-      }
+//      stage('set-test-preprod') {
+//        when {
+//           environment name: 'GIT_BRANCH', value: 'origin/testpreprod'
+//         }
+//         steps {
+//            script {
+//               mvnProfile    = 'galasa-preprod'
+//               dockerVersion = 'preprod'
+//               gitBranch     = 'testpreprod'
+//            }
+//         }
+//      }
 
 // for debugging purposes
       stage('report') {
          steps {
             echo "Branch/Tag         : ${env.GIT_BRANCH}"
-            echo "Repo Branches      : ${gitBranch}"
             echo "Workspace directory: ${workspace}"
             echo "Maven Goal         : ${mvnGoal}"
             echo "Maven profile      : ${mvnProfile}"
@@ -70,122 +67,13 @@ pipeline {
             dir('repository/dev/galasa') {
                deleteDir()
             }
-            dir('git/wrapping') {
-               deleteDir()
-            }
-            dir('git/maven') {
-               deleteDir()
-            }
-            dir('git/framework') {
-               deleteDir()
-            }
-            dir('git/extensions') {
-               deleteDir()
-            }
-            dir('git/managers') {
-               deleteDir()
-            }
-            dir('git/simplatform') {
-               deleteDir()
-            }
-            dir('git/inttests') {
-               deleteDir()
-            }
-         }
-      }
-      
-// Build the wrapping repository
-      stage('wrapping') {
-         steps {
-            dir('git/wrapping') {
-               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:galasa/wrapping.git', branch: "${gitBranch}"
-         
-               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
-            }
-         }
-      }
-      
-// Build the maven repository
-      stage('maven') {
-         steps {
-            dir('git/maven') {
-               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:galasa/maven.git', branch: "${gitBranch}"
-         
-               dir('galasa-maven-plugin') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
-               }
-            }
-         }
-      }
-      
-// Build the framework repository
-      stage('framework') {
-         steps {
-            dir('git/framework') {
-               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:galasa/framework.git', branch: "${gitBranch}"
-         
-               dir('galasa-parent') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
-               }
-            }
-         }
-      }
-      
-// Build the extensions repository
-      stage('extensions') {
-         steps {
-            dir('git/extensions') {
-               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:galasa/extensions.git', branch: "${gitBranch}"
-         
-               dir('galasa-extensions-parent') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
-               }
-
-               dir('galasa-eclipse-parent') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
-               }
-            }
-         }
-      }
-      
-// Build the managers repository
-      stage('managers') {
-         steps {
-            dir('git/managers') {
-               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:galasa/managers.git', branch: "${gitBranch}"
-         
-               dir('galasa-managers-parent') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
-               }
-            }
-         }
-      }
-      
-// Build the simplatform
-      stage('simplatform') {
-         steps {
-            dir('git/simplatform') {
-               git credentialsId: 'df028cc4-778d-4f90-ab52-e2a0db283c9f', url: 'git@github.ibm.com:galasa/simplatform.git', branch: "${gitBranch}"
-         
-               dir('galasa-simplatform-application') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
-               }
-         
-               dir('galasa-simbank-tests') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
-               }
-         
-               dir('galasa-simbank-eclipse') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
-               }
-            }
          }
       }
       
 // Build the runtime repository
       stage('runtime') {
          steps {
-            dir('git/build/runtime') {
+            dir('runtime') {
                sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -DdockerVersion=${dockerVersion} -P ${mvnProfile} -B -e -fae ${mvnGoal}"
             }
          }
@@ -194,7 +82,7 @@ pipeline {
 // Build the various global sites and features
       stage('global') {
          steps {
-            dir('git/build/devtools') {
+            dir('devtools') {
                sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -DdockerVersion=${dockerVersion} -P ${mvnProfile} -B -e -fae ${mvnGoal}"
             }
          }
@@ -223,11 +111,11 @@ pipeline {
             
 // Build the Eclipse p2 site
             
-            dir('git/build/eclipse/dev.galasa.eclipse.site') {
+            dir('eclipse/dev.galasa.eclipse.site') {
                sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae install"
             }
 
-			dir('git/build/docker') {
+			dir('docker') {
 // Build the maven repository image
 			   dir('mavenRepository') {
 			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -DdockerVersion=${dockerVersion} -P ${mvnProfile} -B -e clean galasa:mavenrepository"
@@ -293,7 +181,7 @@ pipeline {
                   configFileProvider([configFile(fileId: '86dde059-684b-4300-b595-64e83c2dd217', targetLocation: 'settings.xml')]) {
                   }
             
-			      dir('git/build/docker') {
+			      dir('docker') {
 			         dir('bootEmbedded') {
 			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/galasa-boot-embedded-amd64:${dockerVersion} ." 
 			            sh "docker push ${dockerRepository}/galasa-boot-embedded-amd64:${dockerVersion}" 
@@ -342,7 +230,7 @@ pipeline {
                   configFileProvider([configFile(fileId: '86dde059-684b-4300-b595-64e83c2dd217', targetLocation: 'settings.xml')]) {
                   }
             
-			      dir('git/build/docker') {
+			      dir('docker') {
 			         dir('bootEmbedded') {
 			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/galasa-boot-embedded-s390x:${dockerVersion} -f Dockerfile.s390x ." 
 			            sh "docker push ${dockerRepository}/galasa-boot-embedded-s390x:${dockerVersion}" 
