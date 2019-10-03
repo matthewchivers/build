@@ -11,7 +11,7 @@
 
 	<artifactId>dev.galasa.devtools</artifactId>
 	<version>0.3.0-SNAPSHOT</version>
-	<packaging>POM</packaging>
+	<packaging>pom</packaging>
 
 	<modules>
 		<module>dev.galasa.devtools.karaffeature</module>
