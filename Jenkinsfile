@@ -88,7 +88,7 @@ pipeline {
             
 // Build the Eclipse p2 site
             dir('eclipse/dev.galasa.eclipse.site') {
-               sh "MAVEN_OPTS=-Xmx1536m mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e ${mvnGoal}"
+               sh "mvn -Dmaven.artifact.threads=1  --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e ${mvnGoal}"
             }
          }
       }
