@@ -74,7 +74,7 @@ pipeline {
       stage('runtime') {
          steps {
             dir('runtime') {
-               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -DdockerVersion=${dockerVersion} -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -DdockerVersion=${dockerVersion} -P ${mvnProfile} -B -e ${mvnGoal}"
             }
          }
       }
@@ -83,12 +83,12 @@ pipeline {
       stage('global') {
          steps {
             dir('devtools') {
-               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -DdockerVersion=${dockerVersion} -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -DdockerVersion=${dockerVersion} -P ${mvnProfile} -B -e ${mvnGoal}"
             }
             
 // Build the Eclipse p2 site
             dir('eclipse/dev.galasa.eclipse.site') {
-               sh "MAVEN_OPTS=-Xmx1536m mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e -fae ${mvnGoal}"
+               sh "MAVEN_OPTS=-Xmx1536m mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e ${mvnGoal}"
             }
          }
       }
