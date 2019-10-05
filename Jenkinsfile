@@ -45,6 +45,7 @@ pipeline {
       stage('report') {
          steps {
             echo "Branch/Tag         : ${env.GIT_BRANCH}"
+            echo "GIT Commit Hash    : ${env.GIT_COMMIT}"
             echo "Workspace directory: ${workspace}"
             echo "Maven Goal         : ${mvnGoal}"
             echo "Maven profile      : ${mvnProfile}"
@@ -192,7 +193,7 @@ pipeline {
    			         }
    			         
 			         dir('resources') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/galasa-resources-amd64:${dockerVersion} ." 
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} --build-arg gitHash=${GIT_COMMIT} -t ${dockerRepository}/galasa-resources-amd64:${dockerVersion} ." 
 			            sh "docker push ${dockerRepository}/galasa-resources-amd64:${dockerVersion}" 
    			         }
    			         
@@ -241,7 +242,7 @@ pipeline {
    			         }
    			         
 			         dir('resources') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/galasa-resources-s390x:${dockerVersion} ." 
+			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} --build-arg gitHash=${GIT_COMMIT} -t ${dockerRepository}/galasa-resources-s390x:${dockerVersion} ." 
 			            sh "docker push ${dockerRepository}/galasa-resources-s390x:${dockerVersion}" 
    			         }
    			         
