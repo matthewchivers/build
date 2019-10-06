@@ -1,6 +1,5 @@
 ARG dockerVersion
 ARG dockerRepository
-ARG gitHash
 
 FROM ${dockerRepository}/galasa-maven-repo-generic:${dockerVersion}
 
@@ -11,6 +10,8 @@ FROM ${dockerRepository}/galasa-eclipse-generic:${dockerVersion}
 FROM ${dockerRepository}/galasa-testcatalogs-generic:${dockerVersion}
 
 FROM httpd:2.4
+
+ARG gitHash
 
 RUN rm -v /usr/local/apache2/htdocs/*
 
