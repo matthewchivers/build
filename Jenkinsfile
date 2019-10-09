@@ -187,11 +187,6 @@ pipeline {
 			            sh "docker push ${dockerRepository}/galasa-boot-embedded-amd64:${dockerVersion}" 
    			         }
 
-			         dir('rasCouchdbInit') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/galasa-ras-couchdb-init-amd64:${dockerVersion} ." 
-			            sh "docker push ${dockerRepository}/galasa-ras-couchdb-init-amd64:${dockerVersion}" 
-   			         }
-   			         
 			         dir('resources') {
 			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} --build-arg gitHash=${GIT_COMMIT} -t ${dockerRepository}/galasa-resources-amd64:${dockerVersion} ." 
 			            sh "docker push ${dockerRepository}/galasa-resources-amd64:${dockerVersion}" 
@@ -234,11 +229,6 @@ pipeline {
 			         dir('bootEmbedded') {
 			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/galasa-boot-embedded-s390x:${dockerVersion} -f Dockerfile.s390x ." 
 			            sh "docker push ${dockerRepository}/galasa-boot-embedded-s390x:${dockerVersion}" 
-   			         }
-   			         
-			         dir('rasCouchdbInit') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/galasa-ras-couchdb-init-s390x:${dockerVersion} ." 
-			            sh "docker push ${dockerRepository}/galasa-ras-couchdb-init-s390x:${dockerVersion}" 
    			         }
    			         
 			         dir('resources') {
