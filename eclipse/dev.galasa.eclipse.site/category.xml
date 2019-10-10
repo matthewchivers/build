@@ -6,5 +6,8 @@
    <feature url="features/dev.galasa.simbank.feature_0.3.0.qualifier.jar" id="dev.galasa.simbank.feature" version="0.3.0.qualifier">
       <category name="dev.galasa.category"/>
    </feature>
+   <feature url="features/dev.galasa.zos.feature_0.3.0.qualifier.jar" id="dev.galasa.zos.feature" version="0.3.0.qualifier">
+      <category name="dev.galasa.category"/>
+   </feature>
    <category-def name="dev.galasa.category" label="Galasa"/>
 </site>
