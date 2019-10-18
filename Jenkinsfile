@@ -1,5 +1,6 @@
 def mvnProfile    = 'galasa-dev'
 def dockerVersion = '0.3.0'
+def galasaSignJarSkip = 'true'
 
 pipeline {
 // Initially run on any agent
@@ -24,6 +25,7 @@ pipeline {
             script {
                mvnGoal       = 'deploy'
                mvnProfile    = 'galasa-dev'
+               galasaSignJarSkip = 'false'
             }
          }
       }
@@ -51,6 +53,7 @@ pipeline {
             echo "Maven profile      : ${mvnProfile}"
             echo "Docker Version     : ${dockerVersion}"
             echo "Docker Repository  : ${dockerRepository}"
+            echo "Skip Signing JARs  : ${galasaSignJarSkip}"
          }
       }
    
