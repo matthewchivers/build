@@ -25,7 +25,7 @@ pipeline {
             script {
                mvnGoal       = 'deploy'
                mvnProfile    = 'galasa-dev'
-               galasaSignJarSkip = 'true'
+               galasaSignJarSkip = 'false'
             }
          }
       }
