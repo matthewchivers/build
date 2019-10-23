@@ -119,29 +119,13 @@ pipeline {
             configFileProvider([configFile(fileId: '86dde059-684b-4300-b595-64e83c2dd217', targetLocation: 'settings.xml')]) {
             }
             
-			dir('docker') {
-// Build the maven repository image
-			   dir('mavenRepository') {
-			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -DdockerVersion=${dockerVersion} -P ${mvnProfile} -B -e clean galasa:mavenrepository"
-			      
-			      sh "docker build -t ${dockerRepository}/galasa-maven-repo-generic:${dockerVersion} ." 
-			      sh "docker push ${dockerRepository}/galasa-maven-repo-generic:${dockerVersion}" 
-			   }
-			   
+			dir('docker') {			   
 // Build the javadocs image
 			   dir('javadoc') {
 			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean generate-sources"
 			      
 			      sh "docker build -t ${dockerRepository}/galasa-javadoc-generic:${dockerVersion} ." 
 			      sh "docker push ${dockerRepository}/galasa-javadoc-generic:${dockerVersion}" 
-			   }
-			   
-// Build the eclipse image
-			   dir('eclipse') {
-			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean generate-sources"
-			      
-			      sh "docker build -t ${dockerRepository}/galasa-eclipse-generic:${dockerVersion} ." 
-			      sh "docker push ${dockerRepository}/galasa-eclipse-generic:${dockerVersion}" 
 			   }
 			   
 // Build the emedded obr directory
@@ -196,6 +180,13 @@ pipeline {
 			            sh "docker push ${dockerRepository}/galasa-resources-amd64:${dockerVersion}" 
    			         }
    			         
+                     dir('eclipse') {
+                        sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean generate-sources"
+                  
+                        sh "docker build --build-arg gitHash=${GIT_COMMIT} -t ${dockerRepository}/galasa-p2-amd64:${dockerVersion} ." 
+                        sh "docker push ${dockerRepository}/galasa-p2-amd64:${dockerVersion}" 
+                     }
+               
 			         dir('master-api') {
     			        sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean generate-sources"
 
