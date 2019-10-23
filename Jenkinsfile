@@ -13,7 +13,7 @@ pipeline {
 //Set some defaults
       def workspace = pwd()
       def mvnGoal    = 'install'
-      def dockerRepository = 'cicsts-docker-local.artifactory.swg-devops.com'
+      def dockerRepository = 'docker.galasa.dev'
    }
    stages {
 // If it is the master branch, version 0.3.0 and master on all the other branches
@@ -26,6 +26,7 @@ pipeline {
                mvnGoal       = 'deploy'
                mvnProfile    = 'galasa-dev'
                galasaSignJarSkip = 'false'
+               dockerVersion = '0.3.0-SNAPSHOT'
             }
          }
       }
