@@ -122,14 +122,6 @@ pipeline {
             }
             
 			dir('docker') {			   
-// Build the javadocs image
-			   dir('javadoc') {
-			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean generate-sources"
-			      
-			      sh "docker build -t ${dockerRepository}/galasa-javadoc-generic:${dockerVersion} ." 
-			      sh "docker push ${dockerRepository}/galasa-javadoc-generic:${dockerVersion}" 
-			   }
-			   
 // Build the emedded obr directory
 			   dir('dockerObr') {
 			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean process-sources galasa:obrembedded"
@@ -200,6 +192,14 @@ pipeline {
 			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} --build-arg platform=amd64 -t ${dockerRepository}/galasa-ibm-boot-embedded-amd64:${dockerVersion} ." 
 			            sh "docker push ${dockerRepository}/galasa-ibm-boot-embedded-amd64:${dockerVersion}" 
    			         }
+
+// Build the javadocs image
+			         dir('javadoc') {
+			            sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean generate-sources"
+			      
+			            sh "docker build -t ${dockerRepository}/galasa-javadoc-amd64:${dockerVersion} ." 
+			            sh "docker push ${dockerRepository}/galasa-javadoc-amd64:${dockerVersion}" 
+			         }
 			      }
                }
             }
