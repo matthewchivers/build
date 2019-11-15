@@ -1,5 +1,5 @@
-def mvnProfile    = 'galasa-dev'
-def dockerVersion = '0.3.0'
+def mvnProfile        = 'dev'
+def dockerVersion     = '0.3.0'
 def galasaSignJarSkip = 'true'
 
 pipeline {
@@ -25,26 +25,26 @@ pipeline {
          }
          steps {
             script {
-               mvnGoal       = 'deploy'
-               mvnProfile    = 'galasa-dev'
+               mvnGoal           = 'deploy'
+               mvnProfile        = 'dev'
                galasaSignJarSkip = 'false'
-               dockerVersion = '0.3.0-SNAPSHOT'
+               dockerVersion     = '0.3.0-SNAPSHOT'
             }
          }
       }
-// If the test-preprod tag,  then set as appropriate
-//      stage('set-test-preprod') {
-//        when {
-//           environment name: 'GIT_BRANCH', value: 'origin/testpreprod'
-//         }
-//         steps {
-//            script {
-//               mvnProfile    = 'galasa-preprod'
-//               dockerVersion = 'preprod'
-//               gitBranch     = 'testpreprod'
-//            }
-//         }
-//      }
+// If it is the staging branch
+      stage('set-staging') {
+         when {
+           environment name: 'GIT_BRANCH', value: 'origin/staging'
+         }
+         steps {
+            script {
+               mvnGoal           = 'deploy'
+               mvnProfile        = 'staging'
+               dockerVersion     = '0.3.0'
+            }
+         }
+      }
 
 // for debugging purposes
       stage('report') {
@@ -80,8 +80,10 @@ pipeline {
 // Build the runtime repository
       stage('runtime') {
          steps {
-            dir('runtime') {
-               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -DdockerVersion=${dockerVersion} -P ${mvnProfile} -B -e ${mvnGoal}"
+            withCredentials([string(credentialsId: 'galasa-gpg', variable: 'GPG')]) {
+               dir('runtime') {
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -DdockerVersion=${dockerVersion} -Dgpg.skip=false -Dgpg.passphrase=$GPG  -P ${mvnProfile} -B -e ${mvnGoal}"
+               }
             }
          }
       }
@@ -89,13 +91,15 @@ pipeline {
 // Build the various global sites and features
       stage('global') {
          steps {
-            dir('devtools') {
-               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -DdockerVersion=${dockerVersion} -P ${mvnProfile} -B -e ${mvnGoal}"
-            }
+            withCredentials([string(credentialsId: 'galasa-gpg', variable: 'GPG')]) {
+               dir('devtools') {
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -DdockerVersion=${dockerVersion} -Dgpg.skip=false -Dgpg.passphrase=$GPG  -P ${mvnProfile} -B -e ${mvnGoal}"
+               }
             
 // Build the Eclipse p2 site
-            dir('eclipse/dev.galasa.eclipse.site') {
-               sh "mvn -Dmaven.artifact.threads=1  --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e ${mvnGoal}"
+               dir('eclipse/dev.galasa.eclipse.site') {
+                  sh "mvn -Dmaven.artifact.threads=1  --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -Dgpg.skip=false -Dgpg.passphrase=$GPG -P ${mvnProfile} -B -e ${mvnGoal}"
+               }
             }
          }
       }
