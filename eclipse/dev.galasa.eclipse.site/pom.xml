@@ -5,7 +5,7 @@
 
 	<groupId>dev.galasa</groupId>
 	<artifactId>dev.galasa.eclipse.site</artifactId>
-	<version>0.3.0</version>
+	<version>0.3.1</version>
 	<packaging>eclipse-repository</packaging>
 	<name>Galasa p2 repository</name>
 
@@ -42,38 +42,38 @@
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.eclipse.feature</artifactId>
-			<version>0.3.0</version>
+			<version>0.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.eclipse.feature</artifactId>
-			<version>0.3.0</version>
+			<version>0.3.1</version>
 			<type>xml</type>
 			<classifier>p2metadata</classifier>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.eclipse.feature</artifactId>
-			<version>0.3.0</version>
+			<version>0.3.1</version>
 			<type>xml</type>
 			<classifier>p2artifacts</classifier>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.simbank.feature</artifactId>
-			<version>0.3.0</version>
+			<version>0.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.simbank.feature</artifactId>
-			<version>0.3.0</version>
+			<version>0.3.1</version>
 			<type>xml</type>
 			<classifier>p2metadata</classifier>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.simbank.feature</artifactId>
-			<version>0.3.0</version>
+			<version>0.3.1</version>
 			<type>xml</type>
 			<classifier>p2artifacts</classifier>
 		</dependency>
