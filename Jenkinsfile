@@ -146,8 +146,8 @@ pipeline {
       }
       
 // Build all the platform specific docker images
-      stage('platform-docker-images') {
-         parallel {
+//      stage('platform-docker-images') {
+//         parallel { 
             stage('amd64-docker-images') {
                agent { 
                   label 'docker-amd64'
@@ -244,8 +244,8 @@ pipeline {
 			      }            
                }
             }
-         }
-      }
+//         }
+//      }
    }
    post {
        // triggered when red sign
