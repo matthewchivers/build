@@ -1,5 +1,8 @@
 # Build
-This repository contains resources that are used to build Galasa, and includes tools such as Docker, Eclipse and Jenkins.
+This repository combines built projects into docker images and also makes the projects available to download as plug-ins from the eclipse update site.
+
+For information about installing new or updated projects from the eclipse update site, see the [Installing section](https://galasa.dev/docs/getting-started/installing) on the Galasa website.
+
 
 ## Documentation
 
