@@ -28,7 +28,7 @@ pipeline {
                mvnGoal           = 'deploy'
                mvnProfile        = 'dev'
                galasaSignJarSkip = 'false'
-               dockerVersion     = '0.4.0-SNAPSHOT'
+               dockerVersion     = '0.4.0'
             }
          }
       }

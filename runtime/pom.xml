@@ -8,23 +8,23 @@
 	<parent>
 		<groupId>dev.galasa</groupId>
 		<artifactId>galasa-parent</artifactId>
-		<version>0.4.0-SNAPSHOT</version>
+		<version>0.4.0</version>
 	</parent>
 
 	<artifactId>runtime</artifactId>
-	<version>0.4.0-SNAPSHOT</version>
+	<version>0.4.0</version>
 	<packaging>pom</packaging>
 
 	<dependencies>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>galasa-boot</artifactId>
-			<version>0.4.0-SNAPSHOT</version>
+			<version>0.4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>galasa-simplatform</artifactId>
-			<version>0.4.0-SNAPSHOT</version>
+			<version>0.4.0</version>
 		</dependency>
 	</dependencies>
 
@@ -67,12 +67,12 @@
 						<artifactItem>
 							<groupId>dev.galasa</groupId>
 							<artifactId>galasa-boot</artifactId>
-							<version>0.4.0-SNAPSHOT</version>
+							<version>0.4.0</version>
 						</artifactItem>
 						<artifactItem>
 							<groupId>dev.galasa</groupId>
 							<artifactId>galasa-simplatform</artifactId>
-							<version>0.4.0-SNAPSHOT</version>
+							<version>0.4.0</version>
 						</artifactItem>
 					</artifactItems>
 					<type>jar</type>
