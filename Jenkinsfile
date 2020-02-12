@@ -1,5 +1,5 @@
 def mvnProfile        = 'dev'
-def dockerVersion     = '0.4.0'
+def dockerVersion     = '0.5.0'
 def galasaSignJarSkip = 'true'
 
 pipeline {
@@ -28,7 +28,7 @@ pipeline {
                mvnGoal           = 'deploy'
                mvnProfile        = 'dev'
                galasaSignJarSkip = 'false'
-               dockerVersion     = '0.4.0'
+               dockerVersion     = '0.5.0-SNAPSHOT'
             }
          }
       }
@@ -41,7 +41,7 @@ pipeline {
             script {
                mvnGoal           = 'deploy'
                mvnProfile        = 'staging'
-               dockerVersion     = '0.4.0'
+               dockerVersion     = '0.5.0'
             }
          }
       }
