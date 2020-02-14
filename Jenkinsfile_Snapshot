@@ -1,0 +1,83 @@
+def mvnProfile        = 'dev'
+
+pipeline {
+// Initially run on any agent
+   agent {
+      any
+   }
+   environment {
+//Configure Maven from the maven tooling in Jenkins
+      def mvnHome = tool 'Default'
+      PATH = "${mvnHome}/bin:${env.PATH}"
+      
+//Set some defaults
+      def workspace = pwd()
+      def dockerRepository = 'docker.galasa.dev'
+   }
+   stages {
+// If this being run from the master branch, then we are setup for Integration testing
+      stage('set-dev') {
+         when {
+           environment name: 'GIT_BRANCH', value: 'origin/master'
+         }
+         steps {
+            script {
+               mvnGoal           = 'deploy'
+               mvnProfile        = 'dev'
+               fromDockerVersion = '0.5.0-SNAPSHOT'
+               toDockerVersion   = '0.5.0-INTEGRATION'
+            }
+         }
+      }
+// for debugging purposes
+      stage('report') {
+         steps {
+            echo "Branch/Tag         : ${env.GIT_BRANCH}"
+            echo "GIT Commit Hash    : ${env.GIT_COMMIT}"
+            echo "Workspace directory: ${workspace}"
+            echo "Maven profile      : ${mvnProfile}"
+            echo "From Docker Version: ${fromDockerVersion}"
+            echo "To Docker Version  : ${toDockerVersion}"
+            echo "Docker Repository  : ${dockerRepository}"
+         }
+      }
+   
+// Set up the workspace, clear the git directories and setup the manve settings.xml files
+      stage('prep-workspace') { 
+         steps {
+            configFileProvider([configFile(fileId: '86dde059-684b-4300-b595-64e83c2dd217', targetLocation: 'settings.xml')]) {
+            }
+         
+            dir('repository/dev.galasa') {
+               deleteDir()
+            }
+            dir('repository/dev/galasa') {
+               deleteDir()
+            }
+         }
+      }
+      
+// Snap the docker images
+      stage('snap-docker') {
+         steps {
+         	sh "docker pull ${dockerRepository}/galasa-boot-embedded-amd64:${fromDockerVersion}" 
+         	sh "docker pull ${dockerRepository}/galasa-resources-amd64:${fromDockerVersion}" 
+         	sh "docker pull ${dockerRepository}/galasa-p2-amd64:${fromDockerVersion}" 
+         	sh "docker pull ${dockerRepository}/galasa-master-api-amd64:${fromDockerVersion}" 
+         	sh "docker pull ${dockerRepository}/galasa-javadoc-amd64:${fromDockerVersion}" 
+
+         	sh "docker tag ${dockerRepository}/galasa-boot-embedded-amd64:${fromDockerVersion} ${dockerRepository}/galasa-boot-embedded-amd64:${fromDockerVersion}" 
+         	sh "docker tag ${dockerRepository}/galasa-resources-amd64:${fromDockerVersion}     ${dockerRepository}/galasa-resources-amd64:${fromDockerVersion}" 
+         	sh "docker tag ${dockerRepository}/galasa-p2-amd64:${fromDockerVersion}            ${dockerRepository}/galasa-p2-amd64:${fromDockerVersion}" 
+         	sh "docker tag ${dockerRepository}/galasa-master-api-amd64:${fromDockerVersion}    ${dockerRepository}/galasa-master-api-amd64:${fromDockerVersion}" 
+         	sh "docker tag ${dockerRepository}/galasa-javadoc-amd64:${fromDockerVersion}       ${dockerRepository}/galasa-javadoc-amd64:${toDockerVersion}" 
+         
+         	sh "docker push ${dockerRepository}/galasa-boot-embedded-amd64:${toDockerVersion}" 
+         	sh "docker push ${dockerRepository}/galasa-resources-amd64:${toDockerVersion}" 
+         	sh "docker push ${dockerRepository}/galasa-p2-amd64:${toDockerVersion}" 
+         	sh "docker push ${dockerRepository}/galasa-master-api-amd64:${toDockerVersion}" 
+         	sh "docker push ${dockerRepository}/galasa-javadoc-amd64:${toDockerVersion}" 
+         }
+      }
+   }
+}
