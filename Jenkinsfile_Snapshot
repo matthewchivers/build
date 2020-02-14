@@ -94,7 +94,7 @@ pipeline {
       stage('deploy-repository') {
          steps {
          	dir('integrationTesting/staging') {
-         		sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -B -e -P ${mvnProfile} clean galasastaging:deployartifacts -Dgalasa.source.repo=${nexus}/repository/${mvnRepo} -Dgalasa.source.repo.id=galasa.snapshot.repo -Dgalasa.settings.file=${workspace}/settings.xml"
+         		sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -B -e -P ${mvnProfile} clean galasastaging:deployartifacts -Dgalasa.target.repo=${nexus}/repository/${mvnRepo} -Dgalasa.target.repo.id=galasa.snapshot.repo -Dgalasa.settings.file=${workspace}/settings.xml"
          		
          		dir('target') {
          		   sh "sh deploy.sh"
