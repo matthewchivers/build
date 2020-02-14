@@ -97,7 +97,8 @@ pipeline {
          		sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -B -e -P ${mvnProfile} clean galasastaging:deployartifacts -Dgalasa.target.repo=${nexus}/repository/${mvnRepo} -Dgalasa.target.repo.id=galasa.snapshot.repo -Dgalasa.settings.file=${workspace}/settings.xml"
          		
          		dir('target') {
-         		   sh "sh deploy.sh"
+         		   sh "chmod +x deploy.sh"
+         		   sh "./deploy.sh"
          		} 
 		    }
          }
