@@ -64,10 +64,10 @@ pipeline {
          	sh "docker pull ${dockerRepository}/galasa-master-api-amd64:${fromDockerVersion}" 
          	sh "docker pull ${dockerRepository}/galasa-javadoc-amd64:${fromDockerVersion}" 
 
-         	sh "docker tag ${dockerRepository}/galasa-boot-embedded-amd64:${fromDockerVersion} ${dockerRepository}/galasa-boot-embedded-amd64:${fromDockerVersion}" 
-         	sh "docker tag ${dockerRepository}/galasa-resources-amd64:${fromDockerVersion}     ${dockerRepository}/galasa-resources-amd64:${fromDockerVersion}" 
-         	sh "docker tag ${dockerRepository}/galasa-p2-amd64:${fromDockerVersion}            ${dockerRepository}/galasa-p2-amd64:${fromDockerVersion}" 
-         	sh "docker tag ${dockerRepository}/galasa-master-api-amd64:${fromDockerVersion}    ${dockerRepository}/galasa-master-api-amd64:${fromDockerVersion}" 
+         	sh "docker tag ${dockerRepository}/galasa-boot-embedded-amd64:${fromDockerVersion} ${dockerRepository}/galasa-boot-embedded-amd64:${toDockerVersion}" 
+         	sh "docker tag ${dockerRepository}/galasa-resources-amd64:${fromDockerVersion}     ${dockerRepository}/galasa-resources-amd64:${toDockerVersion}" 
+         	sh "docker tag ${dockerRepository}/galasa-p2-amd64:${fromDockerVersion}            ${dockerRepository}/galasa-p2-amd64:${toDockerVersion}" 
+         	sh "docker tag ${dockerRepository}/galasa-master-api-amd64:${fromDockerVersion}    ${dockerRepository}/galasa-master-api-amd64:${toDockerVersion}" 
          	sh "docker tag ${dockerRepository}/galasa-javadoc-amd64:${fromDockerVersion}       ${dockerRepository}/galasa-javadoc-amd64:${toDockerVersion}" 
          
          	sh "docker push ${dockerRepository}/galasa-boot-embedded-amd64:${toDockerVersion}" 
