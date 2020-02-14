@@ -93,7 +93,7 @@ pipeline {
 // Deploy the maven artifacts
       stage('clean-repository') {
          steps {
-         	dir('integrationTesting/staging')
+         	dir('integrationTesting/staging') {
          		sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -B -e -P ${mvnProfile} clean galasastaging:deployartifacts -Dgalasa.source.repo=${nexus}/repository/${mvnRepo} -Dgalasa.source.repo.id=galasa.snapshot.repo -Dgalasa.settings.file=${workspace}/settings.xml"
          		
          		dir('target') {
