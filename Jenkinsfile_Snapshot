@@ -25,7 +25,7 @@ pipeline {
                fromDockerVersion = '0.5.0-SNAPSHOT'
                toDockerVersion   = '0.5.0-INTEGRATION'
                mvnRepo           = 'maven-integration'
-               nexus             = 'https://nexus.galasa.dev/service/rest'
+               nexus             = 'https://nexus.galasa.dev'
             }
          }
       }
@@ -85,8 +85,21 @@ pipeline {
 // Clean the target 
       stage('clean-repository') {
          steps {
-         	sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -B -e -P ${mvnProfile} galasastaging:cleannexusrepo -Dgalasa.source.repo.nexus=${nexus} -Dgalasa.source.repo.id=galasa.snapshot.repo -Dgalasa.source.repo.name=${mvnRepo}" 
+         	sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -B -e -P ${mvnProfile} galasastaging:cleannexusrepo -Dgalasa.source.repo.nexus=${nexus}/service/rest -Dgalasa.source.repo.id=galasa.snapshot.repo -Dgalasa.source.repo.name=${mvnRepo}" 
 
+         }
+      }
+      
+// Deploy the maven artifacts
+      stage('clean-repository') {
+         steps {
+         	dir('integrationTesting/staging')
+         		sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -B -e -P ${mvnProfile} clean galasastaging:deployartifacts -Dgalasa.source.repo=${nexus}/repository/${mvnRepo} -Dgalasa.source.repo.id=galasa.snapshot.repo -Dgalasa.settings.file=${workspace}/settings.xml"
+         		
+         		dir('target') {
+         		   sh "sh deploy.sh"
+         		} 
+		    }
          }
       }
    }
