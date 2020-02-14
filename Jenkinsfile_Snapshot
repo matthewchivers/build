@@ -24,6 +24,8 @@ pipeline {
                mvnProfile        = 'dev'
                fromDockerVersion = '0.5.0-SNAPSHOT'
                toDockerVersion   = '0.5.0-INTEGRATION'
+               mvnRepo           = 'maven-integration'
+               nexus             = 'https://nexus.galasa.dev'
             }
          }
       }
@@ -34,6 +36,8 @@ pipeline {
             echo "GIT Commit Hash    : ${env.GIT_COMMIT}"
             echo "Workspace directory: ${workspace}"
             echo "Maven profile      : ${mvnProfile}"
+            echo "Maven repository   : ${mvnRepo}"
+            echo "Nexus              : ${nexus}"
             echo "From Docker Version: ${fromDockerVersion}"
             echo "To Docker Version  : ${toDockerVersion}"
             echo "Docker Repository  : ${dockerRepository}"
@@ -75,6 +79,14 @@ pipeline {
          	sh "docker push ${dockerRepository}/galasa-p2-amd64:${toDockerVersion}" 
          	sh "docker push ${dockerRepository}/galasa-master-api-amd64:${toDockerVersion}" 
          	sh "docker push ${dockerRepository}/galasa-javadoc-amd64:${toDockerVersion}" 
+         }
+      }
+      
+// Clean the target 
+      stage('clean-repository') {
+         steps {
+         	sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} galasastaging:cleannexusrepo -Dgalasa.source.repo.nexus=${nexus} -Dgalasa.source.repo.id=galasa.snapshot.repo -Dgalasa.source.repo.name=${mvnRepo}" 
+
          }
       }
    }
