@@ -2,9 +2,7 @@ def mvnProfile        = 'dev'
 
 pipeline {
 // Initially run on any agent
-   agent {
-      any
-   }
+   agent any
    environment {
 //Configure Maven from the maven tooling in Jenkins
       def mvnHome = tool 'Default'
