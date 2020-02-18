@@ -27,7 +27,6 @@ pipeline {
             script {
                mvnGoal           = 'deploy'
                mvnProfile        = 'dev'
-               galasaSignJarSkip = 'false'
                dockerVersion     = '0.5.0-SNAPSHOT'
             }
          }
@@ -41,6 +40,7 @@ pipeline {
             script {
                mvnGoal           = 'deploy'
                mvnProfile        = 'staging'
+               galasaSignJarSkip = 'false'
                dockerVersion     = '0.5.0'
             }
          }
