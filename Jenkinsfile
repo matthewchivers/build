@@ -200,43 +200,43 @@ pipeline {
 			      }
                }
             }
-            stage('s390x-docker-images') {
-               agent { 
-                  label 'docker-s390x'
-               }
-	           options {
-                  skipDefaultCheckout false
-               }
-               environment {
-                  def workspace = pwd()
-               }
-               steps {
-            
-                  dir('repository/dev/galasa') {
-                     deleteDir()
-                  }
-
-                  configFileProvider([configFile(fileId: '86dde059-684b-4300-b595-64e83c2dd217', targetLocation: 'settings.xml')]) {
-                  }
-            
-			      dir('docker') {
-			         dir('bootEmbedded') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/galasa-boot-embedded-s390x:${dockerVersion} -f Dockerfile.s390x ." 
-			            sh "docker push ${dockerRepository}/galasa-boot-embedded-s390x:${dockerVersion}" 
-   			         }
-   			         
-			         dir('resources') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} --build-arg gitHash=${GIT_COMMIT} -t ${dockerRepository}/galasa-resources-s390x:${dockerVersion} ." 
-			            sh "docker push ${dockerRepository}/galasa-resources-s390x:${dockerVersion}" 
-   			         }
-   			         
-			         dir('ibm/bootEmbedded') {
-			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} --build-arg platform=s390x -t ${dockerRepository}/galasa-ibm-boot-embedded-s390x:${dockerVersion} ." 
-			            sh "docker push ${dockerRepository}/galasa-ibm-boot-embedded-s390x:${dockerVersion}" 
-   			         }
-			      }            
-               }
-            }
+//            stage('s390x-docker-images') {
+//               agent { 
+//                  label 'docker-s390x'
+//               }
+//	           options {
+//                  skipDefaultCheckout false
+//               }
+//               environment {
+//                  def workspace = pwd()
+//               }
+//               steps {
+//            
+//                  dir('repository/dev/galasa') {
+//                     deleteDir()
+//                  }
+//
+//                  configFileProvider([configFile(fileId: '86dde059-684b-4300-b595-64e83c2dd217', targetLocation: 'settings.xml')]) {
+//                  }
+//            
+//			      dir('docker') {
+//			         dir('bootEmbedded') {
+//			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} -t ${dockerRepository}/galasa-boot-embedded-s390x:${dockerVersion} -f Dockerfile.s390x ." 
+//			            sh "docker push ${dockerRepository}/galasa-boot-embedded-s390x:${dockerVersion}" 
+//   			         }
+//   			         
+//			         dir('resources') {
+//			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} --build-arg gitHash=${GIT_COMMIT} -t ${dockerRepository}/galasa-resources-s390x:${dockerVersion} ." 
+//			            sh "docker push ${dockerRepository}/galasa-resources-s390x:${dockerVersion}" 
+//   			         }
+//   			         
+//			         dir('ibm/bootEmbedded') {
+//			            sh "docker build --pull --build-arg dockerVersion=${dockerVersion} --build-arg dockerRepository=${dockerRepository} --build-arg platform=s390x -t ${dockerRepository}/galasa-ibm-boot-embedded-s390x:${dockerVersion} ." 
+//			            sh "docker push ${dockerRepository}/galasa-ibm-boot-embedded-s390x:${dockerVersion}" 
+//   			         }
+//			      }            
+//               }
+//            }
 //         }
 //      }
    }
