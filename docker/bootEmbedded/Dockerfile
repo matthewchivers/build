@@ -7,7 +7,7 @@ FROM openjdk:8-jdk
 
 COPY --from=0 /galasa/* /galasa/
 
-RUN useradd -d /galasa galasa                      && \
+RUN useradd -u 1000 -d /galasa galasa              && \
     chown -R galasa:galasa /galasa
 
 WORKDIR /galasa
