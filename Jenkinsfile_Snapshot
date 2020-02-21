@@ -10,7 +10,8 @@ pipeline {
       
 //Set some defaults
       def workspace = pwd()
-      def dockerRepository = 'docker.galasa.dev'
+//      def dockerRepository = 'docker.galasa.dev'
+      def dockerRepository = '9.20.205.160:5000'
    }
    stages {
 // If this being run from the master branch, then we are setup for Integration testing
@@ -25,7 +26,7 @@ pipeline {
                fromDockerVersion = '0.5.0-SNAPSHOT'
                toDockerVersion   = '0.5.0-INTEGRATION'
                mvnRepo           = 'maven-integration'
-               nexus             = 'https://nexus.galasa.dev'
+               nexus             = 'https://9.20.205.160'
             }
          }
       }

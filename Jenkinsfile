@@ -15,7 +15,8 @@ pipeline {
 //Set some defaults
       def workspace = pwd()
       def mvnGoal    = 'install'
-      def dockerRepository = 'docker.galasa.dev'
+//      def dockerRepository = 'docker.galasa.dev'
+      def dockerRepository = '9.20.205.160:5000'
    }
    stages {
 // If it is the master branch, version 0.3.0 and master on all the other branches
