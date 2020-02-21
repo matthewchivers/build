@@ -93,10 +93,6 @@ pipeline {
       stage('global') {
          steps {
             withCredentials([string(credentialsId: 'galasa-gpg', variable: 'GPG')]) {
-               dir('devtools') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -DdockerVersion=${dockerVersion} -Dgpg.skip=false -Dgpg.passphrase=$GPG  -P ${mvnProfile} -B -e ${mvnGoal}"
-               }
-            
 // Build the Eclipse p2 site
                dir('eclipse/dev.galasa.eclipse.site') {
                   sh "mvn -Dmaven.artifact.threads=1  --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -Dgpg.skip=false -Dgpg.passphrase=$GPG -P ${mvnProfile} -B -e ${mvnGoal}"
