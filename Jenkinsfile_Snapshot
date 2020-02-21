@@ -26,7 +26,7 @@ pipeline {
                fromDockerVersion = '0.5.0-SNAPSHOT'
                toDockerVersion   = '0.5.0-INTEGRATION'
                mvnRepo           = 'maven-integration'
-               nexus             = 'https://9.20.205.160'
+               nexus             = 'http://9.20.205.160:8081'
             }
          }
       }
