@@ -38,7 +38,7 @@ pipeline {
          	         dir('maven') {
          	            sh "git reset --hard ${env.HASH}"
                         sh "git tag -f intok"
-                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin --tags"
+                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin -f --tags"
          	         }
                    }
                 }
@@ -59,7 +59,7 @@ pipeline {
          	         dir('framework') {
          	            sh "git reset --hard ${env.HASH}"
                         sh "git tag -f intok"
-                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin --tags"
+                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin -f --tags"
          	         }
                    }
                 }
@@ -80,7 +80,7 @@ pipeline {
          	         dir('extensions') {
          	            sh "git reset --hard ${env.HASH}"
                         sh "git tag -f intok"
-                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin --tags"
+                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin -f --tags"
          	         }
                    }
                 }
@@ -101,7 +101,7 @@ pipeline {
          	         dir('managers') {
          	            sh "git reset --hard ${env.HASH}"
                         sh "git tag -f intok"
-                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin --tags"
+                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin -f --tags"
          	         }
                    }
                 }
@@ -122,7 +122,7 @@ pipeline {
          	         dir('simplatform') {
          	            sh "git reset --hard ${env.HASH}"
                         sh "git tag -f intok"
-                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin --tags"
+                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin -f --tags"
          	         }
                    }
                 }
@@ -143,7 +143,7 @@ pipeline {
          	         dir('integratedtests') {
          	            sh "git reset --hard ${env.HASH}"
                         sh "git tag -f intok"
-                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin --tags"
+                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin -f --tags"
          	         }
                    }
                 }
@@ -164,7 +164,7 @@ pipeline {
          	         dir('build') {
          	            sh "git reset --hard ${env.HASH}"
                         sh "git tag -f intok"
-                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin --tags"
+                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin -f --tags"
          	         }
                    }
                 }
