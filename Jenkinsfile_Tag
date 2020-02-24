@@ -89,7 +89,7 @@ pipeline {
                   deleteDir()
                   
                   script {
-                    env.HASH = readFile '../../hashes/maven.hash'
+                    env.HASH = readFile '../../hashes/managers.hash'
                    }
                    
          	      withCredentials([sshUserPrivateKey(credentialsId: 'public-github-cicsdeliverytest', keyFileVariable: 'GITKEY')]) {
