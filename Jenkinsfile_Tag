@@ -36,8 +36,7 @@ pipeline {
          	         sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git clone git@github.com:galasa-dev/maven.git"
          	         
          	         dir('maven') {
-         	            sh "git reset --hard ${env.HASH}"
-                        sh "git tag -f intok"
+                        sh "git tag -f intok ${env.HASH}"
                         sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin -f --tags"
          	         }
                    }
