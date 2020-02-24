@@ -138,6 +138,15 @@ pipeline {
 			      sh "docker build -t ${dockerRepository}/galasa-testcatalogs-generic:${dockerVersion} ." 
 			      sh "docker push ${dockerRepository}/galasa-testcatalogs-generic:${dockerVersion}" 
 			   }
+
+// Build the git hashes transient docker image
+			   dir('hashes') {
+			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean generate-sources"
+			      
+			      sh "echo ${GIT_COMMIT} > target/build.hash"
+			      sh "docker build -t ${dockerRepository}/galasa-githashes:${dockerVersion} ." 
+			      sh "docker push ${dockerRepository}/galasa-githashes:${dockerVersion}" 
+			   }
 			}            
          }
       }

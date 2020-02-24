@@ -67,16 +67,19 @@ pipeline {
          	sh "docker pull ${dockerRepository}/galasa-resources-amd64:${fromDockerVersion}" 
          	sh "docker pull ${dockerRepository}/galasa-p2-amd64:${fromDockerVersion}" 
          	sh "docker pull ${dockerRepository}/galasa-javadoc-amd64:${fromDockerVersion}" 
+         	sh "docker pull ${dockerRepository}/galasa-githashes:${fromDockerVersion}" 
 
          	sh "docker tag ${dockerRepository}/galasa-boot-embedded-amd64:${fromDockerVersion} ${dockerRepository}/galasa-boot-embedded-amd64:${toDockerVersion}" 
          	sh "docker tag ${dockerRepository}/galasa-resources-amd64:${fromDockerVersion}     ${dockerRepository}/galasa-resources-amd64:${toDockerVersion}" 
          	sh "docker tag ${dockerRepository}/galasa-p2-amd64:${fromDockerVersion}            ${dockerRepository}/galasa-p2-amd64:${toDockerVersion}" 
          	sh "docker tag ${dockerRepository}/galasa-javadoc-amd64:${fromDockerVersion}       ${dockerRepository}/galasa-javadoc-amd64:${toDockerVersion}" 
+         	sh "docker tag ${dockerRepository}/galasa-githashes:${fromDockerVersion}           ${dockerRepository}/galasa-githashes:${toDockerVersion}" 
          
          	sh "docker push ${dockerRepository}/galasa-boot-embedded-amd64:${toDockerVersion}" 
          	sh "docker push ${dockerRepository}/galasa-resources-amd64:${toDockerVersion}" 
          	sh "docker push ${dockerRepository}/galasa-p2-amd64:${toDockerVersion}" 
          	sh "docker push ${dockerRepository}/galasa-javadoc-amd64:${toDockerVersion}" 
+         	sh "docker push ${dockerRepository}/galasa-githashes:${toDockerVersion}" 
          }
       }
       
