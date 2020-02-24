@@ -95,7 +95,7 @@ pipeline {
          	      withCredentials([sshUserPrivateKey(credentialsId: 'public-github-cicsdeliverytest', keyFileVariable: 'GITKEY')]) {
          	         sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git clone -b integrationok git@github.com:galasa-dev/managers.git"
          	         
-         	         dir('mamanagersven') {
+         	         dir('managers') {
                         sh "git merge --ff-only ${env.HASH}"
                         sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin integrationok"
          	         }
