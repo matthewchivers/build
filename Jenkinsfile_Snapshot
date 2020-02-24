@@ -1,5 +1,3 @@
-def mvnProfile        = 'dev'
-
 pipeline {
 // Initially run on any agent
    agent any
@@ -10,40 +8,9 @@ pipeline {
       
 //Set some defaults
       def workspace = pwd()
-//      def dockerRepository = 'docker.galasa.dev'
-      def dockerRepository = '9.20.205.160:5000'
    }
    stages {
-// If this being run from the master branch, then we are setup for Integration testing
-      stage('set-dev') {
-         when {
-           environment name: 'GIT_BRANCH', value: 'origin/master'
-         }
-         steps {
-            script {
-               mvnGoal           = 'deploy'
-               mvnProfile        = 'dev'
-               fromDockerVersion = '0.5.0-SNAPSHOT'
-               toDockerVersion   = '0.5.0-INTEGRATION'
-               mvnRepo           = 'maven-integration'
-               nexus             = 'http://9.20.205.160:8081'
-            }
-         }
-      }
-// for debugging purposes
-      stage('report') {
-         steps {
-            echo "Branch/Tag         : ${env.GIT_BRANCH}"
-            echo "GIT Commit Hash    : ${env.GIT_COMMIT}"
-            echo "Workspace directory: ${workspace}"
-            echo "Maven profile      : ${mvnProfile}"
-            echo "Maven repository   : ${mvnRepo}"
-            echo "Nexus              : ${nexus}"
-            echo "From Docker Version: ${fromDockerVersion}"
-            echo "To Docker Version  : ${toDockerVersion}"
-            echo "Docker Repository  : ${dockerRepository}"
-         }
-      }
+
    
 // Set up the workspace, clear the git directories and setup the manve settings.xml files
       stage('prep-workspace') { 
@@ -63,30 +30,33 @@ pipeline {
 // Snap the docker images
       stage('snap-docker') {
          steps {
-         	sh "docker pull ${dockerRepository}/galasa-boot-embedded-amd64:${fromDockerVersion}" 
-         	sh "docker pull ${dockerRepository}/galasa-resources-amd64:${fromDockerVersion}" 
-         	sh "docker pull ${dockerRepository}/galasa-p2-amd64:${fromDockerVersion}" 
-         	sh "docker pull ${dockerRepository}/galasa-javadoc-amd64:${fromDockerVersion}" 
-         	sh "docker pull ${dockerRepository}/galasa-githashes:${fromDockerVersion}" 
+         	sh "docker pull ${env.DOCKER_REPO}/galasa-boot-embedded-amd64:${env.DOCKER_SOURCE_VERSION}" 
+         	sh "docker pull ${env.DOCKER_REPO}/galasa-resources-amd64:${env.DOCKER_SOURCE_VERSION}" 
+         	sh "docker pull ${env.DOCKER_REPO}/galasa-p2-amd64:${env.DOCKER_SOURCE_VERSION}" 
+         	sh "docker pull ${env.DOCKER_REPO}/galasa-javadoc-amd64:${env.DOCKER_SOURCE_VERSION}" 
+         	sh "docker pull ${env.DOCKER_REPO}/galasa-githashes:${env.DOCKER_SOURCE_VERSION}" 
 
-         	sh "docker tag ${dockerRepository}/galasa-boot-embedded-amd64:${fromDockerVersion} ${dockerRepository}/galasa-boot-embedded-amd64:${toDockerVersion}" 
-         	sh "docker tag ${dockerRepository}/galasa-resources-amd64:${fromDockerVersion}     ${dockerRepository}/galasa-resources-amd64:${toDockerVersion}" 
-         	sh "docker tag ${dockerRepository}/galasa-p2-amd64:${fromDockerVersion}            ${dockerRepository}/galasa-p2-amd64:${toDockerVersion}" 
-         	sh "docker tag ${dockerRepository}/galasa-javadoc-amd64:${fromDockerVersion}       ${dockerRepository}/galasa-javadoc-amd64:${toDockerVersion}" 
-         	sh "docker tag ${dockerRepository}/galasa-githashes:${fromDockerVersion}           ${dockerRepository}/galasa-githashes:${toDockerVersion}" 
+         	sh "docker tag ${env.DOCKER_REPO}/galasa-boot-embedded-amd64:${env.DOCKER_SOURCE_VERSION} ${env.DOCKER_REPO}/galasa-boot-embedded-amd64:${env.DOCKER_TARGET_VERSION}" 
+         	sh "docker tag ${env.DOCKER_REPO}/galasa-resources-amd64:${env.DOCKER_SOURCE_VERSION}     ${env.DOCKER_REPO}/galasa-resources-amd64:${env.DOCKER_TARGET_VERSION}" 
+         	sh "docker tag ${env.DOCKER_REPO}/galasa-p2-amd64:${env.DOCKER_SOURCE_VERSION}            ${env.DOCKER_REPO}/galasa-p2-amd64:${env.DOCKER_TARGET_VERSION}" 
+         	sh "docker tag ${env.DOCKER_REPO}/galasa-javadoc-amd64:${env.DOCKER_SOURCE_VERSION}       ${env.DOCKER_REPO}/galasa-javadoc-amd64:${env.DOCKER_TARGET_VERSION}" 
+         	sh "docker tag ${env.DOCKER_REPO}/galasa-githashes:${env.DOCKER_SOURCE_VERSION}           ${env.DOCKER_REPO}/galasa-githashes:${env.DOCKER_TARGET_VERSION}" 
          
-         	sh "docker push ${dockerRepository}/galasa-boot-embedded-amd64:${toDockerVersion}" 
-         	sh "docker push ${dockerRepository}/galasa-resources-amd64:${toDockerVersion}" 
-         	sh "docker push ${dockerRepository}/galasa-p2-amd64:${toDockerVersion}" 
-         	sh "docker push ${dockerRepository}/galasa-javadoc-amd64:${toDockerVersion}" 
-         	sh "docker push ${dockerRepository}/galasa-githashes:${toDockerVersion}" 
+         	sh "docker push ${env.DOCKER_REPO}/galasa-boot-embedded-amd64:${env.DOCKER_TARGET_VERSION}" 
+         	sh "docker push ${env.DOCKER_REPO}/galasa-resources-amd64:${env.DOCKER_TARGET_VERSION}" 
+         	sh "docker push ${env.DOCKER_REPO}/galasa-p2-amd64:${env.DOCKER_TARGET_VERSION}" 
+         	sh "docker push ${env.DOCKER_REPO}/galasa-javadoc-amd64:${env.DOCKER_TARGET_VERSION}" 
+         	sh "docker push ${env.DOCKER_REPO}/galasa-githashes:${env.DOCKER_TARGET_VERSION}" 
          }
       }
       
 // Clean the target 
       stage('clean-repository') {
+         when {
+            expression { env.CLEAN_REPO = 'true' }
+         }
          steps {
-         	sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -B -e -P ${mvnProfile} galasastaging:cleannexusrepo -Dgalasa.source.repo.nexus=${nexus}/service/rest -Dgalasa.source.repo.id=galasa.snapshot.repo -Dgalasa.source.repo.name=${mvnRepo}" 
+         	sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -B -e -P ${env.MAVEN_PROFILE} galasastaging:cleannexusrepo -Dgalasa.source.repo.nexus=${env.NEXUS_SERVER}/service/rest -Dgalasa.source.repo.id=galasa.snapshot.repo -Dgalasa.source.repo.name=${env.MAVEN_REPO}" 
 
          }
       }
@@ -95,7 +65,7 @@ pipeline {
       stage('deploy-repository') {
          steps {
          	dir('integrationTesting/staging') {
-         		sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -B -e -P ${mvnProfile} clean galasastaging:deployartifacts -Dgalasa.target.repo=${nexus}/repository/${mvnRepo} -Dgalasa.target.repo.id=galasa.snapshot.repo -Dgalasa.settings.file=${workspace}/settings.xml"
+         		sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -B -e -P ${env.MAVEN_PROFILE} clean galasastaging:deployartifacts -Dgalasa.target.repo=${env.NEXUS_SERVER}/repository/${env.MAVEN_REPO} -Dgalasa.target.repo.id=galasa.snapshot.repo -Dgalasa.settings.file=${workspace}/settings.xml"
          		
          		dir('target') {
          		   sh "chmod +x deploy.sh"
