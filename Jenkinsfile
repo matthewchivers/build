@@ -143,7 +143,7 @@ pipeline {
 			   dir('hashes') {
 			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${mvnProfile} -B -e clean generate-sources"
 			      
-			      sh "echo ${GIT_COMMIT} > target/build.hash"
+			      sh "echo -n ${GIT_COMMIT} > target/build.hash"
 			      sh "docker build -t ${dockerRepository}/galasa-githashes:${dockerVersion} ." 
 			      sh "docker push ${dockerRepository}/galasa-githashes:${dockerVersion}" 
 			   }
