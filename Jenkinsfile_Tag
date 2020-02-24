@@ -3,9 +3,11 @@ pipeline {
    stages {
        stage('extract-githash') {
            steps {
+               withFolderProperties()
+           
                sh(script: "docker rm -f hashes", returnStatus: true)
-               sh "docker pull 9.20.205.160:5000/galasa-githashes:0.5.0-INTEGRATION"
-               sh "docker create --name hashes 9.20.205.160:5000/galasa-githashes:0.5.0-INTEGRATION dummy"
+               sh "docker pull ${env.DOCKER_REPO)/galasa-githashes:${env.DOCKER_TARGET_VERSION)"
+               sh "docker create --name hashes ${env.DOCKER_REPO)/galasa-githashes:${env.DOCKER_TARGET_VERSION) dummy"
              
                dir('hashes') {
                  deleteDir()
