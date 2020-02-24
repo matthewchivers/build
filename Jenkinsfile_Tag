@@ -33,14 +33,14 @@ pipeline {
                    }
                    
          	      withCredentials([sshUserPrivateKey(credentialsId: 'public-github-cicsdeliverytest', keyFileVariable: 'GITKEY')]) {
-         	         sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git clone git@github.com:galasa-dev/maven.git"
+         	         sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git clone -b integrationok git@github.com:galasa-dev/maven.git"
          	         
          	         dir('maven') {
-                        sh "git tag -f intok ${env.HASH}"
-                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin -f --tags"
+                        sh "git merge --ff-only ${env.HASH}"
+                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin integrationok"
          	         }
-                   }
-                }
+         	      }
+               }
             }
         }
        stage('tag-framework') {
@@ -53,11 +53,11 @@ pipeline {
                    }
                    
          	      withCredentials([sshUserPrivateKey(credentialsId: 'public-github-cicsdeliverytest', keyFileVariable: 'GITKEY')]) {
-         	         sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git clone git@github.com:galasa-dev/framework.git"
+         	         sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git clone -b integrationok git@github.com:galasa-dev/framework.git"
          	         
          	         dir('framework') {
-                        sh "git tag -f intok ${env.HASH}"
-                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin -f --tags"
+                        sh "git merge --ff-only ${env.HASH}"
+                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin integrationok"
          	         }
                    }
                 }
@@ -73,11 +73,11 @@ pipeline {
                    }
                    
          	      withCredentials([sshUserPrivateKey(credentialsId: 'public-github-cicsdeliverytest', keyFileVariable: 'GITKEY')]) {
-         	         sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git clone git@github.com:galasa-dev/extensions.git"
+         	         sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git clone -b integrationok git@github.com:galasa-dev/extensions.git"
          	         
          	         dir('extensions') {
-                        sh "git tag -f intok ${env.HASH}"
-                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin -f --tags"
+                        sh "git merge --ff-only ${env.HASH}"
+                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin integrationok"
          	         }
                    }
                 }
@@ -93,11 +93,11 @@ pipeline {
                    }
                    
          	      withCredentials([sshUserPrivateKey(credentialsId: 'public-github-cicsdeliverytest', keyFileVariable: 'GITKEY')]) {
-         	         sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git clone git@github.com:galasa-dev/managers.git"
+         	         sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git clone -b integrationok git@github.com:galasa-dev/managers.git"
          	         
-         	         dir('managers') {
-                        sh "git tag -f intok ${env.HASH}"
-                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin -f --tags"
+         	         dir('mamanagersven') {
+                        sh "git merge --ff-only ${env.HASH}"
+                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin integrationok"
          	         }
                    }
                 }
@@ -113,11 +113,11 @@ pipeline {
                    }
                    
          	      withCredentials([sshUserPrivateKey(credentialsId: 'public-github-cicsdeliverytest', keyFileVariable: 'GITKEY')]) {
-         	         sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git clone git@github.com:galasa-dev/simplatform.git"
+         	         sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git clone -b integrationok git@github.com:galasa-dev/simplatform.git"
          	         
          	         dir('simplatform') {
-                        sh "git tag -f intok ${env.HASH}"
-                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin -f --tags"
+                        sh "git merge --ff-only ${env.HASH}"
+                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin integrationok"
          	         }
                    }
                 }
@@ -133,11 +133,11 @@ pipeline {
                    }
                    
          	      withCredentials([sshUserPrivateKey(credentialsId: 'public-github-cicsdeliverytest', keyFileVariable: 'GITKEY')]) {
-         	         sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git clone git@github.com:galasa-dev/integratedtests.git"
+         	         sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git clone -b integrationok git@github.com:galasa-dev/integratedtests.git"
          	         
          	         dir('integratedtests') {
-                        sh "git tag -f intok ${env.HASH}"
-                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin -f --tags"
+                        sh "git merge --ff-only ${env.HASH}"
+                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin integrationok"
          	         }
                    }
                 }
@@ -153,11 +153,11 @@ pipeline {
                    }
                    
          	      withCredentials([sshUserPrivateKey(credentialsId: 'public-github-cicsdeliverytest', keyFileVariable: 'GITKEY')]) {
-         	         sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git clone git@github.com:galasa-dev/build.git"
+         	         sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git clone -b integrationok git@github.com:galasa-dev/build.git"
          	         
          	         dir('build') {
-                        sh "git tag -f intok ${env.HASH}"
-                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin -f --tags"
+                        sh "git merge --ff-only ${env.HASH}"
+                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin integrationok"
          	         }
                    }
                 }
