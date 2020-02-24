@@ -32,23 +32,23 @@ pipeline {
 // Build the runtime repository
       stage('runtime') {
          steps {
-            withFolderProperties { withCredentials([string(credentialsId: 'galasa-gpg', variable: 'GPG')]) {
+            withFolderProperties { withSonarQubeEnv('GalasaSonarQube') { withCredentials([string(credentialsId: 'galasa-gpg', variable: 'GPG')]) {
                dir('runtime') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -DdockerVersion=${env.DOCKER_VERSION} -Dgpg.skip=${GPG_SKIP} -Dgpg.passphrase=$GPG  -P ${MAVEN_PROFILE} -B -e ${MAVEN_GOAL}"
                }
-            } }
+            } } }
          }
       }
       
 // Build the various global sites and features
       stage('global') {
          steps {
-            withFolderProperties { withCredentials([string(credentialsId: 'galasa-gpg', variable: 'GPG')]) {
+            withFolderProperties { withSonarQubeEnv('GalasaSonarQube') { withCredentials([string(credentialsId: 'galasa-gpg', variable: 'GPG')]) {
 // Build the Eclipse p2 site
                dir('eclipse/dev.galasa.eclipse.site') {
                   sh "mvn -Dmaven.artifact.threads=1  --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -Dgpg.skip=${GPG_SKIP} -Dgpg.passphrase=$GPG -P ${MAVEN_PROFILE} -B -e ${MAVEN_GOAL}"
                }
-            } }
+            } } }
          }
       }
       
