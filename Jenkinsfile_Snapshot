@@ -30,6 +30,7 @@ pipeline {
 // Snap the docker images
       stage('snap-docker') {
          steps {
+            withFolderProperties { 
          	sh "docker pull ${env.DOCKER_REPO}/galasa-boot-embedded-amd64:${env.DOCKER_SOURCE_VERSION}" 
          	sh "docker pull ${env.DOCKER_REPO}/galasa-resources-amd64:${env.DOCKER_SOURCE_VERSION}" 
          	sh "docker pull ${env.DOCKER_REPO}/galasa-p2-amd64:${env.DOCKER_SOURCE_VERSION}" 
@@ -47,6 +48,7 @@ pipeline {
          	sh "docker push ${env.DOCKER_REPO}/galasa-p2-amd64:${env.DOCKER_TARGET_VERSION}" 
          	sh "docker push ${env.DOCKER_REPO}/galasa-javadoc-amd64:${env.DOCKER_TARGET_VERSION}" 
          	sh "docker push ${env.DOCKER_REPO}/galasa-githashes:${env.DOCKER_TARGET_VERSION}" 
+         	}
          }
       }
       
@@ -65,12 +67,14 @@ pipeline {
       stage('deploy-repository') {
          steps {
          	dir('integrationTesting/staging') {
+         	    withFolderProperties { 
          		sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -B -e -P ${env.MAVEN_PROFILE} clean galasastaging:deployartifacts -Dgalasa.target.repo=${env.NEXUS_SERVER}/repository/${env.MAVEN_REPO} -Dgalasa.target.repo.id=galasa.snapshot.repo -Dgalasa.settings.file=${workspace}/settings.xml"
          		
          		dir('target') {
          		   sh "chmod +x deploy.sh"
          		   sh "./deploy.sh"
          		} 
+         		}
 		    }
          }
       }
