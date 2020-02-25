@@ -58,7 +58,7 @@ pipeline {
             expression { env.CLEAN_REPO = 'true' }
          }
          steps {
-         	sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -B -e -P ${env.MAVEN_PROFILE} galasastaging:cleannexusrepo -Dgalasa.source.repo.nexus=${env.NEXUS_SERVER}/service/rest -Dgalasa.source.repo.id=galasa.snapshot.repo -Dgalasa.source.repo.name=${env.MAVEN_REPO}" 
+         	sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -B -e -P ${env.MAVEN_PROFILE} dev.galasa:galasastaging-maven-plugin:cleannexusrepo -Dgalasa.source.repo.nexus=${env.NEXUS_SERVER}/service/rest -Dgalasa.source.repo.id=galasa.snapshot.repo -Dgalasa.source.repo.name=${env.MAVEN_REPO}" 
 
          }
       }
@@ -68,7 +68,7 @@ pipeline {
          steps {
          	dir('integrationTesting/staging') {
          	    withFolderProperties { 
-         		sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -B -e -P ${env.MAVEN_PROFILE} clean galasastaging:deployartifacts -Dgalasa.target.repo=${env.NEXUS_SERVER}/repository/${env.MAVEN_REPO} -Dgalasa.target.repo.id=galasa.snapshot.repo -Dgalasa.settings.file=${workspace}/settings.xml"
+         		sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -B -e -P ${env.MAVEN_PROFILE} clean dev.galasa:galasastaging-maven-plugin:deployartifacts -Dgalasa.target.repo=${env.NEXUS_SERVER}/repository/${env.MAVEN_REPO} -Dgalasa.target.repo.id=galasa.snapshot.repo -Dgalasa.settings.file=${workspace}/settings.xml"
          		
          		dir('target') {
          		   sh "chmod +x deploy.sh"
