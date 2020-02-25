@@ -36,7 +36,25 @@
         </dependency>
         <dependency>
             <groupId>dev.galasa</groupId>
+            <artifactId>dev.galasa.simbank.manager</artifactId>
+            <version>0.5.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>dev.galasa</groupId>
+            <artifactId>dev.galasa.simbank.tests</artifactId>
+            <version>0.5.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.simbank.obr</artifactId>
+            <version>0.5.0-SNAPSHOT</version>
+            <type>obr</type>
+        </dependency>
+        <dependency>
+            <groupId>dev.galasa</groupId>
+            <artifactId>dev.galasa.inttests.tests</artifactId>
             <version>0.5.0-SNAPSHOT</version>
             <type>obr</type>
         </dependency>
