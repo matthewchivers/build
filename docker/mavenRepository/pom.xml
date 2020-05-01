@@ -67,18 +67,6 @@
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
-			<artifactId>dev.galasa.devtools.karaffeature</artifactId>
-			<version>0.8.0-SNAPSHOT</version>
-			<type>xml</type>
-		</dependency>
-		<dependency>
-			<groupId>dev.galasa</groupId>
-			<artifactId>dev.galasa.uber.karaffeature</artifactId>
-			<version>0.8.0-SNAPSHOT</version>
-			<type>xml</type>
-		</dependency>
-		<dependency>
-			<groupId>dev.galasa</groupId>
 			<artifactId>galasa-demo-archetype</artifactId>
 			<version>0.8.0-SNAPSHOT</version>
 			<type>jar</type>
