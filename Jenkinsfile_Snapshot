@@ -32,18 +32,21 @@ pipeline {
          steps {
             withFolderProperties { 
          	sh "docker pull ${env.DOCKER_REPO}/galasa-boot-embedded-amd64:${env.DOCKER_SOURCE_VERSION}" 
+         	sh "docker pull ${env.DOCKER_REPO}/galasa-ibm-boot-embedded-amd64:${env.DOCKER_SOURCE_VERSION}" 
          	sh "docker pull ${env.DOCKER_REPO}/galasa-resources-amd64:${env.DOCKER_SOURCE_VERSION}" 
          	sh "docker pull ${env.DOCKER_REPO}/galasa-p2-amd64:${env.DOCKER_SOURCE_VERSION}" 
          	sh "docker pull ${env.DOCKER_REPO}/galasa-javadoc-amd64:${env.DOCKER_SOURCE_VERSION}" 
          	sh "docker pull ${env.DOCKER_REPO}/galasa-githashes:${env.DOCKER_SOURCE_VERSION}" 
 
-         	sh "docker tag ${env.DOCKER_REPO}/galasa-boot-embedded-amd64:${env.DOCKER_SOURCE_VERSION} ${env.DOCKER_REPO}/galasa-boot-embedded-amd64:${env.DOCKER_TARGET_VERSION}" 
-         	sh "docker tag ${env.DOCKER_REPO}/galasa-resources-amd64:${env.DOCKER_SOURCE_VERSION}     ${env.DOCKER_REPO}/galasa-resources-amd64:${env.DOCKER_TARGET_VERSION}" 
-         	sh "docker tag ${env.DOCKER_REPO}/galasa-p2-amd64:${env.DOCKER_SOURCE_VERSION}            ${env.DOCKER_REPO}/galasa-p2-amd64:${env.DOCKER_TARGET_VERSION}" 
-         	sh "docker tag ${env.DOCKER_REPO}/galasa-javadoc-amd64:${env.DOCKER_SOURCE_VERSION}       ${env.DOCKER_REPO}/galasa-javadoc-amd64:${env.DOCKER_TARGET_VERSION}" 
-         	sh "docker tag ${env.DOCKER_REPO}/galasa-githashes:${env.DOCKER_SOURCE_VERSION}           ${env.DOCKER_REPO}/galasa-githashes:${env.DOCKER_TARGET_VERSION}" 
+         	sh "docker tag ${env.DOCKER_REPO}/galasa-boot-embedded-amd64:${env.DOCKER_SOURCE_VERSION}     ${env.DOCKER_REPO}/galasa-boot-embedded-amd64:${env.DOCKER_TARGET_VERSION}" 
+         	sh "docker tag ${env.DOCKER_REPO}/galasa-ibm-boot-embedded-amd64:${env.DOCKER_SOURCE_VERSION} ${env.DOCKER_REPO}/galasa-ibm-boot-embedded-amd64:${env.DOCKER_TARGET_VERSION}" 
+         	sh "docker tag ${env.DOCKER_REPO}/galasa-resources-amd64:${env.DOCKER_SOURCE_VERSION}         ${env.DOCKER_REPO}/galasa-resources-amd64:${env.DOCKER_TARGET_VERSION}" 
+         	sh "docker tag ${env.DOCKER_REPO}/galasa-p2-amd64:${env.DOCKER_SOURCE_VERSION}                ${env.DOCKER_REPO}/galasa-p2-amd64:${env.DOCKER_TARGET_VERSION}" 
+         	sh "docker tag ${env.DOCKER_REPO}/galasa-javadoc-amd64:${env.DOCKER_SOURCE_VERSION}           ${env.DOCKER_REPO}/galasa-javadoc-amd64:${env.DOCKER_TARGET_VERSION}" 
+         	sh "docker tag ${env.DOCKER_REPO}/galasa-githashes:${env.DOCKER_SOURCE_VERSION}               ${env.DOCKER_REPO}/galasa-githashes:${env.DOCKER_TARGET_VERSION}" 
          
          	sh "docker push ${env.DOCKER_REPO}/galasa-boot-embedded-amd64:${env.DOCKER_TARGET_VERSION}" 
+         	sh "docker push ${env.DOCKER_REPO}/galasa-ibm-boot-embedded-amd64:${env.DOCKER_TARGET_VERSION}" 
          	sh "docker push ${env.DOCKER_REPO}/galasa-resources-amd64:${env.DOCKER_TARGET_VERSION}" 
          	sh "docker push ${env.DOCKER_REPO}/galasa-p2-amd64:${env.DOCKER_TARGET_VERSION}" 
          	sh "docker push ${env.DOCKER_REPO}/galasa-javadoc-amd64:${env.DOCKER_TARGET_VERSION}" 
