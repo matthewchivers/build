@@ -1,4 +1,4 @@
-def mvnProfile        = 'dev,whitelist'
+def mvnProfile        = 'dev,whitelistbuild'
 
 pipeline {
 // Initially run on any agent
