@@ -67,7 +67,7 @@ pipeline {
       stage('Create Pull Request') {
          steps {
             withCredentials([string(credentialsId: 'c4c96c90-6635-4813-ae7f-abfa889a96b6', variable: 'GITHUB_TOKEN')]) {
-               dir('galasa.dev') {
+               dir('projectmanagement') {
                   sh "${workspace}/whitelistpr.sh"
                }
             }
