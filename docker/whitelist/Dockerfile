@@ -1,3 +1,3 @@
 FROM scratch
 
-COPY target/* /galasa/
+COPY target/* /

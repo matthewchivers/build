@@ -62,7 +62,7 @@ pipeline {
          steps {
             withFolderProperties { 
                dir('docker/whitelist') {
-                  sh "docker push ${env.DOCKER_REPO}/galasa-obr-generic:${env.DOCKER_VERSION}" 
+                  sh "docker push ${env.DOCKER_REPO}/galasa-offline-maven-generic:${env.DOCKER_VERSION}" 
                }
             }
          }
