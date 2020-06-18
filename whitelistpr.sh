@@ -33,4 +33,4 @@ fi
 
 echo "No Pull Request exists, creating one"
 
-hub pull-request -b next -h $WHITELIST_BRANCH -m "Autogenned Whitelists" -m "Jenkins run $BUILD_TAG" -r $WHITELIST_REVIEWERS
+hub pull-request -b master -h $WHITELIST_BRANCH -m "Autogenned Whitelists" -m "Jenkins run $BUILD_TAG" -r $WHITELIST_REVIEWERS
