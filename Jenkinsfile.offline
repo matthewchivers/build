@@ -19,6 +19,16 @@ pipeline {
          }
       }
          
+      stage('Pull Docker Images') {
+         steps {
+            withFolderProperties { 
+               sh "docker pull ${env.DOCKER_REPO}/galasa-docs-generic:${env.DOCKER_VERSION}" 
+               sh "docker pull ${env.DOCKER_REPO}/galasa-offline-maven-generic:${env.DOCKER_VERSION}" 
+               sh "docker pull ${env.DOCKER_REPO}/galasa-p2-amd64:${env.DOCKER_VERSION}" 
+            }
+         }
+      }
+      
       stage('Build Docker Image') {
          steps {
             withFolderProperties { 
