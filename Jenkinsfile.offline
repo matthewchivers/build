@@ -1,0 +1,48 @@
+pipeline {
+// Initially run on any agent
+   agent {
+      label 'docker-amd64'
+   }
+   options { timestamps () }
+   environment {
+     
+//Set some defaults
+      def workspace = pwd()
+   }
+   stages {
+// for debugging purposes
+      stage('report') {
+         steps {
+            echo "Branch/Tag          : ${env.GIT_BRANCH}"
+            echo "Commit Hash         : ${env.GIT_COMMIT}"
+            echo "Workspace directory : ${workspace}"
+         }
+      }
+         
+      stage('Build Docker Image') {
+         steps {
+            withFolderProperties { 
+               dir('docker/offline') {
+                  sh "docker build -t ${env.DOCKER_REPO}/galasa-offline:${env.DOCKER_VERSION} ." 
+               }
+            }
+         }
+      }
+      
+      stage('Push Docker Image') {
+         steps {
+            withFolderProperties { 
+               dir('docker/offline') {
+                  sh "docker push ${env.DOCKER_REPO}/galasa-offline:${env.DOCKER_VERSION}" 
+               }
+            }
+         }
+      }
+   }
+//   post {
+//       // triggered when red sign
+//       failure {
+//           slackSend (channel: '#project-galasa-devs', color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+//       }
+//    }
+}
