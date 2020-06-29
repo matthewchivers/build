@@ -37,7 +37,30 @@ pipeline {
          steps {
             dir('galasa.dev') {
                sh "npm install"
+               dir('public') {
+                  deleteDir()
+               }
                sh "npm run build"
+            }
+         }
+      }
+      
+      stage('Build Docker Image') {
+         steps {
+            withFolderProperties { 
+               dir('docker/docs') {
+                  sh "docker build -t ${env.DOCKER_REPO}/galasa-docs-generic:${env.DOCKER_VERSION} ." 
+               }
+            }
+         }
+      }
+      
+      stage('Push Docker Image') {
+         steps {
+            withFolderProperties { 
+               dir('docker/docs') {
+                  sh "docker push ${env.DOCKER_REPO}/galasa-docs-generic:${env.DOCKER_VERSION}" 
+               }
             }
          }
       }
