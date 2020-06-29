@@ -1,0 +1,51 @@
+pipeline {
+// Initially run on any agent
+   agent {
+      label 'docker-amd64'
+   }
+   options { timestamps () }
+   environment {
+     
+//Set some defaults
+      def workspace = pwd()
+   }
+   stages {
+// for debugging purposes
+      stage('report') {
+         steps {
+            echo "Branch/Tag          : ${env.GIT_BRANCH}"
+            echo "Commit Hash         : ${env.GIT_COMMIT}"
+            echo "Workspace directory : ${workspace}"
+         }
+      }
+         
+      stage('Clone Docs') {
+         steps {
+            dir('galasa.dev') {
+              deleteDir()
+            }
+            sh 'mkdir galasa.dev'
+            dir('galasa.dev') {
+               git(url: 'https://github.com/galasa-dev/galasa.dev.git', branch: "master")
+               
+               sh "git checkout -b ${env.DOC_BRANCH}"
+            }
+         }
+      }
+         
+      stage('Build Docs') {
+         steps {
+            dir('galasa.dev') {
+               sh "npm install"
+               sh "npm run build"
+            }
+         }
+      }
+   }
+//   post {
+//       // triggered when red sign
+//       failure {
+//           slackSend (channel: '#project-galasa-devs', color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+//       }
+//    }
+}
