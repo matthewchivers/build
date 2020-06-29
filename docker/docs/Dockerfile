@@ -1,3 +1,3 @@
 FROM scratch
 
-COPY ../../galasa.dev/public/ /
+COPY public/ /

@@ -47,6 +47,10 @@ pipeline {
          steps {
             withFolderProperties { 
                dir('docker/docs') {
+                  dir('public') {
+                     deleteDir()
+                  }
+                  sh "cp -R ../../galasa.dev/public ."
                   sh "docker build -t ${env.DOCKER_REPO}/galasa-docs-generic:${env.DOCKER_VERSION} ." 
                }
             }
