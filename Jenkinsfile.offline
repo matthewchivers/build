@@ -23,7 +23,7 @@ pipeline {
          steps {
             withFolderProperties { 
                dir('docker/offline') {
-                  sh "docker build -t ${env.DOCKER_REPO}/galasa-offline:${env.DOCKER_VERSION} ." 
+                  sh "docker build --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} -t ${env.DOCKER_REPO}/galasa-offline:${env.DOCKER_VERSION} ." 
                }
             }
          }
