@@ -143,6 +143,13 @@ pipeline {
                         sh "docker push ${env.DOCKER_REPO}/galasa-p2-amd64:${env.DOCKER_VERSION}" 
                      }
                
+                     dir('dockerOperator') {
+                        sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean process-sources"
+                  
+                        sh "docker build --build-arg gitHash=${GIT_COMMIT} -t ${env.DOCKER_REPO}/galasa-docker-operator-amd64:${env.DOCKER_VERSION} ." 
+                        sh "docker push ${env.DOCKER_REPO}/galasa-docker-operator-amd64:${env.DOCKER_VERSION}" 
+                     }
+                     
 			         dir('ibm/bootEmbedded') {
 			            sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} --build-arg platform=amd64 -t ${env.DOCKER_REPO}/galasa-ibm-boot-embedded-amd64:${env.DOCKER_VERSION} ." 
 			            sh "docker push ${env.DOCKER_REPO}/galasa-ibm-boot-embedded-amd64:${env.DOCKER_VERSION}" 
