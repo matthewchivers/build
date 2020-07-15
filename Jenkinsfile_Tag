@@ -19,6 +19,7 @@ pipeline {
                    sh "docker cp hashes:managers.hash ."
                    sh "docker cp hashes:simbank.hash ."
                    sh "docker cp hashes:inttests.hash ."
+                   sh "docker cp hashes:webui.hash ."
                    sh "docker cp hashes:build.hash ."
                }
            }
@@ -136,6 +137,26 @@ pipeline {
          	         sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git clone -b integrationok git@github.com:galasa-dev/integratedtests.git"
          	         
          	         dir('integratedtests') {
+                        sh "git merge --ff-only ${env.HASH}"
+                        sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin integrationok"
+         	         }
+                   }
+                }
+            }
+        }
+       stage('tag-webui') {
+            steps {
+               dir('git/webui') {
+                  deleteDir()
+                  
+                  script {
+                    env.HASH = readFile '../../hashes/webui.hash'
+                   }
+                   
+         	      withCredentials([sshUserPrivateKey(credentialsId: 'public-github-cicsdeliverytest', keyFileVariable: 'GITKEY')]) {
+         	         sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git clone -b integrationok git@github.com:galasa-dev/webui.git"
+         	         
+         	         dir('webui') {
                         sh "git merge --ff-only ${env.HASH}"
                         sh "GIT_SSH_COMMAND=\"ssh -i ${GITKEY}\" git push origin integrationok"
          	         }
