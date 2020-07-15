@@ -162,6 +162,12 @@ pipeline {
 			            sh "docker build -t ${env.DOCKER_REPO}/galasa-javadoc-amd64:${env.DOCKER_VERSION} ." 
 			            sh "docker push ${env.DOCKER_REPO}/galasa-javadoc-amd64:${env.DOCKER_VERSION}" 
 			         }
+
+			         dir('webui') {
+			            sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} -t ${env.DOCKER_REPO}/galasa-webui-amd64:${env.DOCKER_VERSION} ." 
+			            sh "docker push ${env.DOCKER_REPO}/galasa-webui-amd64:${env.DOCKER_VERSION}" 
+   			         }
+
 			      }
 			      }
                }
