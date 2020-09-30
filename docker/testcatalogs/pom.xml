@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>dev.galasa</groupId>
 		<artifactId>galasa-parent</artifactId>
-		<version>0.11.0-SNAPSHOT</version>
+		<version>0.11.0</version>
 	</parent>
 
 	<artifactId>galasa-testcatalogs</artifactId>
@@ -31,7 +31,7 @@
                                 <artifactItem>
                                     <groupId>dev.galasa</groupId>
                                     <artifactId>dev.galasa.managers.obr</artifactId>
-                                    <version>0.11.0-SNAPSHOT</version>
+                                    <version>0.11.0</version>
                                     <classifier>testcatalog</classifier>
                                     <type>json</type>
                                     <overWrite>true</overWrite>
@@ -40,7 +40,7 @@
                                 <artifactItem>
                                     <groupId>dev.galasa</groupId>
                                     <artifactId>dev.galasa.simbank.obr</artifactId>
-                                    <version>0.11.0-SNAPSHOT</version>
+                                    <version>0.11.0</version>
                                     <classifier>testcatalog</classifier>
                                     <type>json</type>
                                     <overWrite>true</overWrite>
@@ -49,7 +49,7 @@
                                 <artifactItem>
                                     <groupId>dev.galasa</groupId>
                                     <artifactId>dev.galasa.inttests.obr</artifactId>
-                                    <version>0.11.0-SNAPSHOT</version>
+                                    <version>0.11.0</version>
                                     <classifier>testcatalog</classifier>
                                     <type>json</type>
                                     <overWrite>true</overWrite>
