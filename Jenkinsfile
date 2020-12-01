@@ -147,14 +147,14 @@ pipeline {
                      dir('eclipse') {
                         sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean generate-sources"
                   
-                        sh "docker build --build-arg gitHash=${GIT_COMMIT} -t ${env.DOCKER_REPO}/galasa-p2-amd64:${env.DOCKER_VERSION} ." 
+                        sh "docker build --build-arg gitHash=${GIT_COMMIT} --build-arg dockerRepository=${env.DOCKER_REPO} -t ${env.DOCKER_REPO}/galasa-p2-amd64:${env.DOCKER_VERSION} ." 
                         sh "docker push ${env.DOCKER_REPO}/galasa-p2-amd64:${env.DOCKER_VERSION}" 
                      }
                
                      dir('dockerOperator') {
                         sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean process-sources"
                   
-                        sh "docker build --build-arg gitHash=${GIT_COMMIT} -t ${env.DOCKER_REPO}/galasa-docker-operator-amd64:${env.DOCKER_VERSION} ." 
+                        sh "docker build --build-arg gitHash=${GIT_COMMIT} --build-arg dockerRepository=${env.DOCKER_REPO} -t ${env.DOCKER_REPO}/galasa-docker-operator-amd64:${env.DOCKER_VERSION} ." 
                         sh "docker push ${env.DOCKER_REPO}/galasa-docker-operator-amd64:${env.DOCKER_VERSION}" 
                      }
                      
