@@ -1,3 +1,5 @@
+ARG dockerRepository
+
 FROM ${dockerRepository}/httpd:2.4
 
 ARG gitHash
