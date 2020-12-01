@@ -5,7 +5,7 @@ FROM ${dockerRepository}/galasa-docs-generic:${dockerVersion}
 FROM ${dockerRepository}/galasa-offline-maven-generic:${dockerVersion}
 FROM ${dockerRepository}/galasa-p2-amd64:${dockerVersion}
 
-FROM httpd:2.4
+FROM ${dockerRepository}/httpd:2.4
 
 ARG gitHash
 

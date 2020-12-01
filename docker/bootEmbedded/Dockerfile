@@ -3,7 +3,7 @@ ARG dockerRepository
 
 FROM ${dockerRepository}/galasa-obr-generic:${dockerVersion}
 
-FROM openjdk:8-jdk
+FROM ${dockerRepository}/openjdk:8-jdk
 
 COPY --from=0 /galasa/* /galasa/
 

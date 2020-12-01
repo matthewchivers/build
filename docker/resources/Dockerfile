@@ -3,7 +3,7 @@ ARG dockerRepository
 
 FROM ${dockerRepository}/galasa-testcatalogs-generic:${dockerVersion}
 
-FROM httpd:2.4
+FROM ${dockerRepository}/httpd:2.4
 
 ARG gitHash
 
