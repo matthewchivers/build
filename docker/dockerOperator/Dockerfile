@@ -1,3 +1,5 @@
+ARG dockerRepository
+
 FROM ${dockerRepository}/openjdk:8-jdk
 
 ENV CONFIG=/config.yaml

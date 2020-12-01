@@ -1,6 +1,7 @@
 FROM ${dockerRepository}/httpd:2.4
 
 ARG gitHash
+ARG dockerRepository
 
 RUN rm -v /usr/local/apache2/htdocs/*
 COPY httpd.conf /usr/local/apache2/conf/httpd.conf
