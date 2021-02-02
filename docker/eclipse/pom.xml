@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>dev.galasa</groupId>
 		<artifactId>galasa-parent</artifactId>
-		<version>0.14.0</version>
+		<version>0.15.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>galasa-eclipse</artifactId>
@@ -31,7 +31,7 @@
 								<artifactItem>
 									<groupId>dev.galasa</groupId>
 									<artifactId>dev.galasa.eclipse.site</artifactId>
-									<version>0.14.0</version>
+									<version>0.15.0-SNAPSHOT</version>
 									<type>zip</type>
 									<overWrite>true</overWrite>
 									<outputDirectory>${project.build.directory}/eclipse</outputDirectory>
