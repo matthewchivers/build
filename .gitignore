@@ -8,3 +8,6 @@ target/
 .DS_Store
 build.properties
 MANIFEST.MF
+zipTest/maven/
+zipTest/eclipse/
+zipTest/archive
