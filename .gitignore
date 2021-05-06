@@ -10,4 +10,9 @@ build.properties
 MANIFEST.MF
 zipTest/maven/
 zipTest/eclipse/
-zipTest/archive
+zipTest/archive/
+zipTest/*.tar
+zipTest/*.zip
+zipTest/.docker*
+zipTest/*.log
+
