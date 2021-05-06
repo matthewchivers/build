@@ -1,0 +1,131 @@
+description = 'Galasa Framework'
+
+apply plugin: 'java-library'
+apply plugin: 'maven-publish'
+
+configurations {
+    galasaP2
+    galasaP2.transitive = false
+
+    galasaLibs
+    galasaLibs.transitive = true
+}
+
+def mavenrepo = System.getenv('MAVEN_REPO') ?: "https://nexus.galasa.dev/repository/maven-development"
+
+def currentVersion = '0.15.0-SNAPSHOT'
+
+repositories {
+    maven {
+        url mavenrepo
+        metadataSources {
+            mavenPom()
+            artifact()
+        }
+    }
+    mavenCentral()
+}
+
+dependencies {
+    galasaP2 "dev.galasa:dev.galasa.eclipse.site:${currentVersion}@zip"
+
+    galasaLibs "dev.galasa:dev.galasa.cicsts.ceci.manager:${currentVersion}"
+    galasaLibs "dev.galasa:dev.galasa.docker.manager:${currentVersion}"
+    galasaLibs "dev.galasa:dev.galasa.http.manager:${currentVersion}"
+    galasaLibs "dev.galasa:dev.galasa.core.manager:${currentVersion}"
+    galasaLibs "dev.galasa:dev.galasa.zos3270.manager:${currentVersion}"
+
+}
+
+task testOutput() {
+    configurations.galasaLibs.resolvedConfiguration.resolvedArtifacts.each { artifact ->
+        print artifact.moduleVersion.id.group + ":" + artifact.moduleVersion.id.name + ":" + artifact.moduleVersion.id.version + " -> " + "\n"
+        print "\t" + artifact.moduleVersion.id.name + "-" + artifact.moduleVersion.id.version + "." + artifact.extension + "\n"
+    }
+}
+
+task copyP2(type: Copy) {
+    into "GalasaOffline/"
+    from configurations.galasaP2
+}
+
+task copyLibs(type: Copy) {
+    into "GalasaOffline/offlineLibs"
+    from configurations.galasaLibs
+}
+
+task copyPoms(type: Copy) {
+    // into "GalasaOffline/offlineLibs"
+    // def componentIds = configurations.galasaLibs.resolvedConfiguration.resolvedArtifacts.collect { it.artifact.moduleVersion.id }
+    // def result = project.dependencies.createArtifactResolutionQuery()
+    //         .forComponents(componentIds)
+    //         .withArtifacts(MavenModule, MavenPomArtifact)
+    //         .execute()
+    // from {
+    //     for (component in result.resolvedComponents) {
+    //         component.getArtifacts(MavenPomArtifact)
+    //     }
+    // }
+    // for (component in result.resolvedComponents) {
+    //     component.getArtifacts(MavenPomArtifact).each { println "POM file for ${component.id}: ${it.file}" }
+    // }
+    into "GalasaOffline/offlineLibs"
+    def componentIds = configurations.galasaLibs.incoming.resolutionResult.allDependencies.collect { it.selected.id }
+
+    def result = dependencies.createArtifactResolutionQuery()
+                            .forComponents(componentIds)
+                            .withArtifacts(MavenModule, MavenPomArtifact)
+                            .execute()
+    def poms = []
+    for (component in result.resolvedComponents) {
+        component.getArtifacts(MavenPomArtifact).each { 
+            poms.add(it.file)
+        }
+        // component.getArtifacts(MavenPomArtifact).each { println "Source artifact for ${component.id}: ${it.file}" }
+    }
+    from poms
+}
+
+task copyAll() {
+    doLast {
+        print "Copied"
+    }
+}
+
+copyAll.dependsOn copyLibs
+copyAll.dependsOn copyPoms
+
+publishing {
+    publications {
+        // testPub(MavenPublication){
+        //     artifact configurations.galasaLibs.resolvedConfiguration.resolvedArtifacts
+        // }
+        // configurations.galasaLibs.resolvedConfiguration.resolvedArtifacts { artifact ->
+        //     MavenPublication(artifact.moduleVersion.id.name) {
+        //         groupId artifact.moduleVersion.id.group
+        //         artifactId artifact.moduleVersion.id.name
+        //         version artifact.moduleVersion.id.version
+        //         artifact artifact
+        //     }
+        // }
+       maven(MavenPublication) {
+           groupId 'com.google.code.gson'
+           artifactId 'gson'
+           version '2.8.5'
+           pom uri('/Users/matthewchivers/Galasa/build/zipTest/GalasaOffline/offlineLibs/gson-2.8.5.pom')
+           artifact '/Users/matthewchivers/Galasa/build/zipTest/GalasaOffline/offlineLibs/gson-2.8.5.jar'
+       }
+       
+    //    maven2(MavenPublication) {
+    //        groupId 'myOtherGroupId'
+    //        artifactId 'myOtherArtifact'
+    //        version '1.2.3.4'
+    //        artifact '/Users/matthewchivers/Galasa/build/zipTest/GalasaOffline/offlineLibs/commons-io-2.6.jar'
+    //    }
+    }
+    repositories {
+        maven {
+            url uri('/Users/matthewchivers/Galasa/build/zipTest/GalasaOffline/testPublish/')
+        }
+    }
+}
