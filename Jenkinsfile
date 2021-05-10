@@ -250,7 +250,8 @@ pipeline {
             withFolderProperties { 
                dir('isolated/full/zip') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean"
-                  sh "docker save ${env.DOCKER_REPO}/galasa-isolated-full-amd64:${env.DOCKER_VERSION} > isolated.zip"
+                  sh "mkdir -p target/zip"
+                  sh "docker save ${env.DOCKER_REPO}/galasa-isolated-full-amd64:${env.DOCKER_VERSION} > target/zip/isolated.tar"
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e deploy"
                }
             } 
