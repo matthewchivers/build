@@ -196,7 +196,7 @@ pipeline {
 
                   }
             // Build the Isolated generic docker image
-                  dir('isolated/full/mavenrepo') {
+                  dir('isolated/full/dockerPlatform') {
                         sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} --build-arg gitHash=${GIT_COMMIT} -t ${env.DOCKER_REPO}/galasa-isolated-full-generic:${env.DOCKER_VERSION} ." 
                         sh "docker push ${env.DOCKER_REPO}/galasa-isolated-full:${env.DOCKER_VERSION}" 
                   }            
