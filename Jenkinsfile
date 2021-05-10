@@ -52,6 +52,16 @@ pipeline {
          }
       }
       
+      stage('isolated-partial-zips') {
+         steps {
+            withFolderProperties { 
+               dir('isolated/full/mavenrepo') {
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e ${MAVEN_GOAL}"
+               }
+            } 
+         }
+      }
+      
 // Spawn to a docker amd64 agent to build the generic (non-executable) images      
       stage('generic-docker-images') {
          agent { 
@@ -91,12 +101,13 @@ pipeline {
 			   }
 
 // Build the WebUI generic image
-			   dir('webuigeneric') {
-			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean process-sources"
-			      
-			      sh "docker build -t ${env.DOCKER_REPO}/galasa-webui-generic:${env.DOCKER_VERSION} ." 
-			      sh "docker push ${env.DOCKER_REPO}/galasa-webui-generic:${env.DOCKER_VERSION}" 
-			   }
+               dir('webuigeneric') {
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean process-sources"
+                  
+                  sh "docker build -t ${env.DOCKER_REPO}/galasa-webui-generic:${env.DOCKER_VERSION} ." 
+                  sh "docker push ${env.DOCKER_REPO}/galasa-webui-generic:${env.DOCKER_VERSION}" 
+               }
+
 
 // Build the git hashes transient docker image
 			   dir('hashes') {
@@ -107,6 +118,12 @@ pipeline {
 			      sh "docker push ${env.DOCKER_REPO}/galasa-githashes:${env.DOCKER_VERSION}" 
 			   }
 			}
+			// Build the Isolated generic docker image
+			dir('isolated/full/dockerGeneric') {
+               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean process-sources"
+                  
+               sh "docker build -t ${env.DOCKER_REPO}/galasa-isolated-full-generic:${env.DOCKER_VERSION} ." 
+               sh "docker push ${env.DOCKER_REPO}/galasa-isolated-full-generic:${env.DOCKER_VERSION}" 
 			}            
          }
       }
@@ -177,7 +194,12 @@ pipeline {
    			         }
 
 			      }
-			      }
+            // Build the Isolated generic docker image
+                  dir('isolated/full/mavenrepo') {
+                        sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} --build-arg gitHash=${GIT_COMMIT} -t ${env.DOCKER_REPO}/galasa-isolated-full-generic:${env.DOCKER_VERSION} ." 
+                        sh "docker push ${env.DOCKER_REPO}/galasa-isolated-full:${env.DOCKER_VERSION}" 
+                  }            
+ 			      }
                }
             }
 //            stage('s390x-docker-images') {
@@ -221,6 +243,19 @@ pipeline {
 //            }
 //         }
 //      }
+
+      stage('isolated-completed-zips') {
+         steps {
+            withFolderProperties { 
+               dir('isolated/full/zip') {
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean"
+                  sh "docker save ${env.DOCKER_REPO}/galasa-isolated-full:${env.DOCKER_VERSION} > isolated.zip"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e deploy"
+               }
+            } 
+         }
+      }
+
    }
    post {
        // triggered when red sign
