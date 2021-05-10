@@ -67,7 +67,7 @@ pipeline {
          agent { 
             label 'docker-amd64'
          }
-	     options {
+         options {
             skipDefaultCheckout false
          }
          environment {
@@ -83,22 +83,22 @@ pipeline {
             configFileProvider([configFile(fileId: '86dde059-684b-4300-b595-64e83c2dd217', targetLocation: 'settings.xml')]) {
             }
             withFolderProperties { 
-			dir('docker') {			   
+            dir('docker') {            
 // Build the emedded obr directory
-			   dir('dockerObr') {
-			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean process-sources galasa:obrembedded"
-			      
-			      sh "docker build -t ${env.DOCKER_REPO}/galasa-obr-generic:${env.DOCKER_VERSION} ." 
-			      sh "docker push ${env.DOCKER_REPO}/galasa-obr-generic:${env.DOCKER_VERSION}" 
-			   }
+               dir('dockerObr') {
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean process-sources galasa:obrembedded"
+                  
+                  sh "docker build -t ${env.DOCKER_REPO}/galasa-obr-generic:${env.DOCKER_VERSION} ." 
+                  sh "docker push ${env.DOCKER_REPO}/galasa-obr-generic:${env.DOCKER_VERSION}" 
+               }
 
 // Build the sample test catalogs
-			   dir('testcatalogs') {
-			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean generate-sources"
-			      
-			      sh "docker build -t ${env.DOCKER_REPO}/galasa-testcatalogs-generic:${env.DOCKER_VERSION} ." 
-			      sh "docker push ${env.DOCKER_REPO}/galasa-testcatalogs-generic:${env.DOCKER_VERSION}" 
-			   }
+               dir('testcatalogs') {
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean generate-sources"
+                  
+                  sh "docker build -t ${env.DOCKER_REPO}/galasa-testcatalogs-generic:${env.DOCKER_VERSION} ." 
+                  sh "docker push ${env.DOCKER_REPO}/galasa-testcatalogs-generic:${env.DOCKER_VERSION}" 
+               }
 
 // Build the WebUI generic image
                dir('webuigeneric') {
@@ -110,22 +110,23 @@ pipeline {
 
 
 // Build the git hashes transient docker image
-			   dir('hashes') {
-			      sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean generate-sources"
-			      
-			      sh "echo -n ${GIT_COMMIT} > target/build.hash"
-			      sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} -t ${env.DOCKER_REPO}/galasa-githashes:${env.DOCKER_VERSION} ." 
-			      sh "docker push ${env.DOCKER_REPO}/galasa-githashes:${env.DOCKER_VERSION}" 
-			   }
-			}
-			// Build the Isolated generic docker image
-			dir('isolated/full/dockerGeneric') {
+               dir('hashes') {
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean generate-sources"
+                  
+                  sh "echo -n ${GIT_COMMIT} > target/build.hash"
+                  sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} -t ${env.DOCKER_REPO}/galasa-githashes:${env.DOCKER_VERSION} ." 
+                  sh "docker push ${env.DOCKER_REPO}/galasa-githashes:${env.DOCKER_VERSION}" 
+               }
+            }
+            // Build the Isolated generic docker image
+            dir('isolated/full/dockerGeneric') {
                sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean process-sources"
                   
                sh "docker build -t ${env.DOCKER_REPO}/galasa-isolated-full-generic:${env.DOCKER_VERSION} ." 
                sh "docker push ${env.DOCKER_REPO}/galasa-isolated-full-generic:${env.DOCKER_VERSION}" 
-			}            
+            }            
          }
+      }
       }
       
 // Build all the platform specific docker images
@@ -135,7 +136,7 @@ pipeline {
                agent { 
                   label 'docker-amd64'
                }
-	           options {
+               options {
                   skipDefaultCheckout false
                }
                environment {
@@ -150,17 +151,17 @@ pipeline {
                   configFileProvider([configFile(fileId: '86dde059-684b-4300-b595-64e83c2dd217', targetLocation: 'settings.xml')]) {
                   }
             
-			      dir('docker') {
-			         dir('bootEmbedded') {
-			            sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} -t ${env.DOCKER_REPO}/galasa-boot-embedded-amd64:${env.DOCKER_VERSION} ." 
-			            sh "docker push ${env.DOCKER_REPO}/galasa-boot-embedded-amd64:${env.DOCKER_VERSION}" 
-   			         }
+                  dir('docker') {
+                     dir('bootEmbedded') {
+                        sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} -t ${env.DOCKER_REPO}/galasa-boot-embedded-amd64:${env.DOCKER_VERSION} ." 
+                        sh "docker push ${env.DOCKER_REPO}/galasa-boot-embedded-amd64:${env.DOCKER_VERSION}" 
+                     }
 
-			         dir('resources') {
-			            sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} --build-arg gitHash=${GIT_COMMIT} -t ${env.DOCKER_REPO}/galasa-resources-amd64:${env.DOCKER_VERSION} ." 
-			            sh "docker push ${env.DOCKER_REPO}/galasa-resources-amd64:${env.DOCKER_VERSION}" 
-   			         }
-   			         
+                     dir('resources') {
+                        sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} --build-arg gitHash=${GIT_COMMIT} -t ${env.DOCKER_REPO}/galasa-resources-amd64:${env.DOCKER_VERSION} ." 
+                        sh "docker push ${env.DOCKER_REPO}/galasa-resources-amd64:${env.DOCKER_VERSION}" 
+                     }
+                     
                      dir('eclipse') {
                         sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean generate-sources"
                   
@@ -175,38 +176,38 @@ pipeline {
                         sh "docker push ${env.DOCKER_REPO}/galasa-docker-operator-amd64:${env.DOCKER_VERSION}" 
                      }
                      
-			         dir('ibm/bootEmbedded') {
-			            sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} --build-arg platform=amd64 -t ${env.DOCKER_REPO}/galasa-ibm-boot-embedded-amd64:${env.DOCKER_VERSION} ." 
-			            sh "docker push ${env.DOCKER_REPO}/galasa-ibm-boot-embedded-amd64:${env.DOCKER_VERSION}" 
-   			         }
+                     dir('ibm/bootEmbedded') {
+                        sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} --build-arg platform=amd64 -t ${env.DOCKER_REPO}/galasa-ibm-boot-embedded-amd64:${env.DOCKER_VERSION} ." 
+                        sh "docker push ${env.DOCKER_REPO}/galasa-ibm-boot-embedded-amd64:${env.DOCKER_VERSION}" 
+                     }
 
 // Build the javadocs image
-			         dir('javadoc') {
-			            sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean generate-sources"
-			      
-			            sh "docker build --build-arg dockerRepository=${env.DOCKER_REPO} -t ${env.DOCKER_REPO}/galasa-javadoc-amd64:${env.DOCKER_VERSION} ." 
-			            sh "docker push ${env.DOCKER_REPO}/galasa-javadoc-amd64:${env.DOCKER_VERSION}" 
-			         }
+                     dir('javadoc') {
+                        sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean generate-sources"
+                  
+                        sh "docker build --build-arg dockerRepository=${env.DOCKER_REPO} -t ${env.DOCKER_REPO}/galasa-javadoc-amd64:${env.DOCKER_VERSION} ." 
+                        sh "docker push ${env.DOCKER_REPO}/galasa-javadoc-amd64:${env.DOCKER_VERSION}" 
+                     }
 
-			         dir('webui') {
-			            sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} -t ${env.DOCKER_REPO}/galasa-webui-amd64:${env.DOCKER_VERSION} ." 
-			            sh "docker push ${env.DOCKER_REPO}/galasa-webui-amd64:${env.DOCKER_VERSION}" 
-   			         }
+                     dir('webui') {
+                        sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} -t ${env.DOCKER_REPO}/galasa-webui-amd64:${env.DOCKER_VERSION} ." 
+                        sh "docker push ${env.DOCKER_REPO}/galasa-webui-amd64:${env.DOCKER_VERSION}" 
+                     }
 
-			      }
+                  }
             // Build the Isolated generic docker image
                   dir('isolated/full/mavenrepo') {
                         sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} --build-arg gitHash=${GIT_COMMIT} -t ${env.DOCKER_REPO}/galasa-isolated-full-generic:${env.DOCKER_VERSION} ." 
                         sh "docker push ${env.DOCKER_REPO}/galasa-isolated-full:${env.DOCKER_VERSION}" 
                   }            
- 			      }
+                  }
                }
             }
 //            stage('s390x-docker-images') {
 //               agent { 
 //                  label 'docker-s390x'
 //               }
-//	           options {
+//             options {
 //                  skipDefaultCheckout false
 //               }
 //               environment {
@@ -222,23 +223,23 @@ pipeline {
 //                  configFileProvider([configFile(fileId: '86dde059-684b-4300-b595-64e83c2dd217', targetLocation: 'settings.xml')]) {
 //                  }
 //            
-//			      dir('docker') {
-//			         dir('bootEmbedded') {
-//			            sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} -t ${env.DOCKER_REPO}/galasa-boot-embedded-s390x:${env.DOCKER_VERSION} -f Dockerfile.s390x ." 
-//			            sh "docker push ${env.DOCKER_REPO}/galasa-boot-embedded-s390x:${env.DOCKER_VERSION}" 
-//   			         }
-//   			         
-//			         dir('resources') {
-//			            sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} --build-arg gitHash=${GIT_COMMIT} -t ${env.DOCKER_REPO}/galasa-resources-s390x:${env.DOCKER_VERSION} ." 
-//			            sh "docker push ${env.DOCKER_REPO}/galasa-resources-s390x:${env.DOCKER_VERSION}" 
-//   			         }
-//   			         
-//			         dir('ibm/bootEmbedded') {
-//			            sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} --build-arg platform=s390x -t ${env.DOCKER_REPO}/galasa-ibm-boot-embedded-s390x:${env.DOCKER_VERSION} ." 
-//			            sh "docker push ${env.DOCKER_REPO}/galasa-ibm-boot-embedded-s390x:${env.DOCKER_VERSION}" 
-//   			         }
-//		         }
-//			      }            
+//                dir('docker') {
+//                   dir('bootEmbedded') {
+//                      sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} -t ${env.DOCKER_REPO}/galasa-boot-embedded-s390x:${env.DOCKER_VERSION} -f Dockerfile.s390x ." 
+//                      sh "docker push ${env.DOCKER_REPO}/galasa-boot-embedded-s390x:${env.DOCKER_VERSION}" 
+//                       }
+//                       
+//                   dir('resources') {
+//                      sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} --build-arg gitHash=${GIT_COMMIT} -t ${env.DOCKER_REPO}/galasa-resources-s390x:${env.DOCKER_VERSION} ." 
+//                      sh "docker push ${env.DOCKER_REPO}/galasa-resources-s390x:${env.DOCKER_VERSION}" 
+//                       }
+//                       
+//                   dir('ibm/bootEmbedded') {
+//                      sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} --build-arg platform=s390x -t ${env.DOCKER_REPO}/galasa-ibm-boot-embedded-s390x:${env.DOCKER_VERSION} ." 
+//                      sh "docker push ${env.DOCKER_REPO}/galasa-ibm-boot-embedded-s390x:${env.DOCKER_VERSION}" 
+//                       }
+//               }
+//                }            
 //               }
 //            }
 //         }
@@ -255,7 +256,6 @@ pipeline {
             } 
          }
       }
-
    }
    post {
        // triggered when red sign
