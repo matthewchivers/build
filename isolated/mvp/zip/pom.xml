@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>dev.galasa</groupId>
+		<artifactId>galasa-parent</artifactId>
+		<version>0.15.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>galasa-isolated-mvp</artifactId>
+	<version>0.15.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<description>Builds the final isolated zip file</description>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.1.2</version>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>dev.galasa</groupId>
+									<artifactId>dev.galasa.eclipse.site</artifactId>
+									<version>0.15.0-SNAPSHOT</version>
+									<type>zip</type>
+									<overWrite>true</overWrite>
+									<outputDirectory>${project.build.directory}/zip/eclipse</outputDirectory>
+								</artifactItem>
+								<artifactItem>
+									<groupId>dev.galasa</groupId>
+									<artifactId>galasa-isolated-mvp-maven-repo</artifactId>
+									<version>0.15.0-SNAPSHOT</version>
+									<classifier>repo</classifier>
+									<type>zip</type>
+									<outputDirectory>${project.build.directory}/zip/maven</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.3.0</version>
+				<configuration>
+					<descriptors>
+						<descriptor>src/assembly/zip.xml</descriptor>
+					</descriptors>
+					<appendAssemblyId>false</appendAssemblyId>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>
