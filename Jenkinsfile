@@ -197,8 +197,8 @@ pipeline {
                   }
             // Build the Isolated generic docker image
                   dir('isolated/full/dockerPlatform') {
-                        sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} --build-arg gitHash=${GIT_COMMIT} -t ${env.DOCKER_REPO}/galasa-isolated-full-generic:${env.DOCKER_VERSION} ." 
-                        sh "docker push ${env.DOCKER_REPO}/galasa-isolated-full:${env.DOCKER_VERSION}" 
+                        sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} --build-arg gitHash=${GIT_COMMIT} -t ${env.DOCKER_REPO}/galasa-isolated-full-amd64:${env.DOCKER_VERSION} ." 
+                        sh "docker push ${env.DOCKER_REPO}/galasa-isolated-full-generic-amd64:${env.DOCKER_VERSION}" 
                   }            
                   }
                }
@@ -250,7 +250,7 @@ pipeline {
             withFolderProperties { 
                dir('isolated/full/zip') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean"
-                  sh "docker save ${env.DOCKER_REPO}/galasa-isolated-full:${env.DOCKER_VERSION} > isolated.zip"
+                  sh "docker save ${env.DOCKER_REPO}/galasa-isolated-full-amd64:${env.DOCKER_VERSION} > isolated.zip"
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e deploy"
                }
             } 
