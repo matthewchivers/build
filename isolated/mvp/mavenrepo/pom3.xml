@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>dev.galasa</groupId>
+		<artifactId>galasa-parent</artifactId>
+		<version>0.15.0-SNAPSHOT</version>
+	</parent>
+
+	<groupId>dev.galasa</groupId>
+	<artifactId>galasa-isolated-mvp-maven-repo3</artifactId>
+	<version>0.15.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<galasa.target.repo>file:${project.build.directory}/repo</galasa.target.repo>
+	</properties>
+
+	<dependencies>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.8</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.4.11</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcomponents-core</artifactId>
+            <version>4.4.11</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>4.5.8</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient-cache</artifactId>
+            <version>4.5.8</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>fluent-hc</artifactId>
+            <version>4.5.8</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient-osgi</artifactId>
+            <version>4.5.8</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcomponents-client</artifactId>
+            <version>4.5.8</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcomponents-parent</artifactId>
+            <version>11</version>
+            <type>pom</type>
+        </dependency>
+		<dependency>
+			<groupId>org.apache</groupId>
+			<artifactId>apache</artifactId>
+			<version>21</version>
+			<type>pom</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>dev.galasa</groupId>
+				<artifactId>galasastaging-maven-plugin</artifactId>
+				<version>0.15.0-SNAPSHOT</version>
+				<extensions>true</extensions>
+				<executions>
+					<execution>
+						<id>x</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>deployartifacts2</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

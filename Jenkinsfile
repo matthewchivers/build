@@ -129,7 +129,10 @@ pipeline {
                sh "docker push ${env.DOCKER_REPO}/galasa-isolated-full-generic:${env.DOCKER_VERSION}" 
             }            
             dir('isolated/mvp/dockerGeneric') {
-               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean process-sources"
+               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e -f pom2.xml clean process-sources"
+               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e -f pom3.xml process-sources"
+               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e -f pom4.xml process-sources"
+               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e process-sources"
                   
                sh "docker build -t ${env.DOCKER_REPO}/galasa-isolated-mvp-generic:${env.DOCKER_VERSION} ." 
                sh "docker push ${env.DOCKER_REPO}/galasa-isolated-mvp-generic:${env.DOCKER_VERSION}" 
