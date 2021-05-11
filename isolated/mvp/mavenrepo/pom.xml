@@ -21,49 +21,49 @@
 	</properties>
 
 	<dependencies>
-        <dependency>
-            <groupId>dev.galasa</groupId>
-            <artifactId>dev.galasa.uber.obr</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
-            <type>obr</type>
-        </dependency>
-        
-        <dependency>
-            <groupId>dev.galasa</groupId>
-            <artifactId>galasa-boot</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>dev.galasa</groupId>
-            <artifactId>galasa-simplatform</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>dev.galasa</groupId>
-            <artifactId>dev.galasa</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>dev.galasa</groupId>
-            <artifactId>dev.galasa.framework</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>dev.galasa</groupId>
-            <artifactId>dev.galasa.framework.maven.repository</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>dev.galasa</groupId>
-            <artifactId>dev.galasa.framework.maven.repository.spi</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>dev.galasa.uber.obr</artifactId>
+			<version>0.15.0-SNAPSHOT</version>
+			<type>obr</type>
+		</dependency>
+
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>galasa-boot</artifactId>
+			<version>0.15.0-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>galasa-simplatform</artifactId>
+			<version>0.15.0-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>dev.galasa</artifactId>
+			<version>0.15.0-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>dev.galasa.framework</artifactId>
+			<version>0.15.0-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>dev.galasa.framework.maven.repository</artifactId>
+			<version>0.15.0-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>dev.galasa.framework.maven.repository.spi</artifactId>
+			<version>0.15.0-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
 
 		<dependency>
 			<groupId>dev.galasa</groupId>
@@ -73,7 +73,19 @@
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
+			<artifactId>dev.galasa.artifact.manager.ivt</artifactId>
+			<version>0.15.0-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.core.manager</artifactId>
+			<version>0.15.0-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>dev.galasa.core.manager.ivt</artifactId>
 			<version>0.15.0-SNAPSHOT</version>
 			<type>jar</type>
 		</dependency>
@@ -95,102 +107,137 @@
 			<version>0.15.0-SNAPSHOT</version>
 			<type>jar</type>
 		</dependency>
-		<dependency>
-			<groupId>dev.galasa</groupId>
-			<artifactId>dev.galasa.selenium.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
-			<type>jar</type>
-		</dependency>
+        <dependency>
+            <groupId>dev.galasa</groupId>
+            <artifactId>dev.galasa.kubernetes.manager</artifactId>
+            <version>0.15.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>dev.galasa</groupId>
+            <artifactId>dev.galasa.selenium.manager</artifactId>
+            <version>0.15.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.zos.manager</artifactId>
 			<version>0.15.0-SNAPSHOT</version>
 			<type>jar</type>
 		</dependency>
+        <dependency>
+            <groupId>dev.galasa</groupId>
+            <artifactId>dev.galasa.zos3270.common</artifactId>
+            <version>0.15.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>dev.galasa</groupId>
+            <artifactId>dev.galasa.zos3270.manager</artifactId>
+            <version>0.15.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
-			<artifactId>dev.galasa.zos3270.manager</artifactId>
+			<artifactId>dev.galasa.zosbatch.rseapi.manager</artifactId>
 			<version>0.15.0-SNAPSHOT</version>
 			<type>jar</type>
 		</dependency>
-        <dependency>
-            <groupId>dev.galasa</groupId>
-            <artifactId>dev.galasa.zosbatch.rseapi.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>dev.galasa</groupId>
-            <artifactId>dev.galasa.zosbatch.zosmf.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>dev.galasa</groupId>
-            <artifactId>dev.galasa.zosconsole.oeconsol.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>dev.galasa</groupId>
-            <artifactId>dev.galasa.zosconsole.zosmf.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>dev.galasa</groupId>
-            <artifactId>dev.galasa.zosfile.rseapi.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>dev.galasa</groupId>
-            <artifactId>dev.galasa.zosfile.zosmf.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>dev.galasa</groupId>
-            <artifactId>dev.galasa.zosmf.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>dev.galasa</groupId>
-            <artifactId>dev.galasa.zosrseapi.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>dev.galasa</groupId>
-            <artifactId>dev.galasa.zosprogram.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>dev.galasa</groupId>
-            <artifactId>dev.galasa.zostsocommand.ssh.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>dev.galasa</groupId>
-            <artifactId>dev.galasa.zosunixcommand.ssh.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>dev.galasa.zosbatch.zosmf.manager</artifactId>
+			<version>0.15.0-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>dev.galasa.zosconsole.oeconsol.manager</artifactId>
+			<version>0.15.0-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>dev.galasa.zosconsole.zosmf.manager</artifactId>
+			<version>0.15.0-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>dev.galasa.zosfile.rseapi.manager</artifactId>
+			<version>0.15.0-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>dev.galasa.zosfile.zosmf.manager</artifactId>
+			<version>0.15.0-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>dev.galasa.zosmf.manager</artifactId>
+			<version>0.15.0-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>dev.galasa.zosrseapi.manager</artifactId>
+			<version>0.15.0-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>dev.galasa.zosprogram.manager</artifactId>
+			<version>0.15.0-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>dev.galasa.zostsocommand.ssh.manager</artifactId>
+			<version>0.15.0-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>dev.galasa.zosunixcommand.ssh.manager</artifactId>
+			<version>0.15.0-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
 
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.2</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.6</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.8.1</version>
+			<type>jar</type>
+		</dependency>
         <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.2</version>
-            <type>jar</type>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.2</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.8.1</version>
-            <type>jar</type>
+            <artifactId>commons-compress</artifactId>
+            <version>1.19</version>
         </dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -210,18 +257,18 @@
 			<version>3.11.1</version>
 			<type>jar</type>
 		</dependency>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-parent-pom</artifactId>
-            <version>2.2.1</version>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.junit</groupId>
-            <artifactId>junit-bom</artifactId>
-            <version>5.2.0</version>
-            <type>pom</type>
-        </dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-parent-pom</artifactId>
+			<version>2.2.1</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>org.junit</groupId>
+			<artifactId>junit-bom</artifactId>
+			<version>5.2.0</version>
+			<type>pom</type>
+		</dependency>
 		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.service.component.annotations</artifactId>
@@ -235,47 +282,94 @@
 			<type>jar</type>
 		</dependency>
 
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-api</artifactId>
+			<version>3.141.59</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-ie-driver</artifactId>
+			<version>3.141.59</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-edge-driver</artifactId>
+			<version>3.141.59</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-chrome-driver</artifactId>
+			<version>3.141.59</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-firefox-driver</artifactId>
+			<version>3.141.59</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-opera-driver</artifactId>
+			<version>3.141.59</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-remote-driver</artifactId>
+			<version>3.141.59</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.http.servlet-api</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.bcel</groupId>
+			<artifactId>bcel</artifactId>
+			<version>6.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.5</version>
+		</dependency>
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-api</artifactId>
-            <version>3.141.59</version>
-            <type>jar</type>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.7</version>
         </dependency>
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-ie-driver</artifactId>
-            <version>3.141.59</version>
-            <type>jar</type>
+            <groupId>dev.galasa</groupId>
+            <artifactId>com.jcraft.jsch</artifactId>
+            <version>0.1.55</version>
         </dependency>
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-edge-driver</artifactId>
-            <version>3.141.59</version>
-            <type>jar</type>
+            <groupId>io.prometheus</groupId>
+            <artifactId>simpleclient</artifactId>
+            <version>0.6.0</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-chrome-driver</artifactId>
-            <version>3.141.59</version>
-            <type>jar</type>
+            <groupId>com.sun.activation</groupId>
+            <artifactId>jakarta.activation</artifactId>
+            <version>2.0.0</version>
         </dependency>
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-firefox-driver</artifactId>
-            <version>3.141.59</version>
-            <type>jar</type>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>3.0.0</version>
         </dependency>
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-opera-driver</artifactId>
-            <version>3.141.59</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-remote-driver</artifactId>
-            <version>3.141.59</version>
-            <type>jar</type>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.configadmin</artifactId>
+            <version>1.9.16</version>
+            <scope>compile</scope>
         </dependency>
 	</dependencies>
 
