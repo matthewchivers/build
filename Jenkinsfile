@@ -126,13 +126,6 @@ pipeline {
                }
             }
             // Build the Isolated generic docker image
-            dir('isolated/combined/generic') {
-               sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean process-sources"
-                  
-               sh "docker build -t ${env.DOCKER_REPO}/galasa-isolated-resources-generic:${env.DOCKER_VERSION} ." 
-               sh "docker push ${env.DOCKER_REPO}/galasa-isolated-resources-generic:${env.DOCKER_VERSION}" 
-            }            
-            // Build the Isolated generic docker image
             dir('isolated/full/dockerGeneric') {
                sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean process-sources"
                   
@@ -215,11 +208,6 @@ pipeline {
                      }
 
                   }
-            // Build the Isolated generic docker image
-                  dir('isolated/combined/platform') {
-                        sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} --build-arg gitHash=${GIT_COMMIT} -t ${env.DOCKER_REPO}/galasa-isolated-resources-amd64:${env.DOCKER_VERSION} ." 
-                        sh "docker push ${env.DOCKER_REPO}/galasa-isolated-resources-amd64:${env.DOCKER_VERSION}" 
-                  }            
                   dir('isolated/full/dockerPlatform') {
                         sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} --build-arg gitHash=${GIT_COMMIT} -t ${env.DOCKER_REPO}/galasa-isolated-full-amd64:${env.DOCKER_VERSION} ." 
                         sh "docker push ${env.DOCKER_REPO}/galasa-isolated-full-amd64:${env.DOCKER_VERSION}" 
@@ -273,7 +261,10 @@ pipeline {
 //         }
 //      }
 
-      stage('isolated-completed-zips') {
+      stage('isolated-complete-zips') {
+         agent { 
+            label 'docker-amd64'
+         }
          steps {
             withFolderProperties { 
                dir('isolated/full/zip') {
@@ -288,6 +279,17 @@ pipeline {
                   sh "docker save ${env.DOCKER_REPO}/galasa-isolated-mvp-amd64:${env.DOCKER_VERSION} > target/zip/isolated.tar"
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e deploy"
                }
+            // Build the Isolated generic docker image
+               dir('isolated/combined/generic') {
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean process-sources"
+                  
+                  sh "docker build -t ${env.DOCKER_REPO}/galasa-isolated-resources-generic:${env.DOCKER_VERSION} ." 
+                  sh "docker push ${env.DOCKER_REPO}/galasa-isolated-resources-generic:${env.DOCKER_VERSION}" 
+               }            
+               dir('isolated/combined/platform') {
+                  sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} --build-arg gitHash=${GIT_COMMIT} -t ${env.DOCKER_REPO}/galasa-isolated-resources-amd64:${env.DOCKER_VERSION} ." 
+                  sh "docker push ${env.DOCKER_REPO}/galasa-isolated-resources-amd64:${env.DOCKER_VERSION}" 
+               }            
             } 
          }
       }

@@ -42,7 +42,7 @@
 								</artifactItem>
                                 <artifactItem>
                                     <groupId>dev.galasa</groupId>
-                                    <artifactId>galasa-isolated-mvp-maven-repo</artifactId>
+                                    <artifactId>galasa-isolated-mvp</artifactId>
                                     <version>0.15.0-SNAPSHOT</version>
                                     <classifier>repo</classifier>
                                     <type>zip</type>
@@ -50,7 +50,7 @@
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>dev.galasa</groupId>
-                                    <artifactId>galasa-isolated-full-maven-repo</artifactId>
+                                    <artifactId>galasa-isolated-full</artifactId>
                                     <version>0.15.0-SNAPSHOT</version>
                                     <classifier>repo</classifier>
                                     <type>zip</type>
