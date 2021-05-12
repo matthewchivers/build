@@ -44,7 +44,6 @@
                                     <groupId>dev.galasa</groupId>
                                     <artifactId>galasa-isolated-mvp</artifactId>
                                     <version>0.15.0-SNAPSHOT</version>
-                                    <classifier>repo</classifier>
                                     <type>zip</type>
                                     <outputDirectory>${project.build.directory}/image/</outputDirectory>
                                 </artifactItem>
@@ -52,7 +51,6 @@
                                     <groupId>dev.galasa</groupId>
                                     <artifactId>galasa-isolated-full</artifactId>
                                     <version>0.15.0-SNAPSHOT</version>
-                                    <classifier>repo</classifier>
                                     <type>zip</type>
                                     <outputDirectory>${project.build.directory}/image/</outputDirectory>
                                 </artifactItem>
