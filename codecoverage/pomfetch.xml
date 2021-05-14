@@ -79,14 +79,30 @@
 									<type>jar</type>
 									<overWrite>true</overWrite>
 								</artifactItem>
-								<artifactItem>
-									<groupId>dev.galasa</groupId>
-									<artifactId>dev.galasa.core.manager</artifactId>
-									<version>0.15.0-SNAPSHOT</version>
-									<classifier>sources</classifier>
-									<type>jar</type>
-									<overWrite>true</overWrite>
-								</artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.core.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <classifier>sources</classifier>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zos.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <classifier>sources</classifier>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zosmf.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <classifier>sources</classifier>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
 							</artifactItems>
 							<outputDirectory>${project.build.directory}/sources/</outputDirectory>
 						</configuration>
@@ -106,13 +122,27 @@
 									<type>jar</type>
 									<overWrite>true</overWrite>
 								</artifactItem>
-								<artifactItem>
-									<groupId>dev.galasa</groupId>
-									<artifactId>dev.galasa.core.manager</artifactId>
-									<version>0.15.0-SNAPSHOT</version>
-									<type>jar</type>
-									<overWrite>true</overWrite>
-								</artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.core.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zos.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zosmf.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
 							</artifactItems>
 							<outputDirectory>${project.build.directory}/classes/</outputDirectory>
 						</configuration>
