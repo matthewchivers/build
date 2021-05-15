@@ -101,14 +101,6 @@ pipeline {
                   sh "docker push ${env.DOCKER_REPO}/galasa-obr-generic:${env.DOCKER_VERSION}" 
                }
 
-// Build the sample test catalogs
-               dir('testcatalogs') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean generate-sources"
-                  
-                  sh "docker build -t ${env.DOCKER_REPO}/galasa-testcatalogs-generic:${env.DOCKER_VERSION} ." 
-                  sh "docker push ${env.DOCKER_REPO}/galasa-testcatalogs-generic:${env.DOCKER_VERSION}" 
-               }
-
 // Build the WebUI generic image
                dir('webuigeneric') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean process-sources"
