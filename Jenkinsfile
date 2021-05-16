@@ -164,11 +164,6 @@ pipeline {
                         sh "docker push ${env.DOCKER_REPO}/galasa-boot-embedded-amd64:${env.DOCKER_VERSION}" 
                      }
 
-                     dir('resources') {
-                        sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} --build-arg gitHash=${GIT_COMMIT} -t ${env.DOCKER_REPO}/galasa-resources-amd64:${env.DOCKER_VERSION} ." 
-                        sh "docker push ${env.DOCKER_REPO}/galasa-resources-amd64:${env.DOCKER_VERSION}" 
-                     }
-                     
                      dir('eclipse') {
                         sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean generate-sources"
                   
@@ -237,11 +232,6 @@ pipeline {
 //                   dir('bootEmbedded') {
 //                      sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} -t ${env.DOCKER_REPO}/galasa-boot-embedded-s390x:${env.DOCKER_VERSION} -f Dockerfile.s390x ." 
 //                      sh "docker push ${env.DOCKER_REPO}/galasa-boot-embedded-s390x:${env.DOCKER_VERSION}" 
-//                       }
-//                       
-//                   dir('resources') {
-//                      sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} --build-arg gitHash=${GIT_COMMIT} -t ${env.DOCKER_REPO}/galasa-resources-s390x:${env.DOCKER_VERSION} ." 
-//                      sh "docker push ${env.DOCKER_REPO}/galasa-resources-s390x:${env.DOCKER_VERSION}" 
 //                       }
 //                       
 //                   dir('ibm/bootEmbedded') {
