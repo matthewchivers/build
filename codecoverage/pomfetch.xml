@@ -415,6 +415,8 @@
                                 </artifactItem>
                             </artifactItems>
 							<outputDirectory>${project.build.directory}/classes/</outputDirectory>
+							<includes>dev/galasa/**
+							</includes>
 						</configuration>
 					</execution>
 				</executions>
