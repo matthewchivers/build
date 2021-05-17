@@ -73,7 +73,31 @@
 							<artifactItems>
                                 <artifactItem>
                                     <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <classifier>sources</classifier>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
                                     <artifactId>dev.galasa.framework</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <classifier>sources</classifier>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.framework.maven.repository</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <classifier>sources</classifier>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.framework.maven.repository.spi</artifactId>
                                     <version>0.15.0-SNAPSHOT</version>
                                     <classifier>sources</classifier>
                                     <type>jar</type>
@@ -105,6 +129,14 @@
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.selenium.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <classifier>sources</classifier>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
                                     <artifactId>dev.galasa.zos.manager</artifactId>
                                     <version>0.15.0-SNAPSHOT</version>
                                     <classifier>sources</classifier>
@@ -113,7 +145,103 @@
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zosprogram.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <classifier>sources</classifier>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
                                     <artifactId>dev.galasa.zosmf.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <classifier>sources</classifier>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zosrseapi.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <classifier>sources</classifier>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zosbatch.zosmf.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <classifier>sources</classifier>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zosbatch.rseapi.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <classifier>sources</classifier>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zosfile.zosmf.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <classifier>sources</classifier>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zosfile.rseapi.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <classifier>sources</classifier>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zosconsole.zosmf.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <classifier>sources</classifier>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zosconsole.oeconsol.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <classifier>sources</classifier>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zostsocommand.ssh.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <classifier>sources</classifier>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zosunixcommand.ssh.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <classifier>sources</classifier>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>galasa-boot</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <classifier>sources</classifier>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>galasa-simplatform</artifactId>
                                     <version>0.15.0-SNAPSHOT</version>
                                     <classifier>sources</classifier>
                                     <type>jar</type>
@@ -130,10 +258,31 @@
 							<goal>unpack</goal>
 						</goals>
 						<configuration>
-							<artifactItems>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
                                 <artifactItem>
                                     <groupId>dev.galasa</groupId>
                                     <artifactId>dev.galasa.framework</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.framework.maven.repository</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.framework.maven.repository.spi</artifactId>
                                     <version>0.15.0-SNAPSHOT</version>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
@@ -161,7 +310,21 @@
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.selenium.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
                                     <artifactId>dev.galasa.zos.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zosprogram.manager</artifactId>
                                     <version>0.15.0-SNAPSHOT</version>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
@@ -173,7 +336,84 @@
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
                                 </artifactItem>
-							</artifactItems>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zosrseapi.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zosbatch.zosmf.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zosbatch.rseapi.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zosfile.zosmf.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zosfile.rseapi.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zosconsole.zosmf.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zosconsole.oeconsol.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zostsocommand.ssh.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>dev.galasa.zosunixcommand.ssh.manager</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>galasa-boot</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>dev.galasa</groupId>
+                                    <artifactId>galasa-simplatform</artifactId>
+                                    <version>0.15.0-SNAPSHOT</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                </artifactItem>
+                            </artifactItems>
 							<outputDirectory>${project.build.directory}/classes/</outputDirectory>
 						</configuration>
 					</execution>
