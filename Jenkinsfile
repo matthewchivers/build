@@ -56,7 +56,16 @@ pipeline {
          steps {
             withFolderProperties { 
                dir('isolated/full/mavenrepo') {
-                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e ${MAVEN_GOAL}"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e -f pom2.xml process-resources"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e -f pom3.xml process-resources"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e -f pom4.xml process-resources"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e -f pom5.xml process-resources"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e -f pom6.xml process-resources"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e -f pom7.xml process-resources"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e -f pom8.xml process-resources"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e -f pom9.xml process-resources"
+                  sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e deploy"
                }
                dir('isolated/mvp/mavenrepo') {
                   sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean"
