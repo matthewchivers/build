@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>dev.galasa</groupId>
+		<artifactId>galasa-parent</artifactId>
+		<version>0.15.0-SNAPSHOT</version>
+	</parent>
+
+	<groupId>dev.galasa</groupId>
+	<artifactId>galasa-isolated-full-maven-repo8</artifactId>
+	<version>0.15.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<galasa.target.repo>file:${project.build.directory}/repo</galasa.target.repo>
+	</properties>
+
+	<dependencies>
+		<!-- Extensions -->
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>dev.galasa.cps.etcd</artifactId>
+			<version>0.15.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>dev.galasa</groupId>
+			<artifactId>dev.galasa.ras.couchdb</artifactId>
+			<version>0.15.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>dev.galasa</groupId>
+				<artifactId>galasastaging-maven-plugin</artifactId>
+				<version>0.15.0-SNAPSHOT</version>
+				<extensions>true</extensions>
+				<executions>
+					<execution>
+						<id>x</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>deployartifacts2</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
