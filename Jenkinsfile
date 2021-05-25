@@ -193,12 +193,12 @@ pipeline {
                      }
 
 // Build the javadocs image
-                     dir('javadoc') {
-                        sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean generate-sources"
-                  
-                        sh "docker build --build-arg dockerRepository=${env.DOCKER_REPO} -t ${env.DOCKER_REPO}/galasa-javadoc-amd64:${env.DOCKER_VERSION} ." 
-                        sh "docker push ${env.DOCKER_REPO}/galasa-javadoc-amd64:${env.DOCKER_VERSION}" 
-                     }
+//                     dir('javadoc') {
+//                        sh "mvn --settings ${workspace}/settings.xml -Dmaven.repo.local=${workspace}/repository -P ${MAVEN_PROFILE} -B -e clean generate-sources"
+//                  
+//                        sh "docker build --build-arg dockerRepository=${env.DOCKER_REPO} -t ${env.DOCKER_REPO}/galasa-javadoc-amd64:${env.DOCKER_VERSION} ." 
+//                        sh "docker push ${env.DOCKER_REPO}/galasa-javadoc-amd64:${env.DOCKER_VERSION}" 
+//                    }
 
                      dir('webui') {
                         sh "docker build --pull --build-arg dockerVersion=${env.DOCKER_VERSION} --build-arg dockerRepository=${env.DOCKER_REPO} -t ${env.DOCKER_REPO}/galasa-webui-amd64:${env.DOCKER_VERSION} ." 
