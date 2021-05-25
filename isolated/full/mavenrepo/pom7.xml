@@ -25,62 +25,62 @@
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.framework.k8s.controller</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.framework.docker.controller</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.framework.resource.management</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.framework.metrics</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.framework.api</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.framework.api.authentication</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.framework.api.bootstrap</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.framework.api.health</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.framework.api.runs</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.framework.api.cps</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.framework.api.ras</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.framework.api.testcatalog</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.felix</groupId>
@@ -139,7 +139,7 @@
 			<plugin>
 				<groupId>dev.galasa</groupId>
 				<artifactId>galasastaging-maven-plugin</artifactId>
-				<version>0.15.0-SNAPSHOT</version>
+				<version>0.15.0</version>
 				<extensions>true</extensions>
 				<executions>
 					<execution>

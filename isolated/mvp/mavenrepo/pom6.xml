@@ -39,7 +39,7 @@
 			<plugin>
 				<groupId>dev.galasa</groupId>
 				<artifactId>galasastaging-maven-plugin</artifactId>
-				<version>0.15.0-SNAPSHOT</version>
+				<version>0.15.0</version>
 				<extensions>true</extensions>
 				<executions>
 					<execution>

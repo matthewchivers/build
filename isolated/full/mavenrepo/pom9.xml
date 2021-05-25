@@ -25,117 +25,117 @@
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.textscan.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 		</dependency>
 		<dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.zosliberty.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
         </dependency>
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.cicsts.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
         </dependency>
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.cicsts.ceci.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
         </dependency>
 		<dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.cicsts.cemt.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
         </dependency>
 		<dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.cicsts.ceda.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
         </dependency>
 		<dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.cicsts.cemt.manager.ivt</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
         </dependency>
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.cicsts.ceda.manager.ivt</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
         </dependency>
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.cicsts.resource.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
         </dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.linux.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.linux.manager.ivt</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 		</dependency>
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.windows.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
         </dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.openstack.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.http.manager.ivt</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 		</dependency>
 		<dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.elasticlog.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
         </dependency>
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.phoenix2.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
         </dependency>
 		<dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.liberty.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
         </dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.galasaecosystem.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.jmeter.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.jmeter.manager.ivt</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 		</dependency>
 		<dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.java.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
         </dependency>
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.java.ubuntu.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
         </dependency>
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.java.windows.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
         </dependency>
 		<dependency>
 			<groupId>org.yaml</groupId>
@@ -149,7 +149,7 @@
 			<plugin>
 				<groupId>dev.galasa</groupId>
 				<artifactId>galasastaging-maven-plugin</artifactId>
-				<version>0.15.0-SNAPSHOT</version>
+				<version>0.15.0</version>
 				<extensions>true</extensions>
 				<executions>
 					<execution>
