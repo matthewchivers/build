@@ -8,12 +8,12 @@
 	<parent>
 		<groupId>dev.galasa</groupId>
 		<artifactId>galasa-parent</artifactId>
-		<version>0.15.0-SNAPSHOT</version>
+		<version>0.15.0</version>
 	</parent>
 
 	<groupId>dev.galasa</groupId>
 	<artifactId>galasa-isolated-full-maven-repo</artifactId>
-	<version>0.15.0-SNAPSHOT</version>
+	<version>0.15.0</version>
 	<packaging>pom</packaging>
 
 	<properties>
@@ -24,231 +24,231 @@
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.uber.obr</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>obr</type>
 		</dependency>
 
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>galasa-boot</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>galasa-simplatform</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.framework</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.framework.maven.repository</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.framework.maven.repository.spi</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
 
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.artifact.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.artifact.manager.ivt</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.core.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.core.manager.ivt</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.docker.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.docker.manager.ivt</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.http.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.http.manager.ivt</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
             <type>jar</type>
         </dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.ipnetwork.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.kubernetes.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.selenium.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
             <type>jar</type>
         </dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.selenium.manager.ivt</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.zos.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.zos.manager.ivt</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.zos3270.common</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.zos3270.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
             <type>jar</type>
         </dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.zos3270.manager.ivt</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
             <type>jar</type>
         </dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.zosbatch.rseapi.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.zosbatch.zosmf.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.zosconsole.oeconsol.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.zosconsole.zosmf.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.zosfile.rseapi.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.zosfile.zosmf.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.zosmf.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.zosrseapi.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.zosprogram.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.zostsocommand.ssh.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.zosunixcommand.ssh.manager</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>0.15.0</version>
 			<type>jar</type>
 		</dependency>
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.simbank.manager</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.simbank.tests</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.simbank.obr</artifactId>
-            <version>0.15.0-SNAPSHOT</version>
+            <version>0.15.0</version>
             <type>obr</type>
         </dependency>
 
@@ -426,7 +426,7 @@
 			<plugin>
 				<groupId>dev.galasa</groupId>
 				<artifactId>galasastaging-maven-plugin</artifactId>
-				<version>0.15.0-SNAPSHOT</version>
+				<version>0.15.0</version>
 				<extensions>true</extensions>
 				<executions>
 					<execution>
