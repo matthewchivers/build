@@ -12,7 +12,7 @@
 	</parent>
 
 	<artifactId>galasa-docker-obr</artifactId>
-	<version>0.15.0</version>
+	<version>0.16.0</version>
 	<packaging>pom</packaging>
 
 	<name>Galasa Docker OBR Repository</name>
@@ -23,7 +23,7 @@
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.uber.obr</artifactId>
-			<version>0.15.0</version>
+			<version>0.16.0</version>
 			<type>obr</type>
 			<scope>compile</scope>
 		</dependency>

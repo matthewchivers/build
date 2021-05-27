@@ -12,7 +12,7 @@
 	</parent>
 
 	<artifactId>galasa-isolated-resources-generic</artifactId>
-	<version>0.15.0</version>
+	<version>0.16.0</version>
 	<packaging>pom</packaging>
 
 	<description>Builds a generic docker image for the isolated resources</description>
@@ -43,14 +43,14 @@
                                 <artifactItem>
                                     <groupId>dev.galasa</groupId>
                                     <artifactId>galasa-isolated-mvp</artifactId>
-                                    <version>0.15.0</version>
+                                    <version>0.16.0</version>
                                     <type>zip</type>
                                     <outputDirectory>${project.build.directory}/image/</outputDirectory>
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>dev.galasa</groupId>
                                     <artifactId>galasa-isolated-full</artifactId>
-                                    <version>0.15.0</version>
+                                    <version>0.16.0</version>
                                     <type>zip</type>
                                     <outputDirectory>${project.build.directory}/image/</outputDirectory>
                                 </artifactItem>

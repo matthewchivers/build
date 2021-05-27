@@ -13,7 +13,7 @@
 
 	<groupId>dev.galasa</groupId>
 	<artifactId>galasa-isolated-full-maven-repo</artifactId>
-	<version>0.15.0</version>
+	<version>0.16.0</version>
 	<packaging>pom</packaging>
 
 	<properties>
@@ -24,7 +24,7 @@
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.uber.obr</artifactId>
-			<version>0.15.0</version>
+			<version>0.16.0</version>
 			<type>obr</type>
 		</dependency>
 
@@ -68,13 +68,13 @@
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.artifact.manager</artifactId>
-			<version>0.15.0</version>
+			<version>0.16.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.artifact.manager.ivt</artifactId>
-			<version>0.15.0</version>
+			<version>0.16.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
@@ -140,13 +140,13 @@
         <dependency>
             <groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.zos.manager</artifactId>
-			<version>0.15.0</version>
+			<version>0.16.0</version>
 			<type>jar</type>
 		</dependency>
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.zos.manager.ivt</artifactId>
-            <version>0.15.0</version>
+            <version>0.16.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -158,13 +158,13 @@
         <dependency>
             <groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.zos3270.manager</artifactId>
-            <version>0.15.0</version>
+            <version>0.16.0</version>
             <type>jar</type>
         </dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
             <artifactId>dev.galasa.zos3270.manager.ivt</artifactId>
-            <version>0.15.0</version>
+            <version>0.16.0</version>
             <type>jar</type>
         </dependency>
 		<dependency>
@@ -194,13 +194,13 @@
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.zosfile.rseapi.manager</artifactId>
-			<version>0.15.0</version>
+			<version>0.16.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.zosfile.zosmf.manager</artifactId>
-			<version>0.15.0</version>
+			<version>0.16.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>

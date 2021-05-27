@@ -12,7 +12,7 @@
 	</parent>
 
 	<artifactId>galasa-isolated-mvp</artifactId>
-	<version>0.15.0</version>
+	<version>0.16.0</version>
 	<packaging>pom</packaging>
 
 	<description>Builds the final isolated zip file</description>
@@ -43,7 +43,7 @@
 								<artifactItem>
 									<groupId>dev.galasa</groupId>
 									<artifactId>galasa-isolated-mvp-maven-repo</artifactId>
-									<version>0.15.0</version>
+									<version>0.16.0</version>
 									<classifier>repo</classifier>
 									<type>zip</type>
 									<outputDirectory>${project.build.directory}/zip/maven</outputDirectory>
