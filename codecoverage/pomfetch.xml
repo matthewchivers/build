@@ -296,13 +296,6 @@
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>dev.galasa</groupId>
-                                    <artifactId>dev.galasa.zosprogram.manager</artifactId>
-                                    <version>0.15.0</version>
-                                    <type>jar</type>
-                                    <overWrite>true</overWrite>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>dev.galasa</groupId>
                                     <artifactId>dev.galasa.zosmf.manager</artifactId>
                                     <version>0.15.0</version>
                                     <type>jar</type>
@@ -340,27 +333,6 @@
                                     <groupId>dev.galasa</groupId>
                                     <artifactId>dev.galasa.zosfile.rseapi.manager</artifactId>
                                     <version>0.16.0</version>
-                                    <type>jar</type>
-                                    <overWrite>true</overWrite>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>dev.galasa</groupId>
-                                    <artifactId>dev.galasa.zosconsole.zosmf.manager</artifactId>
-                                    <version>0.15.0</version>
-                                    <type>jar</type>
-                                    <overWrite>true</overWrite>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>dev.galasa</groupId>
-                                    <artifactId>dev.galasa.zosconsole.oeconsol.manager</artifactId>
-                                    <version>0.15.0</version>
-                                    <type>jar</type>
-                                    <overWrite>true</overWrite>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>dev.galasa</groupId>
-                                    <artifactId>dev.galasa.zostsocommand.ssh.manager</artifactId>
-                                    <version>0.15.0</version>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
                                 </artifactItem>
