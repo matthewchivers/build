@@ -170,13 +170,13 @@
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.zosbatch.rseapi.manager</artifactId>
-			<version>0.15.0</version>
+			<version>0.16.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>dev.galasa</groupId>
 			<artifactId>dev.galasa.zosbatch.zosmf.manager</artifactId>
-			<version>0.15.0</version>
+			<version>0.16.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
