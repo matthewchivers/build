@@ -139,7 +139,7 @@
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
                                 </artifactItem>
-           <!--                      <artifactItem>
+                               <artifactItem>
                                     <groupId>dev.galasa</groupId>
                                     <artifactId>dev.galasa.zos3270.manager</artifactId>
                                     <version>0.16.0</version>
@@ -147,7 +147,7 @@
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
                                 </artifactItem>
-                 -->                <artifactItem>
+                                <artifactItem>
                                     <groupId>dev.galasa</groupId>
                                     <artifactId>dev.galasa.zosmf.manager</artifactId>
                                     <version>0.15.0</version>
@@ -207,14 +207,6 @@
                                     <groupId>dev.galasa</groupId>
                                     <artifactId>galasa-boot</artifactId>
                                     <version>0.16.0</version>
-                                    <classifier>sources</classifier>
-                                    <type>jar</type>
-                                    <overWrite>true</overWrite>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>dev.galasa</groupId>
-                                    <artifactId>galasa-simplatform</artifactId>
-                                    <version>0.15.0</version>
                                     <classifier>sources</classifier>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
@@ -287,14 +279,14 @@
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
                                 </artifactItem>
-                  <!--               <artifactItem>
+                                <artifactItem>
                                     <groupId>dev.galasa</groupId>
                                     <artifactId>dev.galasa.zos3270.manager</artifactId>
                                     <version>0.16.0</version>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
                                 </artifactItem>
-                        -->         <artifactItem>
+                                <artifactItem>
                                     <groupId>dev.galasa</groupId>
                                     <artifactId>dev.galasa.zosmf.manager</artifactId>
                                     <version>0.15.0</version>
@@ -347,13 +339,6 @@
                                     <groupId>dev.galasa</groupId>
                                     <artifactId>galasa-boot</artifactId>
                                     <version>0.16.0</version>
-                                    <type>jar</type>
-                                    <overWrite>true</overWrite>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>dev.galasa</groupId>
-                                    <artifactId>galasa-simplatform</artifactId>
-                                    <version>0.15.0</version>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
                                 </artifactItem>
