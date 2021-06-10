@@ -34,3 +34,11 @@ rm temp.zip
 wget -O temp.zip https://nexus.galasa.dev/repository/jacoco/execs/dev.galasa.inttests/dev.galasa.inttests.zos3270.local.Zos3270LocalJava11Ubuntu.zip
 unzip temp.zip -d target/inttests/dev.galasa.inttests
 rm temp.zip
+
+wget -O temp.zip https://nexus.galasa.dev/repository/jacoco/execs/dev.galasa.inttests/dev.galasa.inttests.zosVSAM.local.ZosVSAMLocalJava11Ubuntu.zip
+unzip temp.zip -d target/inttests/dev.galasa.inttests
+rm temp.zip
+
+wget -O temp.zip https://nexus.galasa.dev/repository/jacoco/execs/dev.galasa.inttests/dev.galasa.inttests.zosTso.local.ZosTsoLocalJava11Ubuntu.zip
+unzip temp.zip -d target/inttests/dev.galasa.inttests
+rm temp.zip
